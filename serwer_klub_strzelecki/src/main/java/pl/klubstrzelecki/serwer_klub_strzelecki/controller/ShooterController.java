@@ -30,6 +30,6 @@ public class ShooterController {
     @DeleteMapping("/shooters/{shooterId}")
     public String deleteShooter(@PathVariable Long shooterId) throws Exception {
         shooterRepository.deleteById(shooterId);
-        return "User deleted successfully";
+        return "Shooter deleted successfully";
     }
 }
