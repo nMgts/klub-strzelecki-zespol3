@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserInfoDetails implements UserDetails {
-    private String email;
-    private String password;
-    private List<GrantedAuthority> roles;
+    private final String email;
+    private final String password;
+    private final List<GrantedAuthority> roles;
 
     public UserInfoDetails(User user) {
         this.email = user.getEmail();

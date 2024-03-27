@@ -8,11 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.User;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.UserRepository;
-
-import java.util.List;
 
 @RestController
 public class UserController {
@@ -46,7 +43,7 @@ public class UserController {
     }
 
     @DeleteMapping("/user/delete/{userId}")
-    public String deleteUser(@PathVariable Long userId) throws Exception {
+    public String deleteUser(@PathVariable Long userId) {
         userRepository.deleteById(userId);
         return "User deleted successfully";
     }

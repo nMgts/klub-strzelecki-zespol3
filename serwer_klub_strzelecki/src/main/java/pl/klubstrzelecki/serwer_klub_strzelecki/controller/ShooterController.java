@@ -6,9 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ShooterRepository;
 
-import java.util.List;
-import java.util.Objects;
-
 @RestController
 public class ShooterController {
 
@@ -29,7 +26,7 @@ public class ShooterController {
     }
 
     @DeleteMapping("/shooter/delete/{shooterId}")
-    public String deleteShooter(@PathVariable Long shooterId) throws Exception {
+    public String deleteShooter(@PathVariable Long shooterId) {
         shooterRepository.deleteById(shooterId);
         return "Shooter deleted successfully";
     }
