@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "shooter", schema = "public")
+@Table(name = "shooters", schema = "public")
 public class Shooter {
 
     @Id
