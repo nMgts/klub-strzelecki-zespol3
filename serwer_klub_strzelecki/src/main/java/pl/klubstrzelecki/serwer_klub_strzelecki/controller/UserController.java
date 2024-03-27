@@ -43,6 +43,7 @@ public class UserController {
     }
 
     @DeleteMapping("/user/delete/{userId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteUser(@PathVariable Long userId) {
         userRepository.deleteById(userId);
         return "User deleted successfully";
