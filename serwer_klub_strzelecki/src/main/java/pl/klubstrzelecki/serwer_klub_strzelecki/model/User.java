@@ -8,12 +8,13 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "shooters", schema = "public")
-public class Shooter {
+@Table(name = "users", schema = "public")
+@Data
+public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -23,4 +24,10 @@ public class Shooter {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "roles")
+    private String roles;
 }
