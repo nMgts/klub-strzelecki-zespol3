@@ -8,7 +8,7 @@ import { Shooter } from "../entities/shooter";
 })
 export class ShooterService {
 
-  private baseURL = "http://localhost:8080/shooters";
+  private baseURL = "http://localhost:8080/shooter/all";
 
   constructor(private httpClient: HttpClient) { }
 
