@@ -27,7 +27,7 @@ public class ShooterController {
         return shooterRepository.save(shooter);
     }
 
-    @DeleteMapping("/shooter/delete/{shooterId}")
+    @RequestMapping("/shooter/delete/{shooterId}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteShooter(@PathVariable Long shooterId) {
         shooterRepository.deleteById(shooterId);

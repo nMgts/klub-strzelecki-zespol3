@@ -17,7 +17,8 @@ export class NewsTableComponent implements OnInit {
 
   news_list: News[] = [];
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    console.log("NewsTableComponent is initialized");
     this.getNews();
   }
 
@@ -26,4 +27,20 @@ export class NewsTableComponent implements OnInit {
       this.news_list = data;
     });
   }
+  logHello(): void {
+    alert("Hello");
+  }
+  public onDeleteNews(id: number): void {
+    console.log('Attempting to delete news with id:');  // Check if ID is correct
+    this.newsService.deleteNews(id).subscribe({
+      next: (response) => {
+        console.log('News deleted successfully', response);
+        this.news_list = this.news_list.filter(news => news.id !== id);
+      },
+      error: (err) => {
+        console.error('Error deleting news:', err);
+      }
+    });
+  }
+  
 }

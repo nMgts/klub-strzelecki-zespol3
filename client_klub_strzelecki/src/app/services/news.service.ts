@@ -14,5 +14,11 @@ export class NewsService {
 
   getNewsList(): Observable<News[]> {
     return this.httpClient.get<News[]>(`${this.baseURL}`);
+  } 
+
+  deleteNews(id: number): Observable<any> {
+    return this.httpClient.delete(`${this.baseURL}/delete/${id}`);
   }
 }
+
+
