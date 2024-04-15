@@ -1,10 +1,15 @@
 <div class="w-4/4 shadow-md p-10 bg-white shadow-blue-200/20 mx-36 my-10">
   
-  <table class="w-full border-4" *ngFor="let news of news_list; let i=index">
+  <table class="w-full border-4 rounded-md" *ngFor="let news of news_list; let i=index">
     <thead>
         <h2 class="p-3 text-left bg-gray-200; justify-center; text-center">{{news.title}}</h2>
       <tr>
-        <th class="p-3 text-left bg-gray-200">{{news.content}}</th>
+        <th class="p-3 text-left bg-gray-200 flex justify-between items-center">
+          <span>
+          {{news.content}}
+        </span>
+        <button class="py-1 px-2 bg-red-500 rounded-md text-white" (click)="onDeleteNews(news.id)" type="button">Usuń</button>
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -15,5 +20,7 @@
     <button class="text-cyan-500 border-4 py-2 px-4 rounded-l-lg cursor-pointer mr-5">Previous</button>
     <button class="py-2 px-4 cursor-pointer bg-cyan-500 text-white">1</button>
     <button class="text-cyan-500 border-4 py-2 px-4 cursor-pointer rounder-r-lg ml-5">Next</button>
+    <button class="py-2 px-4 cursor-pointer bg-cyan-500 text-white" (click)="logHello()">Log Hello</button> <!-- New Button Here -->
   </div>
+  
 </div>
