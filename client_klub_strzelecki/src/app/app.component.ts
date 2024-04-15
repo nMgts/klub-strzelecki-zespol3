@@ -12,5 +12,5 @@ import { NewsTableComponent } from './news-table/news-table.component';
 })
 export class AppComponent {
   title = 'Shooting Club';
-  title_news = 'Bierzące informacje'
+  title_news = 'Bieżące informacje'
 }

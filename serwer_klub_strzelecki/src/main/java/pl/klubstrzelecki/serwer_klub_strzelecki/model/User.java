@@ -3,6 +3,8 @@ package pl.klubstrzelecki.serwer_klub_strzelecki.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -21,4 +23,12 @@ public class User {
     private String email;
     private String password;
     private String roles;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_competition",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "competition_id")
+    )
+    private Set<Competition> competitions;
 }
