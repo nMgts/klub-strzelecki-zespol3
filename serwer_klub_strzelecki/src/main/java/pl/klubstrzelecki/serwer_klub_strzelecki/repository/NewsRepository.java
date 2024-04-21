@@ -7,7 +7,7 @@ import pl.klubstrzelecki.serwer_klub_strzelecki.model.News;
 
 @Repository
 public interface NewsRepository extends JpaRepository<News, Long> {
-    News findNewsById(Long id) throws Exception;
+
 }
 
 

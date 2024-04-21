@@ -1,7 +1,10 @@
 package pl.klubstrzelecki.serwer_klub_strzelecki.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import pl.klubstrzelecki.serwer_klub_strzelecki.dto.NewsDTO;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.News;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.NewsRepository;
 import java.util.Optional;
@@ -13,13 +16,27 @@ public class NewsServiceImplementation implements NewsService {
     private NewsRepository newsRepository;
 
     @Override
-    public News findNewsById(long newsId) throws Exception {
+    public NewsDTO findNewsById(long newsId) throws Exception {
         Optional<News> opt = newsRepository.findById(newsId);
-
         if (opt.isPresent()) {
-            return opt.get();
+            News news = opt.get();
+            return new NewsDTO(news.getId(), news.getTitle(), news.getContent());
         }
-        throw new Exception("News not found with id" + newsId);
+        throw new Exception("News not found with id " + newsId);
+    }
+
+    public NewsDTO saveNews(NewsDTO newsDTO) {
+        News news = new News();
+        news.setId(newsDTO.getId());
+        news.setTitle(newsDTO.getTitle());
+        news.setContent(newsDTO.getContent());
+        News savedNews = newsRepository.save(news);
+        return new NewsDTO(savedNews.getId(), savedNews.getTitle(), savedNews.getContent());
+    }
+
+    @Override
+    public void deleteNewsById(long id) {
+        newsRepository.deleteById(id);
     }
 
 }

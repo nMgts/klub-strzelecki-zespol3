@@ -1,6 +1,27 @@
-<!-- <router-outlet></router-outlet> -->
-<h1 class="text-3xl text-red-500 text-center">{{title_news}}</h1>
-<app-news-table></app-news-table>
+<header class="header">
+    <div class="container">
+      <h1 class="logo">Klub strzelecki</h1>
+      <nav class="navbar">
+        <ul class="nav-list">
+          <li class="nav-item"><a routerLink="/" routerLinkActive="active">Strona główna</a></li>
+          <li class="nav-item"><a routerLink="/weapons" routerLinkActive="active">Lista broni</a></li>
+          <li class="nav-item"><a routerLink="/users" routerlinkActive="active">Lista użytkowników</a></li>
+          <li class="nav-item"><a routerLink="/about" routerLinkActive="active">O nas</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-<h1 class="text-3xl text-red-500 text-center">{{title}}</h1>
-<app-shooters-table></app-shooters-table>
+  <main>
+    News component content goes here
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="footer">
+    Footer content goes here
+    <p>&copy; 2024 Klub strzelecki</p>
+  </footer>
+
+  <router-outlet></router-outlet>
+
+

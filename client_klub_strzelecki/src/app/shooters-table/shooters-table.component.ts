@@ -20,7 +20,6 @@ export class ShootersTableComponent implements OnInit {
   ngOnInit(): void {
     this.getShooters();
   }
-
   private getShooters() {
     this.shooterService.getShootersList().subscribe(data => {
       this.shooters = data;

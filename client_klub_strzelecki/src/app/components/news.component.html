@@ -1,0 +1,14 @@
+<div class="welcome">
+    <p>Aktualności halo</p>
+    <div class="w-full border-4 rounded-md" *ngFor="let news of news_list; let i=index">
+    <h2>{{ news.title }}</h2>
+
+        <div class="p-3 text-left bg-gray-200 flex justify-between items-center">
+            <div [innerHTML]="news.content"></div>
+            <button class="py-2 px-4 cursor-pointer bg-cyan-500 text-white" (click)="onDeleteNews(news.id)">Usun</button>
+        </div>
+
+        <div id="button-container"></div>
+    </div>
+</div>
+

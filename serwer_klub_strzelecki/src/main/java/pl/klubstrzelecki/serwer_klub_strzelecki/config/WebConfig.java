@@ -10,6 +10,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("*") // Add your Angular app's origin here
-                .allowedMethods("GET", "POST", "PUT", "DELETE"); // Specify the HTTP methods allowed
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("*");
+
     }
 }
