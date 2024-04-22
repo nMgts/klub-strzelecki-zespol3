@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Competition;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ComptetionRepository;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("api/competition")
