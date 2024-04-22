@@ -4,39 +4,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import pl.klubstrzelecki.serwer_klub_strzelecki.dto.NewsDTO;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.News;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.NewsRepository;
-import pl.klubstrzelecki.serwer_klub_strzelecki.service.NewsService;
 
 @RestController
-@RequestMapping("/api/news")
 public class NewsController {
 
     @Autowired
     private NewsRepository newsRepository;
-    @Autowired
-    private NewsService newsService;
 
-    @GetMapping("/all")
+    @GetMapping("/news")
     public ResponseEntity<Object> getAllNews() {
         return ResponseEntity.ok(newsRepository.findAll());
     }
 
-    @PostMapping("/save")
+    @PostMapping("/news/save")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public NewsDTO createNews(@RequestBody NewsDTO news) throws Exception {
-        return newsService.saveNews(news);
+    public News createNews(@RequestBody News news) throws Exception {
+        return newsRepository.save(news);
     }
 
-    @RequestMapping("/delete/{newsId}")
+    @DeleteMapping("/news/delete/{newsId}")
     @PreAuthorize("hasAuthority('ADMIN')")
-//    public String deleteNews(@PathVariable Long newsId) throws Exception {
-//        newsService.deleteNews(newsId);
-//        return "News deleted successfully";
-//    }
-    public ResponseEntity<String> deleteNews(@PathVariable("newsId") Long newsId) throws Exception {
-        newsService.deleteNewsById(newsId);
-        return ResponseEntity.ok("News deleted successfully!.");
+    public String deleteNews(@PathVariable Long newsId) {
+        newsRepository.deleteById(newsId);
+        return "News deleted successfully";
     }
 }
