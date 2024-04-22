@@ -1,7 +1,7 @@
 import { News } from './news';
 
-describe('News', () => {
+describe('Shooter', () => {
   it('should create an instance', () => {
-    expect(new News()).toBeTruthy();
+    expect(new News(1, 'Sample Title', 'Sample Content')).toBeTruthy();
   });
 });
