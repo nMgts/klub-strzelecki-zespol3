@@ -9,22 +9,29 @@
 
   <table class="w-full border-4">
     <thead>
-      <tr>
-        <th class="p-3 text-left bg-gray-200">Id</th>
-        <th class="p-3 text-left bg-gray-200">First name</th>
-        <th class="p-3 text-left bg-gray-200">Last name</th>
-        <th class="p-3 text-left bg-gray-200">e-mail</th>
-        <th class="p-3 text-left bg-gray-200">Action</th>
-      </tr>
+    <tr>
+      <th class="p-3 text-left bg-gray-200">Id</th>
+      <th class="p-3 text-left bg-gray-200">First name</th>
+      <th class="p-3 text-left bg-gray-200">Last name</th>
+      <th class="p-3 text-left bg-gray-200">e-mail</th>
+      <th class="p-3 text-left bg-gray-200">Action</th>
+    </tr>
     </thead>
     <tbody>
-      <tr class="border-2" *ngFor="let shooter of shooters; let i=index">
-        <td class="p-3 border-2">{{i+1}}</td>
-        <td class="p-3 border-2">{{ shooter.firstName }}</td>
-        <td class="p-3 border-2">{{ shooter.lastName }}</td>
-        <td class="p-3 border-2">{{ shooter.email }}</td>
-        <td class="p-3 border-2"></td>
-      </tr>
+    <tr class="border-2" *ngFor="let shooter of shooters; let i=index">
+      <td class="p-3 border-2">{{i+1}}</td>
+      <td class="p-3 border-2">{{ shooter.firstName }}</td>
+      <td class="p-3 border-2">{{ shooter.lastName }}</td>
+      <td class="p-3 border-2">{{ shooter.email }}</td>
+      <td class="p-3 border-2">
+        <button (click)="editShooter(shooter)">
+          <i class="bi bi-pencil" style="color: blue"></i>
+        </button>
+        <button class="ml-6" (click)="deleteShooter(shooter.id)">
+          <i class="bi bi-trash" style="color: red"></i>
+        </button>
+      </td>
+    </tr>
     </tbody>
   </table>
 

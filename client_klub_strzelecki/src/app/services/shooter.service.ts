@@ -8,11 +8,23 @@ import { Shooter } from "../entities/shooter";
 })
 export class ShooterService {
 
-  private baseURL = "http://localhost:8080/shooter/all";
+  private baseURL = "http://localhost:8080/shooter";
 
   constructor(private httpClient: HttpClient) { }
 
   getShootersList(): Observable<Shooter[]> {
-    return this.httpClient.get<Shooter[]>(`${this.baseURL}`);
+    return this.httpClient.get<Shooter[]>(`${this.baseURL + '/all'}`);
+  }
+
+  getShooter(shooterId: number) {
+    return this.httpClient.get<Shooter>(this.baseURL + '/' + shooterId);
+  }
+
+  editShooter(shooter: Shooter) {
+    return this.httpClient.put<Shooter>(this.baseURL, shooter);
+  }
+
+  deleteShooter(shooterId: number) {
+    return this.httpClient.delete(this.baseURL + '/' + shooterId);
   }
 }
