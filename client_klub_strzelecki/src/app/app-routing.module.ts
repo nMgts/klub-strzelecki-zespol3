@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NewsComponent } from './news-list/news.component';
 
-const routes: Routes = [];
+export const routes: Routes = [
+  { path: '', redirectTo: 'news', pathMatch: 'full' },
+  { path: 'news', component: NewsComponent },
+
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
