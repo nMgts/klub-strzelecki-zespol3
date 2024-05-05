@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Competition;
 
 @Repository
-public interface ComptetionRepository extends JpaRepository<Competition, Long> {
+public interface CompetitionRepository extends JpaRepository<Competition, Long> {
 
 }
+

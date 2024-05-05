@@ -5,7 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Competition;
-import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ComptetionRepository;
+import pl.klubstrzelecki.serwer_klub_strzelecki.repository.CompetitionRepository;
+import pl.klubstrzelecki.serwer_klub_strzelecki.service.CompetitionService;
 
 
 @RestController
@@ -13,7 +14,10 @@ import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ComptetionRepository;
 public class CompetitionController {
 
     @Autowired
-    private ComptetionRepository comptetionRepository;
+    private CompetitionRepository comptetionRepository;
+
+    @Autowired
+    private CompetitionService competitionService;
 
     @GetMapping("/all")
     public ResponseEntity<Object> getAllCompetitions() {
@@ -24,5 +28,10 @@ public class CompetitionController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public Competition createCompetition(@RequestBody Competition competition) throws Exception {
         return comptetionRepository.save(competition);
+    }
+
+    @PostMapping("/{competitionId}/register/{userId}")
+    public ResponseEntity<Object> registerUserToCompetition(@PathVariable long competitionId, @PathVariable long userId) {
+        return competitionService.registerUserToCompetition(competitionId, userId);
     }
 }
