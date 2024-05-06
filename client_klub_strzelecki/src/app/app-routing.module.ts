@@ -12,7 +12,7 @@ export const routes: Routes = [
   { path: 'news/add', component: AddNewsComponent },
   { path: 'news/edit/:id', component: EditNewsComponent },
   { path: 'shooters', component: ShootersComponent},
-  { path: 'competions', component: CompetitionsListComponent},
+  { path: 'competitions', component: CompetitionsListComponent},
 ];
 
 @NgModule({

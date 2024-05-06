@@ -6,18 +6,24 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Competition;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.CompetitionRepository;
+import pl.klubstrzelecki.serwer_klub_strzelecki.repository.NewsRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.service.CompetitionService;
+import pl.klubstrzelecki.serwer_klub_strzelecki.service.NewsService;
 
 
 @RestController
 @RequestMapping("api/competition")
 public class CompetitionController {
 
-    @Autowired
-    private CompetitionRepository comptetionRepository;
+    private final CompetitionRepository comptetionRepository;
+
+    private final CompetitionService competitionService;
 
     @Autowired
-    private CompetitionService competitionService;
+    public CompetitionController(CompetitionService competitionService, CompetitionRepository comptetionRepository) {
+        this.comptetionRepository = comptetionRepository;
+        this.competitionService = competitionService;
+    }
 
     @GetMapping("/all")
     public ResponseEntity<Object> getAllCompetitions() {
@@ -25,12 +31,12 @@ public class CompetitionController {
     }
 
     @PostMapping("/save")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public Competition createCompetition(@RequestBody Competition competition) throws Exception {
         return comptetionRepository.save(competition);
     }
 
-    @PostMapping("/{competitionId}/register/{userId}")
+    //@PostMapping("/{competitionId}/register/{userId}")
     public ResponseEntity<Object> registerUserToCompetition(@PathVariable long competitionId, @PathVariable long userId) {
         return competitionService.registerUserToCompetition(competitionId, userId);
     }
