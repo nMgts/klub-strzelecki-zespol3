@@ -17,12 +17,19 @@ export class EditNewsComponent implements OnInit {
 
   constructor(
     private newsService: NewsService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router) {
     this.id = 0;
   }
 
   onSubmit() {
+    this.newsService.editNews(this.id, this.new_news).subscribe(data => {
+      this.goToNews();
+    }, error => console.log(error));
+  }
 
+  goToNews() {
+    this.router.navigate(['/news']);
   }
 
   ngOnInit(): void {

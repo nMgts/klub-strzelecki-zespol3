@@ -11,7 +11,8 @@ export class NewsService {
 
   private baseUrl = 'http://localhost:8080/api/news/all';
   private deleteUrl = 'http://localhost:8080/api/news/delete';
-  private postUrl = 'http://localhost:8080/api/news/add'
+  private postUrl = 'http://localhost:8080/api/news/add';
+  private putUrl = 'http://localhost:8080/api/news/edit';
 
   constructor(private http: HttpClient) {}
 
@@ -31,6 +32,10 @@ export class NewsService {
 
   addNews(news?: News): Observable<News> {
     return this.http.post<News>(this.postUrl, news);
+  }
+
+  editNews(id: number, news: News) {
+    return this.http.put(`${this.putUrl}/${id}`, news);
   }
 
 }
