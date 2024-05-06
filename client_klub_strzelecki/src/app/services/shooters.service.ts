@@ -8,17 +8,32 @@ import { Shooter } from "../interfaces/shooter";
 })
 export class ShootersService {
 
-  private baseURL = "http://localhost:8080/shooter/all";
-  private deleteURL = "http://localhost:8080/shooter/delete"
+  private baseUrl = 'http://localhost:8080/api/shooters/all';
+  private deleteUrl = 'http://localhost:8080/api/shooters/delete';
+  private postUrl = 'http://localhost:8080/api/shooters/add';
+  private putUrl = 'http://localhost:8080/api/shooters/edit';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getShootersList(): Observable<Shooter[]> {
-    return this.http.get<Shooter[]>(`${this.baseURL}`);
+  getShooter(): Observable<Shooter[]> {
+    return this.http.get<Shooter[]>(this.baseUrl);
   }
 
   deleteShooter(shooterId: number): Observable<Shooter> {
-    const url = `${this.deleteURL}/${shooterId}`;
+    const url = `${this.deleteUrl}/${shooterId}`;
     return this.http.delete<Shooter>(url);
+  }
+
+  getShooterById(shooterId: number): Observable<Shooter> {
+    const url = `${this.baseUrl}/${shooterId}`;
+    return this.http.get<Shooter>(url);
+  }
+
+  addShooter(shooter?: Shooter): Observable<Shooter> {
+    return this.http.post<Shooter>(this.postUrl, shooter);
+  }
+
+  editShooter(id: number, shooter: Shooter) {
+    return this.http.put(`${this.putUrl}/${id}`, shooter);
   }
 }

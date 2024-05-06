@@ -12,6 +12,8 @@ export const routes: Routes = [
   { path: 'news/add', component: AddNewsComponent },
   { path: 'news/edit/:id', component: EditNewsComponent },
   { path: 'shooters', component: ShootersComponent},
+  { path: 'shooters/add', component: AddNewsComponent },
+  { path: 'shooters/edit/:id', component: EditNewsComponent },
   { path: 'competions', component: CompetitionsListComponent},
 ];
 

@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { ShootersService } from '../services/shooters.service';
 import { CommonModule } from '@angular/common';
 import { Shooter } from '../interfaces/shooter';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-shooters',
@@ -13,15 +14,19 @@ import { Shooter } from '../interfaces/shooter';
   ]
 })
 
-// Component that displays the news
+
+
 export class ShootersComponent implements AfterViewInit {
   
   shooters_list: Shooter[] = [];
 
-  constructor(private shooterService: ShootersService, private cd: ChangeDetectorRef) {}
+  constructor(
+    private shooterService: ShootersService, 
+    private cd: ChangeDetectorRef,
+    private router: Router) {}
 
   // After init - because we need the pagination to load first
-  // Fetch the news from the database and display them
+  // Fetch the shooters from the database and display them
   ngAfterViewInit(): void {
     
     // The DOM has been changed, we need to detect the changes to prevent ExpressionChangedAfterItHasBeenCheckedError
@@ -36,7 +41,7 @@ export class ShootersComponent implements AfterViewInit {
   }
 
   private getShooters() {
-    this.shooterService.getShootersList().subscribe(data => {
+    this.shooterService.getShooter().subscribe(data => {
       this.shooters_list = data;
     });
   }
@@ -48,7 +53,7 @@ export class ShootersComponent implements AfterViewInit {
         this.shooters_list = this.shooters_list.filter(shooter => shooter.id !== id);
       },
       error: (err) => {
-        console.error('Error deleting news:', err);
+        console.error('Error deleting shooter:', err);
       }
     });
   }
@@ -58,5 +63,20 @@ export class ShootersComponent implements AfterViewInit {
     editedText = editedText.replace(/\n/g, '</p><p>');
     editedText += '</p>';
     return editedText;
+  }
+
+  editShooters(id: number) {
+    this.router.navigate(['shooters/edit', id]);
+  }
+
+  deleteShooters(id?: number): void {
+    if (id !== undefined) {
+      this.shooterService.deleteShooter(id).subscribe( data =>{
+        console.log(data);
+        this.getShooters();
+      })
+    } else {
+      console.error('ID is undefined');
+    }
   }
 }
