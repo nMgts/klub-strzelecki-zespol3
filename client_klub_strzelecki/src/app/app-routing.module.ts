@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NewsComponent } from './news-list/news.component';
 import { ShootersComponent } from './shooters/shooters.component';
+import { AddNewsComponent } from './add-news/add-news.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'news', pathMatch: 'full' },
   { path: 'news', component: NewsComponent },
+  { path: 'news/add', component: AddNewsComponent },
   { path: 'shooters', component: ShootersComponent},
 
 ];

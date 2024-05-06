@@ -23,8 +23,8 @@ public class NewsController {
         return ResponseEntity.ok(newsRepository.findAll());
     }
 
-    @PostMapping("/save")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/add")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public NewsDTO createNews(@RequestBody NewsDTO news) throws Exception {
         return newsService.saveNews(news);
     }
