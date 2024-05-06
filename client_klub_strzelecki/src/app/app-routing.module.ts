@@ -4,6 +4,7 @@ import { NewsComponent } from './news-list/news.component';
 import { ShootersComponent } from './shooters/shooters.component';
 import { AddNewsComponent } from './add-news/add-news.component';
 import {EditNewsComponent} from "./edit-news/edit-news.component";
+import {CompetitionsListComponent} from "./competitions-list/competitions-list.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: 'news', pathMatch: 'full' },
@@ -11,6 +12,7 @@ export const routes: Routes = [
   { path: 'news/add', component: AddNewsComponent },
   { path: 'news/edit/:id', component: EditNewsComponent },
   { path: 'shooters', component: ShootersComponent},
+  { path: 'competions', component: CompetitionsListComponent},
 ];
 
 @NgModule({

@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { AddNewsComponent } from './add-news/add-news.component';
 import { FormsModule } from "@angular/forms";
 import { EditNewsComponent } from './edit-news/edit-news.component';
+import { CompetitionsListComponent } from './competitions-list/competitions-list.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { EditNewsComponent } from './edit-news/edit-news.component';
     ShootersComponent,
     AddNewsComponent,
     EditNewsComponent,
+    CompetitionsListComponent,
   ],
   imports: [
     BrowserModule,
