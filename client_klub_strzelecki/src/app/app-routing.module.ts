@@ -13,6 +13,8 @@ export const routes: Routes = [
   { path: 'news/edit/:id', component: EditNewsComponent },
   { path: 'shooters', component: ShootersComponent},
   { path: 'competitions', component: CompetitionsListComponent},
+  { path: 'shooters/add', component: AddNewsComponent },
+  { path: 'shooters/edit/:id', component: EditNewsComponent },
 ];
 
 @NgModule({
