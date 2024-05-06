@@ -15,10 +15,14 @@ import pl.klubstrzelecki.serwer_klub_strzelecki.service.NewsService;
 @RequestMapping("/api/news")
 public class NewsController {
 
+    private final NewsService newsService;
+    private final NewsRepository newsRepository;
+
     @Autowired
-    private NewsRepository newsRepository;
-    @Autowired
-    private NewsService newsService;
+    public NewsController(NewsService newsService, NewsRepository newsRepository) {
+        this.newsService = newsService;
+        this.newsRepository = newsRepository;
+    }
 
     @GetMapping("/all")
     public ResponseEntity<Object> getAllNews() {
@@ -48,14 +52,14 @@ public class NewsController {
         return ResponseEntity.ok(updatedNews);
     }
 
-    @RequestMapping("/delete/{newsId}")
+    @DeleteMapping("/delete/{id}")
     //@PreAuthorize("hasAuthority('ADMIN')")
 //    public String deleteNews(@PathVariable Long newsId) throws Exception {
 //        newsService.deleteNews(newsId);
 //        return "News deleted successfully";
 //    }
-    public ResponseEntity<String> deleteNews(@PathVariable("newsId") Long newsId) throws Exception {
-        newsService.deleteNewsById(newsId);
+    public ResponseEntity<String> deleteNews(@PathVariable("id") Long id) throws Exception {
+            newsService.deleteNewsById(id);
         return ResponseEntity.ok("News deleted successfully!.");
     }
 }
