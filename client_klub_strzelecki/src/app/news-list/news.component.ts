@@ -67,4 +67,25 @@ export class NewsComponent implements AfterViewInit {
   editNews(id: number) {
     this.router.navigate(['news/edit', id]);
   }
+
+  deleteNews(id?: number): void {
+    if (id !== undefined) {
+      this.newsService.deleteNews(id).subscribe( data =>{
+        console.log(data);
+        this.getNews();
+      })
+    } else {
+      console.error('ID is undefined');
+    }
+  }
+
+  /*
+  deleteNews(id: number) {
+    this.newsService.deleteNews(id).subscribe( data =>{
+      console.log(data);
+      this.getNews();
+    })
+  }
+
+   */
 }
