@@ -38,7 +38,6 @@ public class NewsServiceImplementation implements NewsService {
         return new NewsDTO(savedNews.getId(), savedNews.getTitle(), savedNews.getContent());
     }
 
-
     @Override
     public void deleteNewsById(Long id) {
         Optional<News> opt = getNewsById(id);
