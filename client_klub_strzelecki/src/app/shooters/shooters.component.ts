@@ -2,23 +2,23 @@ import { AfterViewInit, ChangeDetectorRef, Component, ViewChild, OnInit } from '
 
 import { NgModule } from '@angular/core';
 
-import { NewsService } from '../services/news.service';
+import { ShootersService } from '../services/shooters.service';
 import { CommonModule } from '@angular/common';
-import { News } from '../interfaces/news';
+import { Shooter } from '../interfaces/shooter';
 
 @Component({
-  selector: 'app-news',
-  templateUrl: './news.component.html',
+  selector: 'app-shooters',
+  templateUrl: './shooters.component.html',
   styleUrls: [
   ]
 })
 
 // Component that displays the news
-export class NewsComponent implements AfterViewInit {
+export class ShootersComponent implements AfterViewInit {
   
-  news_list: News[] = [];
+  shooters_list: Shooter[] = [];
 
-  constructor(private newsService: NewsService, private cd: ChangeDetectorRef) {}
+  constructor(private shooterService: ShootersService, private cd: ChangeDetectorRef) {}
 
   // After init - because we need the pagination to load first
   // Fetch the news from the database and display them
@@ -31,21 +31,21 @@ export class NewsComponent implements AfterViewInit {
     console.log("Hello");
   }
   ngOnInit(): void { 
-    console.log("NewsComponent is initialized halo");
-    this.getNews();
+    console.log("ShootersComponent is initialized halo");
+    this.getShooters();
   }
 
-  private getNews() {
-    this.newsService.getNews().subscribe(data => {
-      this.news_list = data;
+  private getShooters() {
+    this.shooterService.getShootersList().subscribe(data => {
+      this.shooters_list = data;
     });
   }
-  public onDeleteNews(id: number): void {
-    console.log('Attempting to delete news with id:');  // Check if ID is correct
-    this.newsService.deleteNews(id).subscribe({
+  public onDeleteShooter(id: number): void {
+    console.log('Attempting to delete shooter with id:');  // Check if ID is correct
+    this.shooterService.deleteShooter(id).subscribe({
       next: (response) => {
-        console.log('News deleted successfully', response);
-        this.news_list = this.news_list.filter(news => news.id !== id);
+        console.log('Shooter deleted successfully', response);
+        this.shooters_list = this.shooters_list.filter(shooter => shooter.id !== id);
       },
       error: (err) => {
         console.error('Error deleting news:', err);

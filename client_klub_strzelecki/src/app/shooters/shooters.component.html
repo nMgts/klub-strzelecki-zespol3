@@ -1,0 +1,37 @@
+<div class="w-4/4 shadow-md p-10 bg-white shadow-blue-200/20 mx-36 my-10">
+    <h2>Shooters table</h2>
+    <div class="flex justify-between items-center mb-4 mt-4">
+      <input type="text" placeholder="Search" class="w-full border p-2 rounded 1-g">
+      <select class="border p-2 rounded-1g">
+        <option value="">Test</option>
+      </select>
+    </div>
+  
+    <div class="w-full border-4">
+      <div>
+        <tr>
+          <th class="p-3 text-left bg-gray-200">Id </th>
+          <th class="p-3 text-left bg-gray-200">First name </th>
+          <th class="p-3 text-left bg-gray-200">Last name </th>
+          <th class="p-3 text-left bg-gray-200">e-mail </th>
+          <th class="p-3 text-center bg-gray-200">Action </th>
+        </tr>
+      </div>
+      <div>
+        <div class="border-2" *ngFor="let shooter of shooters_list; let i=index">
+          <th class="p-3 border-2">id: {{i+1}} </th>
+          <th class="p-3 border-2">Imie: {{ shooter.imie}} </th>
+          <th class="p-3 border-2">Nazwisko: {{ shooter.nazwisko }} </th>
+          <th class="p-3 border-2">Email: {{ shooter.email }} </th>
+          <button class="py-2 px-4 cursor-pointer bg-cyan-500 text-black" (click)="onDeleteShooter(shooter.id)">Usun</button>
+          <p class="p-3 border-2"></p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="mt-4 flex items-center justify-center">
+      <button class="text-cyan-500 border-4 py-2 px-4 rounded-l-lg cursor-pointer mr-5">Previous</button>
+      <button class="py-2 px-4 cursor-pointer bg-cyan-500 text-white">1</button>
+      <button class="text-cyan-500 border-4 py-2 px-4 cursor-pointer rounder-r-lg ml-5">Next</button>
+    </div>
+  </div>
