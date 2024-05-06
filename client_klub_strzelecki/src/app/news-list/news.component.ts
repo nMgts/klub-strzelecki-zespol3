@@ -8,7 +8,7 @@ import { News } from '../interfaces/news';
 
 @Component({
   selector: 'app-news',
-  
+
   templateUrl: './news.component.html',
   styleUrls: [
   ]
@@ -16,7 +16,7 @@ import { News } from '../interfaces/news';
 
 // Component that displays the news
 export class NewsComponent implements AfterViewInit {
-  
+
   news_list: News[] = [];
 
   constructor(private newsService: NewsService, private cd: ChangeDetectorRef) {}
@@ -24,14 +24,14 @@ export class NewsComponent implements AfterViewInit {
   // After init - because we need the pagination to load first
   // Fetch the news from the database and display them
   ngAfterViewInit(): void {
-    
+
     // The DOM has been changed, we need to detect the changes to prevent ExpressionChangedAfterItHasBeenCheckedError
     this.cd.detectChanges();
   }
   logHello(): void {
     console.log("Hello");
   }
-  ngOnInit(): void { 
+  ngOnInit(): void {
     console.log("NewsComponent is initialized halo");
     this.getNews();
   }
