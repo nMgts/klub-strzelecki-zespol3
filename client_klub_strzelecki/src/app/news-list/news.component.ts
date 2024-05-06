@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { NewsService } from '../services/news.service';
 import { CommonModule } from '@angular/common';
 import { News } from '../interfaces/news';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-news',
@@ -18,7 +19,10 @@ export class NewsComponent implements AfterViewInit {
 
   news_list: News[] = [];
 
-  constructor(private newsService: NewsService, private cd: ChangeDetectorRef) {}
+  constructor(
+    private newsService: NewsService,
+    private cd: ChangeDetectorRef,
+    private router: Router) {}
 
   // After init - because we need the pagination to load first
   // Fetch the news from the database and display them
@@ -58,5 +62,9 @@ export class NewsComponent implements AfterViewInit {
     editedText = editedText.replace(/\n/g, '</p><p>');
     editedText += '</p>';
     return editedText;
+  }
+
+  editNews(id: number) {
+    this.router.navigate(['news/edit', id]);
   }
 }
