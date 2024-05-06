@@ -11,7 +11,6 @@ import {Router} from "@angular/router";
 })
 export class AddNewsComponent implements OnInit {
   new_news: News = {
-    id: 0,
     title: '',
     content: ''
   };
@@ -26,6 +25,7 @@ export class AddNewsComponent implements OnInit {
   saveNews() {
     this.newsService.addNews(this.new_news).subscribe( data =>{
       console.log(data);
+      this.goToNews();
     },
         error => console.log(error));
   }
