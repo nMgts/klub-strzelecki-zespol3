@@ -10,6 +10,8 @@ import { AddNewsComponent } from './add-news/add-news.component';
 import { FormsModule } from "@angular/forms";
 import { EditNewsComponent } from './edit-news/edit-news.component';
 import { CompetitionsListComponent } from './competitions-list/competitions-list.component';
+import { AddShooterComponent } from './shooters-add/add-shooters.component';
+import { EditShooterComponent } from './shooters-edit/edit-shooters.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { CompetitionsListComponent } from './competitions-list/competitions-list
     ShootersComponent,
     AddNewsComponent,
     EditNewsComponent,
+    AddShooterComponent,
+    EditShooterComponent,
     CompetitionsListComponent,
   ],
   imports: [

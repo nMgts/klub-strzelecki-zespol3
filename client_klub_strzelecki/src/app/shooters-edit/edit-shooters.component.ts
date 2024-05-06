@@ -30,7 +30,7 @@ export class EditShooterComponent implements OnInit {
   }
 
   goToShooters() {
-    this.router.navigate(['/news']);
+    this.router.navigate(['/shooters']);
   }
 
   ngOnInit(): void {

@@ -10,8 +10,12 @@ import java.util.Optional;
 @Service
 public class ShooterServiceImplementation implements ShooterService {
 
+    private final ShooterRepository shooterRepository;
+
     @Autowired
-    private ShooterRepository shooterRepository;
+    public ShooterServiceImplementation(ShooterRepository shooterRepository) {
+        this.shooterRepository = shooterRepository;
+    }
 
     @Override
     public Shooter findShooterById(long shooterId) throws Exception {
@@ -21,5 +25,32 @@ public class ShooterServiceImplementation implements ShooterService {
             return opt.get();
         }
         throw new Exception("Shooter not found with id" + shooterId);
+    }
+
+    public Shooter saveShooter(Shooter shooter) {
+        shooter = new Shooter();
+        shooter.setId(shooter.getId());
+        shooter.setFirstName(shooter.getFirstName());
+        shooter.setLastName(shooter.getLastName());
+        shooter.setEmail(shooter.getEmail());
+        Shooter savedShooter = shooterRepository.save(shooter);
+        return new Shooter(savedShooter.getId(), savedShooter.getFirstName(), savedShooter.getLastName(),
+                savedShooter.getEmail());
+    }
+
+    @Override
+    public void deleteShooterById(Long id) {
+        Optional<Shooter> opt = getShooterById(id);
+        if (opt.isPresent()) {
+            Shooter shooter = opt.get();
+            shooterRepository.delete(shooter);
+        }
+        else {
+            //todo
+        }
+    }
+
+    private Optional<Shooter> getShooterById(Long id) {
+        return shooterRepository.findById(id);
     }
 }

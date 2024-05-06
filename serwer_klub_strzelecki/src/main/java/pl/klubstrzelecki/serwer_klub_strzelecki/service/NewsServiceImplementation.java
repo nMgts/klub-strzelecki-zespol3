@@ -28,7 +28,6 @@ public class NewsServiceImplementation implements NewsService {
         throw new Exception("News not found with id " + newsId);
     }
 
-
     public NewsDTO saveNews(NewsDTO newsDTO) {
         News news = new News();
         news.setId(newsDTO.getId());
@@ -37,7 +36,6 @@ public class NewsServiceImplementation implements NewsService {
         News savedNews = newsRepository.save(news);
         return new NewsDTO(savedNews.getId(), savedNews.getTitle(), savedNews.getContent());
     }
-
 
     @Override
     public void deleteNewsById(Long id) {
