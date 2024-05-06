@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {News} from "../interfaces/news";
 import {NewsService} from "../services/news.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-edit-news',
@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
   styleUrl: './edit-news.component.css'
 })
 export class EditNewsComponent implements OnInit {
+  id: number;
   new_news: News = {
     title: '',
     content: ''
@@ -16,7 +17,8 @@ export class EditNewsComponent implements OnInit {
 
   constructor(
     private newsService: NewsService,
-    private router: Router) {
+    private route: ActivatedRoute) {
+    this.id = 0;
   }
 
   onSubmit() {
@@ -24,6 +26,10 @@ export class EditNewsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.params['id'];
+    this.newsService.getNewsById(this.id).subscribe(data => {
+      this.new_news = data;
+    }, error => console.log(error));
   }
 
 }
