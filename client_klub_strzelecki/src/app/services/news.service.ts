@@ -37,7 +37,6 @@ export class NewsService {
   editNews(id: number, news: News) {
     return this.http.put(`${this.putUrl}/${id}`, news);
   }
-
 }
 
 // import { Injectable } from '@angular/core';
