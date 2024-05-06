@@ -38,30 +38,21 @@ public class NewsServiceImplementation implements NewsService {
         return new NewsDTO(savedNews.getId(), savedNews.getTitle(), savedNews.getContent());
     }
 
-    /*
-    @Override
-    public void deleteNewsById(long id) {
-        newsRepository.deleteById(id);
-    }
 
-     */
+    @Override
+    public void deleteNewsById(Long id) {
+        Optional<News> opt = getNewsById(id);
+        if (opt.isPresent()) {
+            News news = opt.get();
+            newsRepository.delete(news);
+        }
+        else {
+            //todo
+        }
+    }
 
     public Optional<News> getNewsById(Long id) {
         return newsRepository.findById(id);
-    }
-
-    @Override
-    public ResponseEntity<String> deleteNewsById(Long id) {
-        Optional<News> optionalNews = this.getNewsById(id);
-
-        // Delete news if it exists
-        if (optionalNews.isPresent()) {
-            newsRepository.deleteById(id);
-            return ResponseEntity.ok("Udało się");
-
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 
 }
