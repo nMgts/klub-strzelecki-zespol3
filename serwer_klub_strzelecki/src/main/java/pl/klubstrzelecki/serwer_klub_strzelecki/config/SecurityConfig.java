@@ -24,7 +24,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/user/save", "/shooter/all", "/api/news/all", "/api/news/delete/{id}",
-                        "/login", "/api/news/edit/{id}", "api/news/add", "api/news/{id}", "api/competition/all").permitAll()
+                        "/login", "/api/news/edit/{id}", "api/news/add", "api/news/{id}", "api/competition/all", "api/competition").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())

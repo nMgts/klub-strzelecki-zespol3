@@ -25,4 +25,9 @@ export class CompetitionsListComponent implements AfterViewInit {
     })
   }
 
+  ngOnInit(): void {
+    console.log("NewsComponent is initialized halo");
+    this.getCompetitions();
+  }
+
 }

@@ -15,25 +15,25 @@ import pl.klubstrzelecki.serwer_klub_strzelecki.service.NewsService;
 @RequestMapping("api/competition")
 public class CompetitionController {
 
-    private final CompetitionRepository comptetionRepository;
+    private final CompetitionRepository competitionRepository;
 
     private final CompetitionService competitionService;
 
     @Autowired
     public CompetitionController(CompetitionService competitionService, CompetitionRepository comptetionRepository) {
-        this.comptetionRepository = comptetionRepository;
+        this.competitionRepository = comptetionRepository;
         this.competitionService = competitionService;
     }
 
     @GetMapping("/all")
     public ResponseEntity<Object> getAllCompetitions() {
-        return ResponseEntity.ok(comptetionRepository.findAll());
+        return ResponseEntity.ok(competitionRepository.findAll());
     }
 
     @PostMapping("/save")
     //@PreAuthorize("hasAuthority('ADMIN')")
     public Competition createCompetition(@RequestBody Competition competition) throws Exception {
-        return comptetionRepository.save(competition);
+        return competitionRepository.save(competition);
     }
 
     //@PostMapping("/{competitionId}/register/{userId}")

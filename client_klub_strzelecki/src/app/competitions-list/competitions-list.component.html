@@ -1,1 +1,27 @@
-<p>competitions-list works!</p>
+<div class="competition-list">
+  <p>Aktualności</p>
+  <button type="button" id="competition-add-button" class="generic-button" [routerLink]="['/competition/add']">Dodaj nowe Zawody</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nazwa</th>
+        <th>Data startu</th>
+        <th>Data końca</th>
+        <th>Limit uczestników</th>
+        <th>akcje</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let competition of competition_list" class="competition-item">
+        <td>{{ competition.name }}</td>
+        <td>{{ competition.start_date }}</td>
+        <td>{{ competition.end_date }}</td>
+        <td>{{ competition.shooters_limit }}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
