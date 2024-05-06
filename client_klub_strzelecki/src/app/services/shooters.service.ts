@@ -8,10 +8,10 @@ import { Shooter } from "../interfaces/shooter";
 })
 export class ShootersService {
 
-  private baseUrl = 'http://localhost:8080/api/shooters/all';
-  private deleteUrl = 'http://localhost:8080/api/shooters/delete';
-  private postUrl = 'http://localhost:8080/api/shooters/add';
-  private putUrl = 'http://localhost:8080/api/shooters/edit';
+  private baseUrl = 'http://localhost:8080/shooter/all';
+  private deleteUrl = 'http://localhost:8080/shooter/delete';
+  private postUrl = 'http://localhost:8080/shooter/add';
+  private putUrl = 'http://localhost:8080/shooter/edit';
 
   constructor(private http: HttpClient) {}
 

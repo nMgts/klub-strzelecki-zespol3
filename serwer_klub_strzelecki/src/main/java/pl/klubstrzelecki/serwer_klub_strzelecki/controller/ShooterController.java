@@ -6,7 +6,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.NewsDTO;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
+import pl.klubstrzelecki.serwer_klub_strzelecki.repository.NewsRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ShooterRepository;
+import pl.klubstrzelecki.serwer_klub_strzelecki.service.NewsService;
 import pl.klubstrzelecki.serwer_klub_strzelecki.service.ShooterService;
 
 @RestController
@@ -14,7 +16,13 @@ public class ShooterController {
 
     @Autowired
     private ShooterRepository shooterRepository;
-    private ShooterService shooterService;
+    private final ShooterService shooterService;
+
+    @Autowired
+    public ShooterController(ShooterService shooterService, ShooterRepository shooterRepository) {
+        this.shooterService = shooterService;
+        this.shooterRepository = shooterRepository;
+    }
 
     @GetMapping("/shooter/all")
     public ResponseEntity<Object> getAllShooters() {
