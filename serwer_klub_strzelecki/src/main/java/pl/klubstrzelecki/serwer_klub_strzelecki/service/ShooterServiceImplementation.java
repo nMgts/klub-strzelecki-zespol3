@@ -2,8 +2,6 @@ package pl.klubstrzelecki.serwer_klub_strzelecki.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.klubstrzelecki.serwer_klub_strzelecki.dto.NewsDTO;
-import pl.klubstrzelecki.serwer_klub_strzelecki.model.News;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ShooterRepository;
 
@@ -12,8 +10,12 @@ import java.util.Optional;
 @Service
 public class ShooterServiceImplementation implements ShooterService {
 
+    private final ShooterRepository shooterRepository;
+
     @Autowired
-    private ShooterRepository shooterRepository;
+    public ShooterServiceImplementation(ShooterRepository shooterRepository) {
+        this.shooterRepository = shooterRepository;
+    }
 
     @Override
     public Shooter findShooterById(long shooterId) throws Exception {
