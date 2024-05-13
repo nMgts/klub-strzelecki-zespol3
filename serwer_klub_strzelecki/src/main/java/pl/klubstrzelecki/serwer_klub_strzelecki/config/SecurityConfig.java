@@ -25,7 +25,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/user/save", "api/shooter/all", "/api/news/all", "/api/news/delete/{id}",
                         "/login", "/api/news/edit/{id}", "api/news/add", "api/news/{id}", "api/competition/all",
-                                "api/competition", "api/shooter/add", "shooters/add", "shooters").permitAll()
+                                "api/competition", "api/shooter/add", "shooters/add", "shooters",
+                                "api/shooter/delete/{id}").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())

@@ -60,6 +60,6 @@ public class NewsController {
 //    }
     public ResponseEntity<String> deleteNews(@PathVariable("id") Long id) throws Exception {
             newsService.deleteNewsById(id);
-        return ResponseEntity.ok("News deleted successfully!.");
+        return ResponseEntity.ok().body("{\"message\": \"News deleted successfully!.\"}");
     }
 }

@@ -53,7 +53,7 @@ public class ShooterController {
 //    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> deleteShooter(@PathVariable("shooterId") Long id) {
         shooterService.deleteShooterById(id);
-        return ResponseEntity.ok("Shooter deleted successfully!.");
+        return ResponseEntity.ok().body("{\"message\": \"Shooter deleted successfully\"}");
     }
 
 //    public String deleteShooter(@PathVariable Long shooterId) {
