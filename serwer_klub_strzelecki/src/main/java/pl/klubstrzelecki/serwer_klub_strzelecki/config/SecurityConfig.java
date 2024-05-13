@@ -26,7 +26,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/user/save", "api/shooter/all", "/api/news/all", "/api/news/delete/{id}",
                         "/login", "/api/news/edit/{id}", "api/news/add", "api/news/{id}", "api/competition/all",
                                 "api/competition", "api/shooter/add", "shooters/add", "shooters",
-                                "api/shooter/delete/{id}").permitAll()
+                                "api/shooter/delete/{id}", "api/shooter/{id}", "api/shooter/edit/{id}").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())

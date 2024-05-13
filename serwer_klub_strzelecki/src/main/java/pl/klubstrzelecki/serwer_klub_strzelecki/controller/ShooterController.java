@@ -1,11 +1,13 @@
 package pl.klubstrzelecki.serwer_klub_strzelecki.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.NewsDTO;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.ShooterDTO;
+import pl.klubstrzelecki.serwer_klub_strzelecki.model.News;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.NewsRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ShooterRepository;
@@ -39,6 +41,12 @@ public class ShooterController {
 //        return shooterRepository.save(shooter);
 //    }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getNewsById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(shooterRepository.findById(id).
+                orElseThrow(() -> new EntityNotFoundException("Shooter not exists with id: " + id)));
+    }
+
     @PostMapping("/add")
 //    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> createShooter(@RequestBody ShooterDTO shooter) {
@@ -47,6 +55,18 @@ public class ShooterController {
             return ResponseEntity.ok().body("{\"message\": \"Shooter was saved\"}");
         }
         return ResponseEntity.status(404).body("{\"error\": \"Error, shooter not saved\"}");
+    }
+
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Object> updateNews(@PathVariable Long id, @RequestBody Shooter shooterDetails) {
+        Shooter shooter = shooterRepository.findById(id).
+                orElseThrow(() -> new EntityNotFoundException("News not exists with id: " + id));
+        shooter.setFirst_name(shooterDetails.getFirst_name());
+        shooter.setLast_name(shooterDetails.getLast_name());
+        shooter.setEmail(shooterDetails.getEmail());
+
+        Shooter updatedShooter = shooterRepository.save(shooter);
+        return ResponseEntity.ok(updatedShooter);
     }
 
     @RequestMapping("/delete/{shooterId}")

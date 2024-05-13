@@ -12,6 +12,7 @@ export class ShootersService {
   private deleteUrl = 'http://localhost:8080/api/shooter/delete';
   private postUrl = 'http://localhost:8080/api/shooter/add';
   private putUrl = 'http://localhost:8080/api/shooter/edit';
+  private getUrl = 'http://localhost:8080/api/shooter'
 
   constructor(private http: HttpClient) {}
 
