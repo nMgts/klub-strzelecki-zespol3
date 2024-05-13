@@ -31,7 +31,7 @@ public class NewsController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getNewsById(@PathVariable Long id) {
-        return ResponseEntity.ok(newsRepository.findById(id).
+        return ResponseEntity.ok().body(newsRepository.findById(id).
                 orElseThrow(() -> new EntityNotFoundException("News not exists with id: " + id)));
     }
 

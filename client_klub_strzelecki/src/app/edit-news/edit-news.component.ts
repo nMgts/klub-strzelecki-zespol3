@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {News} from "../interfaces/news";
 import {NewsService} from "../services/news.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {resetParseTemplateAsSourceFileForTest} from "@angular/compiler-cli/src/ngtsc/typecheck/diagnostics";
 
 @Component({
   selector: 'app-edit-news',

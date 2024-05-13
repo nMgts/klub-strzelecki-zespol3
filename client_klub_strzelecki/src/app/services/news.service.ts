@@ -13,6 +13,7 @@ export class NewsService {
   private deleteUrl = 'http://localhost:8080/api/news/delete';
   private postUrl = 'http://localhost:8080/api/news/add';
   private putUrl = 'http://localhost:8080/api/news/edit';
+  private getUrl = 'http://localhost:8080/api/news'
 
   constructor(private http: HttpClient) {}
 
@@ -26,7 +27,7 @@ export class NewsService {
   }
 
   getNewsById(newsId: number): Observable<News> {
-    const url = `${this.baseUrl}/${newsId}`;
+    const url = `${this.getUrl}/${newsId}`;
     return this.http.get<News>(url);
   }
 
