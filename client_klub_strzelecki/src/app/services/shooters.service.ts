@@ -26,7 +26,7 @@ export class ShootersService {
   }
 
   getShooterById(shooterId: number): Observable<Shooter> {
-    const url = `${this.baseUrl}/${shooterId}`;
+    const url = `${this.getUrl}/${shooterId}`;
     return this.http.get<Shooter>(url);
   }
 
