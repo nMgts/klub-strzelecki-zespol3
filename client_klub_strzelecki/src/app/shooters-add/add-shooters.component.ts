@@ -10,11 +10,11 @@ import { ShootersService } from '../services/shooters.service';
 })
 export class AddShooterComponent implements OnInit {
   new_shooter: Shooter = {
-    imie: '',
-    nazwisko: '',
+    first_name: '',
+    last_name: '',
     email: ''
   };
-  
+
   constructor(
     private shooterService: ShootersService,
     private router: Router) {

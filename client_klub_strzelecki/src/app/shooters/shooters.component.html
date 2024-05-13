@@ -20,8 +20,8 @@
       <div>
         <div class="border-2" *ngFor="let shooter of shooters_list; let i=index">
           <th class="p-3 border-2">id: {{i+1}} </th>
-          <th class="p-3 border-2">Imie: {{ shooter.imie}} </th>
-          <th class="p-3 border-2">Nazwisko: {{ shooter.nazwisko }} </th>
+          <th class="p-3 border-2">Imie: {{ shooter.first_name}} </th>
+          <th class="p-3 border-2">Nazwisko: {{ shooter.last_name }} </th>
           <th class="p-3 border-2">Email: {{ shooter.email }} </th>
           <div id="button-container">
             <button [routerLink]="['/shooters/edit', shooter.id]" type="button" id="shooters-edit-button" class="generic-button">Edytuj</button>
@@ -31,7 +31,7 @@
         </div>
       </div>
     </div>
-  
+
     <div class="mt-4 flex items-center justify-center">
       <button class="text-cyan-500 border-4 py-2 px-4 rounded-l-lg cursor-pointer mr-5">Previous</button>
       <button class="py-2 px-4 cursor-pointer bg-cyan-500 text-white">1</button>

@@ -2,6 +2,7 @@ package pl.klubstrzelecki.serwer_klub_strzelecki.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.klubstrzelecki.serwer_klub_strzelecki.dto.ShooterDTO;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ShooterRepository;
 
@@ -27,14 +28,14 @@ public class ShooterServiceImplementation implements ShooterService {
         throw new Exception("Shooter not found with id" + shooterId);
     }
 
-    public Shooter saveShooter(Shooter shooter) {
-        shooter = new Shooter();
-        shooter.setId(shooter.getId());
-        shooter.setFirstName(shooter.getFirstName());
-        shooter.setLastName(shooter.getLastName());
-        shooter.setEmail(shooter.getEmail());
+    public ShooterDTO saveShooter(ShooterDTO shooterDTO) {
+        Shooter shooter = new Shooter();
+        shooter.setId(shooterDTO.getId());
+        shooter.setFirst_name(shooterDTO.getFirst_name());
+        shooter.setLast_name(shooterDTO.getLast_name());
+        shooter.setEmail(shooterDTO.getEmail());
         Shooter savedShooter = shooterRepository.save(shooter);
-        return new Shooter(savedShooter.getId(), savedShooter.getFirstName(), savedShooter.getLastName(),
+        return new ShooterDTO(savedShooter.getId(), savedShooter.getFirst_name(), savedShooter.getLast_name(),
                 savedShooter.getEmail());
     }
 

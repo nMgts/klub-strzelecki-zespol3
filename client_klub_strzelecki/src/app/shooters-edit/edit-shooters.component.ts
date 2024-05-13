@@ -11,8 +11,8 @@ import { ShootersService } from '../services/shooters.service';
 export class EditShooterComponent implements OnInit {
   id: number;
   new_shooter: Shooter = {
-    imie: '',
-    nazwisko: '',
+    first_name: '',
+    last_name: '',
     email: ''
   };
 

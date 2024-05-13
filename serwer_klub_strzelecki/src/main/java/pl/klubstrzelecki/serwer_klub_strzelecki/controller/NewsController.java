@@ -37,7 +37,7 @@ public class NewsController {
 
     @PostMapping("/add")
     //@PreAuthorize("hasAuthority('ADMIN')")
-    public NewsDTO createNews(@RequestBody NewsDTO news) throws Exception {
+    public NewsDTO createNews(@RequestBody NewsDTO news) {
         return newsService.saveNews(news);
     }
 

@@ -1,6 +1,6 @@
 export interface Shooter {
     id?: number;
-    imie: string;
-    nazwisko: string;
+    first_name: string;
+    last_name: string;
     email: string;
   }
