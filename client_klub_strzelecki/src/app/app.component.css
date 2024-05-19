@@ -1,21 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-.header {
-  background-color: #34495e;
+
+header {
+  background-color: #010038;
   color: #f5f5f5;
   top: 0;
   left: 0;
   width: 100%;
+  min-height: 80px;
   z-index: 100;
-}
-
-.container {
-  display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
-  max-width: 11000px;
+  padding: 5px 10px;
   margin: 0 auto;
 }
 
@@ -23,32 +20,56 @@
   font-weight: bold;
   margin: 0;
   font-size: 40px;
+  min-width: 100%;
+  margin-right: 15px;
+  user-select: none;
+}
+
+@media screen and (min-width: 1115px) {
+  header{
+    display: flex;
+  }
+  .logo{
+    min-width: 300px;
+  }
+
 }
 
 .navbar {
   display: flex;
+  height: 100%;
 }
 
 .nav-list {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  display: flex;
+  width: 100%;
 }
 
 .nav-item {
-  margin-left: 15px;
+  color: #ffffff;
+  padding: 10px;
+  text-align: center;
+  transition: 0.1s;
+}
+
+@media screen and (min-width: 730px) {
+  .nav-list {
+    display: flex;
+  }
 }
 
 .nav-item a {
   text-decoration: none;
-  color: #d2c7c7;
   font-size: 16px;
   transition: color 0.3s ease;
+  height: 100%;
 }
 
-.nav-item a:hover {
-  color: #4949b2;
+.nav-item:hover {
+  background-color: #ffffff;
+  color: #010038;
 }
 
 .active {
@@ -60,18 +81,28 @@
 }
 
 .header h1 {
-  margin: 10px;
+  margin: 0px;
+}
+
+main{
+  margin: 20px 0;
 }
 
 .footer {
-  background-color: #34495e;
-  color: #f5f5f5;
-  padding: 10px 650px;
+  background-color: #010038;
+  color: #ffffff;
+  padding: 10px;
   bottom: 0;
   left: 0;
   width: 100%;
   z-index: 100;
+  text-align: center;
 }
+
+#footerLinks{
+  text-decoration: underline;
+}
+
 
 
 

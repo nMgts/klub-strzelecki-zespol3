@@ -1,18 +1,16 @@
 
-<header class="header">
-  <div class="container">
-    <h1 class="logo">Klub strzelecki</h1>
+<header>
+    <h1 class="logo" >Klub strzelecki</h1>
     <nav class="navbar">
-      <ul class="nav-list">
-        <li class="nav-item"><a routerLink="/" routerLinkActive="active">Strona główna</a></li>
-        <li class="nav-item"><a routerLink="/users" routerLinkActive="active">Lista użytkowników</a></li>
-        <li class="nav-item"><a routerLink="/shooters" routerLinkActive="active">Lista zawodników</a></li>
-        <li class="nav-item"><a routerLink="/competitions" routerLinkActive="active">Lista zawodów</a></li>
-        <li class="nav-item"><a routerLink="/about" routerLinkActive="active">O nas</a></li>
-        <li class="nav-item"><a routerLink="/login" routerLinkActive="active">Zaloguj</a></li>
-      </ul>
+      <div class="nav-list">
+        <div class="nav-item"><a routerLink="/" routerLinkActive="active">Strona główna</a></div>
+        <div class="nav-item"><a routerLink="/users" routerLinkActive="active">Lista użytkowników</a></div>
+        <div class="nav-item"><a routerLink="/shooters" routerLinkActive="active">Lista zawodników</a></div>
+        <div class="nav-item"><a routerLink="/competitions" routerLinkActive="active">Lista zawodów</a></div>
+        <div class="nav-item"><a routerLink="/about" routerLinkActive="active">O nas</a></div>
+        <div class="nav-item"><a routerLink="/login" routerLinkActive="active">Zaloguj</a></div>
+      </div>
     </nav>
-  </div>
 </header>
 
 
@@ -21,5 +19,8 @@
   <router-outlet></router-outlet>
 </main>
 
-<div class="footer">&copy; 2024 Klub strzelecki</div>
+<div class="footer">
+  <div id="footerLinks"><a routerLink="/statute" routerLinkActive="active">Regulamin</a></div>
+  <p>&copy; 2024 Klub strzelecki</p>
+</div>
 

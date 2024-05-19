@@ -12,6 +12,7 @@ import { EditNewsComponent } from './edit-news/edit-news.component';
 import { CompetitionsListComponent } from './competitions-list/competitions-list.component';
 import { AddShooterComponent } from './shooters-add/add-shooters.component';
 import { EditShooterComponent } from './shooters-edit/edit-shooters.component';
+import { StatuteComponent } from './statute/statute.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { EditShooterComponent } from './shooters-edit/edit-shooters.component';
     AddShooterComponent,
     EditShooterComponent,
     CompetitionsListComponent,
+    StatuteComponent,
   ],
   imports: [
     BrowserModule,
