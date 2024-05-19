@@ -10,32 +10,31 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-shooters',
   templateUrl: './shooters.component.html',
-  styleUrls: [
-  ]
+  styleUrl: './shooters.component.css'
 })
 
 
 
 export class ShootersComponent implements AfterViewInit {
-  
+
   shooters_list: Shooter[] = [];
 
   constructor(
-    private shooterService: ShootersService, 
+    private shooterService: ShootersService,
     private cd: ChangeDetectorRef,
     private router: Router) {}
 
   // After init - because we need the pagination to load first
   // Fetch the shooters from the database and display them
   ngAfterViewInit(): void {
-    
+
     // The DOM has been changed, we need to detect the changes to prevent ExpressionChangedAfterItHasBeenCheckedError
     this.cd.detectChanges();
   }
   logHello(): void {
     console.log("Hello");
   }
-  ngOnInit(): void { 
+  ngOnInit(): void {
     console.log("ShootersComponent is initialized halo");
     this.getShooters();
   }

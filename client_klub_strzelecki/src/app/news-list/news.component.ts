@@ -10,8 +10,7 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html',
-  styleUrls: [
-  ]
+  styleUrl: './news.component.css'
 })
 
 // Component that displays the news

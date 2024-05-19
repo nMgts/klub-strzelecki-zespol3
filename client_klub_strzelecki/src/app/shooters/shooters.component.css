@@ -1,3 +1,88 @@
+@charset "utf-8";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+h2 {
+  margin-top: 25px;
+  font-size: 35px;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th:nth-child(1) {
+  width: 5%;
+}
+
+thead th:nth-child(2) {
+  width: 15%;
+}
+
+thead th:nth-child(3) {
+  width: 25%;
+}
+
+thead th:nth-child(4) {
+  width: 40%;
+}
+
+th,
+td {
+  padding: 10px;
+}
+
+th {
+  letter-spacing: 2px;
+}
+
+td {
+  letter-spacing: 1px;
+}
+
+tbody td {
+  text-align: center;
+}
+
+tfoot th {
+  text-align: right;
+}
+
+thead,
+tfoot {
+  color: white;
+  text-shadow: 1px 1px 1px black;
+}
+
+thead th,
+tfoot th,
+tfoot td {
+  background: linear-gradient(to bottom, rgb(0 0 0 / 10%), rgb(0 0 0 / 35%));
+}
+input {
+  padding: 5px;
+  margin: 15px;
+}
+button {
+  font-weight: bold;
+  padding: 12px;
+}
+
+button {
+  width: 150px;
+  height: 50px;
+  transition: width 0.2s;
+}
+
+button:hover {
+  width: 200px;
+  background-color: #4141ce;
+}
+
+
+

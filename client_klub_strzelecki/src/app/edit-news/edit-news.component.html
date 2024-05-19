@@ -2,9 +2,9 @@
 <form (ngSubmit) = "onSubmit()">
   <div class="form-group">
     <label>Tytuł</label>
-    <input type="text" class="form-control" id="title" name = "title" [(ngModel)]="new_news.title" required>
+    <input type="text" placeholder="Enter" class="form-control" id="title" name = "title" [(ngModel)]="new_news.title" required>
     <label>Opis</label>
-    <input type="text" class="form-control" id="content" name = "content" [(ngModel)]="new_news.content" required>
+    <input type="text" placeholder="Enter" class="form-control" id="content" name = "content" [(ngModel)]="new_news.content" required>
   </div>
 
   <button class="btn btn-success" type="submit"> Potwierdź </button>

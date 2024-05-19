@@ -1,0 +1,17 @@
+p {
+    font-size: 35px;
+    margin-top: 25px;
+  }
+  button {
+    width: 150px;
+    height: 30px;
+    transition: width 0.2s;
+  }
+  
+  button:hover {
+    width: 200px;
+    background-color: #4141ce;
+  }
+  
+  
+  

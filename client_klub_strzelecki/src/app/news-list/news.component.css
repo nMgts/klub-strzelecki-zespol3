@@ -1,65 +1,34 @@
-/* Style dla kontenera listy newsów */
-.news-list {
+h2 {
   margin-top: 20px;
+  font-size: 35px;
 }
 
-/* Styl dla nagłówka "Aktualności" */
-.news-list > p {
-  font-size: 24px;
+h3 {
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+button {
   font-weight: bold;
-  color: #551321; /* Kolor czcionki */
+  font-size: 15px;
+  padding: 15px;
 }
 
-/* Styl dla pojedynczego elementu newsa */
-.news-item {
-  margin-bottom: 20px;
-  padding: 20px;
-  border-radius: 8px;
-  background-color: #f9f9f9; /* Kolor tła */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Cień */
+p {
+  font-size: 40px;
 }
 
-/* Styl dla tytułu newsa */
-.news-item h2 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  color: #007bff; /* Kolor tytułu */
+button {
+  width: 150px;
+  height: 60px;
+  transition: width 0.2s;
 }
 
-/* Styl dla treści newsa */
-.news-item p {
-  margin-bottom: 20px;
-  color: #555; /* Kolor treści */
+button:hover {
+  width: 200px;
+  background-color: #4141ce;
 }
 
-/* Styl dla kontenera przycisków */
-#button-container {
-  display: flex;
-  justify-content: space-between;
-}
 
-/* Styl dla przycisków edycji i usuwania */
-#button-container button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease; /* Płynne przejście koloru */
-}
 
-/* Styl dla przycisku edycji */
-#news-edit-button {
-  background-color: #28a745; /* Zielony kolor tła */
-  color: #fff; /* Biały kolor tekstu */
-}
 
-/* Styl dla przycisku usuwania */
-#news-delete-button {
-  background-color: #dc3545; /* Czerwony kolor tła */
-  color: #fff; /* Biały kolor tekstu */
-}
-
-/* Styl dla przycisków po najechaniu myszą */
-#button-container button:hover {
-  opacity: 0.8;
-}

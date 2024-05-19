@@ -1,12 +1,12 @@
 <h3>Dodaj strzelca</h3>
 <form (ngSubmit) = "onSubmit()">
-    <div class="form-group">
+    <div class ="form-group">
       <label>Imię</label>
-      <input type="text" class="form-control" id="first_name" name = "first_name" [(ngModel)]="new_shooter.first_name" required>
+      <input type="text" placeholder="Enter" class="form-control" id="first_name" name = "first_name" [(ngModel)]="new_shooter.first_name" required>
       <label>Naziwsko</label>
-      <input type="text" class="form-control" id="last_name" name = "last_name" [(ngModel)]="new_shooter.last_name" required>
+      <input type="text" placeholder="Enter" class="form-control" id="last_name" name = "last_name" [(ngModel)]="new_shooter.last_name" required>
       <label>Email</label>
-      <input type="text" class="form-control" id="email" name = "email" [(ngModel)]="new_shooter.email" required>
+      <input type="text" placeholder="Enter" class="form-control" id="email" name = "email" [(ngModel)]="new_shooter.email" required>
     </div>
 
     <button class="btn btn-success" type="submit"> Potwierdź </button>
