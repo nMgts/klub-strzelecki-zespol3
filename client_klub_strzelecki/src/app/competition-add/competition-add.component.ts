@@ -40,5 +40,4 @@ export class CompetitionAddComponent implements OnInit {
     console.log(this.new_competition);
     this.saveCompetition();
   }
-
 }

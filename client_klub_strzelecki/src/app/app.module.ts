@@ -13,20 +13,20 @@ import { CompetitionsListComponent } from './competitions-list/competitions-list
 import { AddShooterComponent } from './shooters-add/add-shooters.component';
 import { EditShooterComponent } from './shooters-edit/edit-shooters.component';
 import { StatuteComponent } from './statute/statute.component';
-import { CompetitionAddComponent } from './competition-add/competition-add.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NewsComponent,
     ShootersComponent,
+    UsersComponent,
     AddNewsComponent,
     EditNewsComponent,
     AddShooterComponent,
     EditShooterComponent,
     CompetitionsListComponent,
     StatuteComponent,
-    CompetitionAddComponent,
   ],
   imports: [
     BrowserModule,
