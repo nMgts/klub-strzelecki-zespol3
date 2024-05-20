@@ -41,3 +41,4 @@ export class CompetitionAddComponent implements OnInit {
     this.saveCompetition();
   }
 }
+

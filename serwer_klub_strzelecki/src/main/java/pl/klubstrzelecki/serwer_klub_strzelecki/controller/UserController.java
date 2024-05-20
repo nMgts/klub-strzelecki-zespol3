@@ -1,5 +1,6 @@
 package pl.klubstrzelecki.serwer_klub_strzelecki.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -8,45 +9,63 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import pl.klubstrzelecki.serwer_klub_strzelecki.dto.UserDTO;
+import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.User;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.UserRepository;
+import pl.klubstrzelecki.serwer_klub_strzelecki.service.UserService;
 
 @RestController
+@RequestMapping("/api/user")
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserService userService;
 
-    @GetMapping("/user/all")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    public UserController(UserRepository userRepository, UserService userService) {
+        this.userRepository = userRepository;
+        this.userService = userService;
+    }
+
+    @GetMapping("/all")
     public ResponseEntity<Object> getAllUsers() {
         return ResponseEntity.ok(userRepository.findAll());
     }
 
-    @GetMapping("user/single")
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
-    public ResponseEntity<Object> getMyDetails() {
-        return ResponseEntity.ok(userRepository.findByEmail(getLoggedInUserDetails().getUsername()));
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getUserById(@PathVariable Long id) {
+        return ResponseEntity.ok(userRepository.findById(id));
     }
 
-    @PostMapping("/user/save")
-    public ResponseEntity<Object> createUser(@RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        User result = userRepository.save(user);
+    @PostMapping("/add")
+    public ResponseEntity<Object> createUser(@RequestBody UserDTO user) {
+        UserDTO result = userService.saveUser(user);
         if (result.getId() > 0) {
-            return ResponseEntity.ok("User was saved");
+            return ResponseEntity.ok("{\"message\": \"User was saved\"}");
         }
-        return ResponseEntity.status(404).body("Error, user not saved");
+        return ResponseEntity.status(404).body("{\"error\": \"Error, user not saved\"}");
     }
 
-    @DeleteMapping("/user/delete/{userId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public String deleteUser(@PathVariable Long userId) {
-        userRepository.deleteById(userId);
-        return "User deleted successfully";
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Object> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+        User user = userRepository.findById(id).
+                orElseThrow(() -> new EntityNotFoundException("User not exists with id: " + id));
+        user.setFirst_name(userDetails.getFirst_name());
+        user.setLast_name(userDetails.getLast_name());
+        user.setEmail(userDetails.getEmail());
+        user.setPassword(userDetails.getPassword());
+        user.setRoles(userDetails.getRoles());
+
+        User updatedUser = userRepository.save(user);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    @DeleteMapping("/delete/{userId}")
+    //@PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<String> deleteUser(@PathVariable("userId") Long id) {
+        userService.deleteUserById(id);
+        return ResponseEntity.ok().body("{\"message\": \"User deleted successfully\"}");
     }
 
     public UserDetails getLoggedInUserDetails() {
