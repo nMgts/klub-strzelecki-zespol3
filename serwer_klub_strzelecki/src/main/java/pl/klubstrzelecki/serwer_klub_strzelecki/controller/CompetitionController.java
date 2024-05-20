@@ -2,14 +2,10 @@ package pl.klubstrzelecki.serwer_klub_strzelecki.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Competition;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.CompetitionRepository;
-import pl.klubstrzelecki.serwer_klub_strzelecki.repository.NewsRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.service.CompetitionService;
-import pl.klubstrzelecki.serwer_klub_strzelecki.service.NewsService;
-
 
 @RestController
 @RequestMapping("api/competition")
@@ -20,14 +16,14 @@ public class CompetitionController {
     private final CompetitionService competitionService;
 
     @Autowired
-    public CompetitionController(CompetitionService competitionService, CompetitionRepository comptetionRepository) {
-        this.competitionRepository = comptetionRepository;
+    public CompetitionController(CompetitionService competitionService, CompetitionRepository competitionRepository) {
+        this.competitionRepository = competitionRepository;
         this.competitionService = competitionService;
     }
 
     @GetMapping("/all")
     public ResponseEntity<Object> getAllCompetitions() {
-        return ResponseEntity.ok(competitionRepository.findAll());
+        return ResponseEntity.ok().body(competitionRepository.findAll());
     }
 
     @PostMapping("/save")

@@ -1,6 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
 import {Competition} from "../interfaces/competition";
-import {ShootersService} from "../services/shooters.service";
 import {CompetitionService} from "../services/competition.service";
 
 @Component({
@@ -23,6 +22,10 @@ export class CompetitionsListComponent implements AfterViewInit {
     this.competitionService.getCompetition().subscribe(data => {
       this.competition_list = data;
     })
+  }
+
+  deleteCompetition(id? : number) {
+
   }
 
   ngOnInit(): void {

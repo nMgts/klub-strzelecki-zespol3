@@ -1,5 +1,4 @@
 <div class="competition-list">
-  <p>Aktualności</p>
   <button type="button" id="competition-add-button" class="generic-button" [routerLink]="['/competition/add']">Dodaj nowe Zawody</button>
 
   <table>
@@ -24,4 +23,20 @@
   </table>
 
 </div>
+
+<div class="news-list">
+  <p>Aktualności</p>
+  <button type="button" id="news-add-button" class="generic-button" [routerLink]="['/competition/add']">Dodaj nowe zawody</button>
+  <div *ngFor="let competition of competition_list" class="news-item">
+    <h2>{{ competition.name }}</h2>
+    <h3>{{ competition.start_date }}</h3>
+    <h3>{{ competition.end_date }}</h3>
+    <h3>{{ competition.shooters_limit }}</h3>
+    <div id="button-container">
+      <button [routerLink]="['/news/edit', competition.id]" type="button" id="news-edit-button" class="generic-button">Edytuj</button>
+      <button (click) = "deleteCompetition(competition.id)" type="button" id="news-delete-button" class="generic-button">Usuń</button>
+    </div>
+  </div>
+</div>
+
 

@@ -25,11 +25,11 @@ public class Competition {
     @Column(name = "description")
     private String description;
     @Column(name = "start_date")
-    private LocalDateTime startDate;
+    private LocalDateTime start_date;
     @Column(name = "end_date")
-    private LocalDateTime endDate;
+    private LocalDateTime end_date;
     @Column(name = "shooters_limit")
-    private int shootersLimit;
+    private int shooters_limit;
 
     @ManyToMany(mappedBy = "competitions")
     private Set<User> users;
