@@ -13,6 +13,7 @@ import { CompetitionsListComponent } from './competitions-list/competitions-list
 import { AddShooterComponent } from './shooters-add/add-shooters.component';
 import { EditShooterComponent } from './shooters-edit/edit-shooters.component';
 import { StatuteComponent } from './statute/statute.component';
+import { CompetitionAddComponent } from './competition-add/competition-add.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { StatuteComponent } from './statute/statute.component';
     EditShooterComponent,
     CompetitionsListComponent,
     StatuteComponent,
+    CompetitionAddComponent,
   ],
   imports: [
     BrowserModule,

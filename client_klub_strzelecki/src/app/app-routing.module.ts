@@ -8,6 +8,7 @@ import { EditShooterComponent } from './shooters-edit/edit-shooters.component';
 import {EditNewsComponent} from "./edit-news/edit-news.component";
 import {CompetitionsListComponent} from "./competitions-list/competitions-list.component";
 import { StatuteComponent } from './statute/statute.component';
+import {CompetitionAddComponent} from "./competition-add/competition-add.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: 'news', pathMatch: 'full' },
@@ -16,6 +17,7 @@ export const routes: Routes = [
   { path: 'news/edit/:id', component: EditNewsComponent },
   { path: 'shooters', component: ShootersComponent},
   { path: 'competitions', component: CompetitionsListComponent},
+  { path: 'competitions/add', component: CompetitionAddComponent},
   { path: 'shooters/add', component: AddShooterComponent },
   { path: 'shooters/edit/:id', component: EditShooterComponent },
   { path: 'statute', component: StatuteComponent },
