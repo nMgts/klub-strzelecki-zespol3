@@ -10,5 +10,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Shooting Club';
-  title_news = 'Bieżące informacje'
 }

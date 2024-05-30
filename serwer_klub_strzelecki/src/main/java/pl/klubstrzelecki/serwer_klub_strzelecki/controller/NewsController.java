@@ -2,14 +2,13 @@ package pl.klubstrzelecki.serwer_klub_strzelecki.controller;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.NewsDTO;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.News;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.NewsRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.service.NewsService;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/api/news")
@@ -26,7 +25,7 @@ public class NewsController {
 
     @GetMapping("/all")
     public ResponseEntity<Object> getAllNews() {
-        return ResponseEntity.ok(newsRepository.findAll());
+        return ResponseEntity.ok().body(newsRepository.findAll());
     }
 
     @GetMapping("/{id}")
@@ -37,8 +36,8 @@ public class NewsController {
 
     @PostMapping("/add")
     //@PreAuthorize("hasAuthority('ADMIN')")
-    public NewsDTO createNews(@RequestBody NewsDTO news) {
-        return newsService.saveNews(news);
+    public ResponseEntity<Object> createNews(@RequestBody NewsDTO news) {
+        return ResponseEntity.ok().body(newsService.saveNews(news));
     }
 
     @PutMapping("/edit/{id}")
@@ -49,16 +48,12 @@ public class NewsController {
         news.setContent(newsDetails.getContent());
 
         News updatedNews = newsRepository.save(news);
-        return ResponseEntity.ok(updatedNews);
+        return ResponseEntity.ok().body(updatedNews);
     }
 
     @DeleteMapping("/delete/{id}")
     //@PreAuthorize("hasAuthority('ADMIN')")
-//    public String deleteNews(@PathVariable Long newsId) throws Exception {
-//        newsService.deleteNews(newsId);
-//        return "News deleted successfully";
-//    }
-    public ResponseEntity<String> deleteNews(@PathVariable("id") Long id) throws Exception {
+    public ResponseEntity<String> deleteNews(@PathVariable("id") Long id) {
             newsService.deleteNewsById(id);
         return ResponseEntity.ok().body("{\"message\": \"News deleted successfully!.\"}");
     }

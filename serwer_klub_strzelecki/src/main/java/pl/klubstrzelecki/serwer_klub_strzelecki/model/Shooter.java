@@ -10,11 +10,11 @@ import lombok.*;
 @Entity
 @Table(name = "shooters", schema = "public")
 public class Shooter {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String first_name;
     private String last_name;
+    @Column(unique = true)
     private String email;
 }

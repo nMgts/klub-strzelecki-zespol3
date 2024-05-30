@@ -10,7 +10,7 @@ import {News} from "../interfaces/news";
 export class CompetitionService {
 
   private baseUrl = 'http://localhost:8080/api/competition/all';
-  private postUrl = 'http://localhost:8080/api/competition/save';
+  private postUrl = 'http://localhost:8080/api/competition/add';
 
   constructor(private http: HttpClient) {}
 

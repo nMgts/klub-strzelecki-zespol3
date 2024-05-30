@@ -1,5 +1,6 @@
 package pl.klubstrzelecki.serwer_klub_strzelecki.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -13,22 +14,29 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import pl.klubstrzelecki.serwer_klub_strzelecki.repository.UserRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.service.UserInfoDetailsService;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+    private final UserRepository userRepository;
+
+    @Autowired
+    public SecurityConfig(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/user/save", "api/shooter/all", "/api/news/all", "/api/news/delete/{id}",
-                        "/login", "/api/news/edit/{id}", "api/news/add", "api/news/{id}", "api/competition/all",
-                                "api/competition", "api/shooter/add", "shooters/add", "shooters",
-                                "api/shooter/delete/{id}", "api/shooter/{id}", "api/shooter/edit/{id}",
-                                "/api/user/all", "/api/user/{id}", "/api/user/add", "/api/user/edit/{id}",
-                                "/api/user/delete/{userId}", "api/competition/save").permitAll()
+                        .requestMatchers("/", "/login",
+                                "api/shooter/all", "api/shooter/{id}", "api/shooter/add", "api/shooter/edit/{id}","api/shooter/delete/{id}",
+                                "/api/news/all", "api/news/{id}", "api/news/add", "/api/news/edit/{id}", "/api/news/delete/{id}",
+                                "/api/user/all", "/api/user/{id}", "/api/user/add", "/api/user/edit/{id}", "/api/user/delete/{userId}",
+                                "api/competition/all", "api/competition/add"
+                                ).permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
@@ -38,7 +46,7 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserInfoDetailsService();
+        return new UserInfoDetailsService(userRepository);
     }
 
     @Bean
@@ -53,5 +61,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

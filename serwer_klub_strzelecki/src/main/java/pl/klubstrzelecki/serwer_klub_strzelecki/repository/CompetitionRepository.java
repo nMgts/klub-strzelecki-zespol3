@@ -6,6 +6,4 @@ import pl.klubstrzelecki.serwer_klub_strzelecki.model.Competition;
 
 @Repository
 public interface CompetitionRepository extends JpaRepository<Competition, Long> {
-
 }
-

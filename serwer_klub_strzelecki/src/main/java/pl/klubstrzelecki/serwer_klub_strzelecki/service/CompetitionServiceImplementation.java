@@ -13,11 +13,14 @@ import java.util.Optional;
 
 @Service
 public class CompetitionServiceImplementation implements CompetitionService {
+    private final CompetitionRepository competitionRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    CompetitionRepository competitionRepository;
-    @Autowired
-    UserRepository userRepository;
+    public CompetitionServiceImplementation(CompetitionRepository competitionRepository, UserRepository userRepository) {
+        this.competitionRepository = competitionRepository;
+        this.userRepository = userRepository;
+    }
 
     public ResponseEntity<Object> registerUserToCompetition(long competitionId, long userId) {
         Optional<Competition> competitionOptional = competitionRepository.findById(competitionId);

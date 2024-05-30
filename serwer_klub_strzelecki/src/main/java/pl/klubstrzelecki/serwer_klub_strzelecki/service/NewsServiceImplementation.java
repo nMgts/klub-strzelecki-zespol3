@@ -1,8 +1,6 @@
 package pl.klubstrzelecki.serwer_klub_strzelecki.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.NewsDTO;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.News;
@@ -52,7 +50,4 @@ public class NewsServiceImplementation implements NewsService {
     public Optional<News> getNewsById(Long id) {
         return newsRepository.findById(id);
     }
-
 }
-
-

@@ -7,10 +7,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.UserDTO;
-import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.User;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.UserRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.service.UserService;
@@ -20,9 +18,9 @@ import pl.klubstrzelecki.serwer_klub_strzelecki.service.UserService;
 public class UserController {
 
     private final UserRepository userRepository;
-
     private final UserService userService;
 
+    @Autowired
     public UserController(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
         this.userService = userService;
@@ -30,12 +28,12 @@ public class UserController {
 
     @GetMapping("/all")
     public ResponseEntity<Object> getAllUsers() {
-        return ResponseEntity.ok(userRepository.findAll());
+        return ResponseEntity.ok().body(userRepository.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getUserById(@PathVariable Long id) {
-        return ResponseEntity.ok(userRepository.findById(id));
+        return ResponseEntity.ok().body(userRepository.findById(id));
     }
 
     @PostMapping("/add")
@@ -58,7 +56,7 @@ public class UserController {
         user.setRoles(userDetails.getRoles());
 
         User updatedUser = userRepository.save(user);
-        return ResponseEntity.ok(updatedUser);
+        return ResponseEntity.ok().body(updatedUser);
     }
 
     @DeleteMapping("/delete/{userId}")

@@ -12,9 +12,7 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImplementation implements UserService {
-
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserServiceImplementation(UserRepository userRepository) {
