@@ -1,3 +1,5 @@
+<html>
+<body>
 <div class="news-list">
   <p>Aktualności</p>
   <button type="button" id="news-add-button" class="generic-button" [routerLink]="['/news/add']">Dodaj nowy post</button>
@@ -6,7 +8,18 @@
     <h3>{{ news.content }}</h3>
     <div id="button-container">
       <button [routerLink]="['/news/edit', news.id]" type="button" id="news-edit-button" class="generic-button">Edytuj</button>
-      <button (click) = "deleteNews(news.id)" type="button" id="news-delete-button" class="generic-button">Usuń</button>
+      <button (click) = "showDialog(news.id)" type="button" id="news-delete-button" class="generic-button">Usuń</button>
     </div>
   </div>
 </div>
+</body>
+<p-dialog header="Potwierdzenie" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+  <span class="p-text-secondary block mb-5">Czy chcesz usunąć posta?</span>
+  <div class="flex justify-content-end gap-2">
+    <p-button label="Anuluj" severity="secondary" (click)="visible = false" />
+    <p-button label="Usuń" (click)= "deleteNews()"  />
+  </div>
+</p-dialog>
+</html>
+
+

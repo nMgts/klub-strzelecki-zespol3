@@ -17,6 +17,8 @@ import {Router} from "@angular/router";
 export class NewsComponent implements AfterViewInit {
 
   news_list: News[] = [];
+  visible: boolean = false;
+  newsId: number| undefined
 
   constructor(
     private newsService: NewsService,
@@ -67,16 +69,25 @@ export class NewsComponent implements AfterViewInit {
     this.router.navigate(['news/edit', id]);
   }
 
-  deleteNews(id?: number): void {
-    if (id !== undefined) {
-      this.newsService.deleteNews(id).subscribe( data =>{
+  deleteNews(): void {
+    if (this.newsId !== undefined) {
+      this.newsService.deleteNews(this.newsId).subscribe( data =>{
         console.log(data);
         this.getNews();
       })
     } else {
       console.error('ID is undefined');
     }
+    this.visible = false;
   }
+
+  showDialog(id?: number)
+  {
+    console.log("show dialog");
+    this.visible = true;
+    this.newsId = id;
+  }
+
 
   /*
   deleteNews(id: number) {

@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NewsComponent } from './news-list/news.component';
 import { ShootersComponent } from './shooters/shooters.component';
+import { DialogModule } from 'primeng/dialog';
 import { RouterModule } from '@angular/router';
 import { AddNewsComponent } from './add-news/add-news.component';
 import { FormsModule } from "@angular/forms";
@@ -15,6 +16,8 @@ import { EditShooterComponent } from './shooters-edit/edit-shooters.component';
 import { StatuteComponent } from './statute/statute.component';
 import { UsersComponent } from './users/users.component';
 import { CompetitionAddComponent } from './competition-add/competition-add.component';
+import {Button} from "primeng/button";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -31,11 +34,14 @@ import { CompetitionAddComponent } from './competition-add/competition-add.compo
     CompetitionAddComponent
   ],
   imports: [
+    DialogModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    Button
   ],
   providers: [],
   bootstrap: [AppComponent]
