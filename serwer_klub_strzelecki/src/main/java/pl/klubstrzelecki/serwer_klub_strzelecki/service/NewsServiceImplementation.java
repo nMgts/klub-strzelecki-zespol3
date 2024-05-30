@@ -11,9 +11,12 @@ import java.util.Optional;
 
 @Service
 public class NewsServiceImplementation implements NewsService {
+    private final NewsRepository newsRepository;
 
     @Autowired
-    private NewsRepository newsRepository;
+    public NewsServiceImplementation(NewsRepository newsRepository) {
+        this.newsRepository = newsRepository;
+    }
 
     @Override
     public NewsDTO findNewsById(long newsId) throws Exception {
@@ -35,8 +38,19 @@ public class NewsServiceImplementation implements NewsService {
     }
 
     @Override
-    public void deleteNewsById(long id) {
-        newsRepository.deleteById(id);
+    public void deleteNewsById(Long id) {
+        Optional<News> opt = getNewsById(id);
+        if (opt.isPresent()) {
+            News news = opt.get();
+            newsRepository.delete(news);
+        }
+        else {
+            //todo
+        }
+    }
+
+    public Optional<News> getNewsById(Long id) {
+        return newsRepository.findById(id);
     }
 
 }

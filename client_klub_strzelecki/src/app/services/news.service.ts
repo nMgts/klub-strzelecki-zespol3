@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { News } from '../interfaces/news';
 
@@ -11,6 +11,9 @@ export class NewsService {
 
   private baseUrl = 'http://localhost:8080/api/news/all';
   private deleteUrl = 'http://localhost:8080/api/news/delete';
+  private postUrl = 'http://localhost:8080/api/news/add';
+  private putUrl = 'http://localhost:8080/api/news/edit';
+  private getUrl = 'http://localhost:8080/api/news'
 
   constructor(private http: HttpClient) {}
 
@@ -23,6 +26,18 @@ export class NewsService {
     return this.http.delete<News>(url);
   }
 
+  getNewsById(newsId: number): Observable<News> {
+    const url = `${this.getUrl}/${newsId}`;
+    return this.http.get<News>(url);
+  }
+
+  addNews(news?: News): Observable<News> {
+    return this.http.post<News>(this.postUrl, news);
+  }
+
+  editNews(id: number, news: News) {
+    return this.http.put(`${this.putUrl}/${id}`, news);
+  }
 }
 
 // import { Injectable } from '@angular/core';

@@ -1,6 +1,8 @@
 package pl.klubstrzelecki.serwer_klub_strzelecki.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -13,30 +15,51 @@ import pl.klubstrzelecki.serwer_klub_strzelecki.service.NewsService;
 @RequestMapping("/api/news")
 public class NewsController {
 
+    private final NewsService newsService;
+    private final NewsRepository newsRepository;
+
     @Autowired
-    private NewsRepository newsRepository;
-    @Autowired
-    private NewsService newsService;
+    public NewsController(NewsService newsService, NewsRepository newsRepository) {
+        this.newsService = newsService;
+        this.newsRepository = newsRepository;
+    }
 
     @GetMapping("/all")
     public ResponseEntity<Object> getAllNews() {
         return ResponseEntity.ok(newsRepository.findAll());
     }
 
-    @PostMapping("/save")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public NewsDTO createNews(@RequestBody NewsDTO news) throws Exception {
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getNewsById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(newsRepository.findById(id).
+                orElseThrow(() -> new EntityNotFoundException("News not exists with id: " + id)));
+    }
+
+    @PostMapping("/add")
+    //@PreAuthorize("hasAuthority('ADMIN')")
+    public NewsDTO createNews(@RequestBody NewsDTO news) {
         return newsService.saveNews(news);
     }
 
-    @RequestMapping("/delete/{newsId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Object> updateNews(@PathVariable Long id, @RequestBody News newsDetails) {
+        News news = newsRepository.findById(id).
+                orElseThrow(() -> new EntityNotFoundException("News not exists with id: " + id));
+        news.setTitle(newsDetails.getTitle());
+        news.setContent(newsDetails.getContent());
+
+        News updatedNews = newsRepository.save(news);
+        return ResponseEntity.ok(updatedNews);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    //@PreAuthorize("hasAuthority('ADMIN')")
 //    public String deleteNews(@PathVariable Long newsId) throws Exception {
 //        newsService.deleteNews(newsId);
 //        return "News deleted successfully";
 //    }
-    public ResponseEntity<String> deleteNews(@PathVariable("newsId") Long newsId) throws Exception {
-        newsService.deleteNewsById(newsId);
-        return ResponseEntity.ok("News deleted successfully!.");
+    public ResponseEntity<String> deleteNews(@PathVariable("id") Long id) throws Exception {
+            newsService.deleteNewsById(id);
+        return ResponseEntity.ok().body("{\"message\": \"News deleted successfully!.\"}");
     }
 }

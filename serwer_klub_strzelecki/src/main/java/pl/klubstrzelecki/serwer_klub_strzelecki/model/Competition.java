@@ -20,15 +20,15 @@ public class Competition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "Name")
+    @Column(name = "name")
     private String name;
-    @Column(name = "Description")
+    @Column(name = "description")
     private String description;
-    @Column(name = "Start_Date")
-    private LocalDateTime startDate;
-    @Column(name = "End_Date")
-    private LocalDateTime endDate;
-    @Column(name = "Shooters_Limit")
+    @Column(name = "start_date")
+    private LocalDateTime start_date;
+    @Column(name = "end_date")
+    private LocalDateTime end_date;
+    @Column(name = "shooters_limit")
     private int shooters_limit;
 
     @ManyToMany(mappedBy = "competitions")

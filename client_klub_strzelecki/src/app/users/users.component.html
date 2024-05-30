@@ -1,0 +1,43 @@
+<div class="w-4/4 shadow-md p-10 bg-white shadow-blue-200/20 mx-36 my-10">
+    <h2>Użytkownicy</h2>
+      <div class="flex justify-between items-center mb-4 mt-4">
+        <input type="text" placeholder="Search" class="w-full border p-2 rounded 1-g">
+        <select class="border p-2 rounded-1g">
+          <option value="">Test</option>
+        </select>
+      </div>
+      <button type="button" id="users-add-button" class="generic-button" [routerLink]="['/users/add']">Dodaj użytkownika</button>
+      <table class="w-full border-4">
+        <thead>
+          <tr>
+            <th class="p-3 text-left bg-gray-200">Id </th>
+            <th class="p-3 text-left bg-gray-200">First name </th>
+            <th class="p-3 text-left bg-gray-200">Last name </th>
+            <th class="p-3 text-left bg-gray-200">e-mail </th>
+            <th class="p-3 text-left bg-gray-200">role </th>
+            <th class="p-3 text-center bg-gray-200">Action </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-2" *ngFor="let user of users_list; let i=index">
+            <td class="p-3 border-2">id: {{i+1}} </td>
+            <td class="p-3 border-2">Imie: {{ user.first_name }} </td>
+            <td class="p-3 border-2">Nazwisko: {{ user.last_name }} </td>
+            <td class="p-3 border-2">Email: {{ user.email }} </td>
+            <td class="p-3 border-2">Role: {{ user.roles }} </td>
+            <div id="button-container">
+              <button [routerLink]="['/users/edit', user.id]" type="button" id="users-edit-button" class="generic-button">Edytuj</button>
+              <button (click) = "deleteUsers(user.id)" type="button" id="users-delete-button" class="generic-button">Usuń</button>
+            </div>
+            <p class="p-3 border-2"></p>
+          </tr>
+        </tbody>
+      </table>
+  
+      <div class="mt-4 flex items-center justify-center">
+        <button class="text-cyan-500 border-4 py-2 px-4 rounded-l-lg cursor-pointer mr-5">Previous</button>
+        <button class="py-2 px-4 cursor-pointer bg-cyan-500 text-white">1</button>
+        <button class="text-cyan-500 border-4 py-2 px-4 cursor-pointer rounder-r-lg ml-5">Next</button>
+      </div>
+    </div>
+  
