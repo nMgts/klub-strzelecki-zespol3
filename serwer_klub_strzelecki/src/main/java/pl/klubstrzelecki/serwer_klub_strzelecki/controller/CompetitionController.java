@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.*;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Competition;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.CompetitionRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.service.CompetitionService;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("api/competition")
 public class CompetitionController {
 
     private final CompetitionRepository competitionRepository;
-
     private final CompetitionService competitionService;
 
     @Autowired
@@ -26,10 +26,10 @@ public class CompetitionController {
         return ResponseEntity.ok().body(competitionRepository.findAll());
     }
 
-    @PostMapping("/save")
+    @PostMapping("/add")
     //@PreAuthorize("hasAuthority('ADMIN')")
-    public Competition createCompetition(@RequestBody Competition competition) throws Exception {
-        return competitionRepository.save(competition);
+    public ResponseEntity<Object> createCompetition(@RequestBody Competition competition) {
+        return ResponseEntity.ok().body(competitionRepository.save(competition));
     }
 
     //@PostMapping("/{competitionId}/register/{userId}")

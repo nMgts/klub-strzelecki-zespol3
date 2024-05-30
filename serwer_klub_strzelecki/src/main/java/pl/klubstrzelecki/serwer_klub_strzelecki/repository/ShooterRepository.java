@@ -6,5 +6,4 @@ import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
 
 @Repository
 public interface ShooterRepository extends JpaRepository<Shooter, Long> {
-    Shooter findByEmail(String email);
 }

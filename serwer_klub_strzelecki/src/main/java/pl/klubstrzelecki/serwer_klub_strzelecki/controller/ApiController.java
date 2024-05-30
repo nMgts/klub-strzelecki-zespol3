@@ -12,5 +12,4 @@ public class ApiController {
     public String goHome() {
         return "This is publickly accesible withing needing authentication";
     }
-
 }

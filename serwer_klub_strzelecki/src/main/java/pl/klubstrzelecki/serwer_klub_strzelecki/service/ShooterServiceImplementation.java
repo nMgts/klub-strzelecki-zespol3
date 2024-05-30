@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Service
 public class ShooterServiceImplementation implements ShooterService {
-
     private final ShooterRepository shooterRepository;
 
     @Autowired

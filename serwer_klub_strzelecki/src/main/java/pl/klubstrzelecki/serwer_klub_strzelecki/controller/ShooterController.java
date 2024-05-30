@@ -5,13 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import pl.klubstrzelecki.serwer_klub_strzelecki.dto.NewsDTO;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.ShooterDTO;
-import pl.klubstrzelecki.serwer_klub_strzelecki.model.News;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
-import pl.klubstrzelecki.serwer_klub_strzelecki.repository.NewsRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ShooterRepository;
-import pl.klubstrzelecki.serwer_klub_strzelecki.service.NewsService;
 import pl.klubstrzelecki.serwer_klub_strzelecki.service.ShooterService;
 
 @RestController
@@ -29,7 +25,7 @@ public class ShooterController {
 
     @GetMapping("/all")
     public ResponseEntity<Object> getAllShooters() {
-        return ResponseEntity.ok(shooterRepository.findAll());
+        return ResponseEntity.ok().body(shooterRepository.findAll());
     }
 
 //    @PostMapping("/shooter/save")
@@ -66,7 +62,7 @@ public class ShooterController {
         shooter.setEmail(shooterDetails.getEmail());
 
         Shooter updatedShooter = shooterRepository.save(shooter);
-        return ResponseEntity.ok(updatedShooter);
+        return ResponseEntity.ok().body(updatedShooter);
     }
 
     @RequestMapping("/delete/{shooterId}")
@@ -75,10 +71,4 @@ public class ShooterController {
         shooterService.deleteShooterById(id);
         return ResponseEntity.ok().body("{\"message\": \"Shooter deleted successfully\"}");
     }
-
-//    public String deleteShooter(@PathVariable Long shooterId) {
-//        shooterRepository.deleteById(shooterId);
-//        return "Shooter deleted successfully";
-//    }
-
 }
