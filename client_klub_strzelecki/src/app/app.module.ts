@@ -14,7 +14,7 @@ import { AddShooterComponent } from './shooters-add/add-shooters.component';
 import { EditShooterComponent } from './shooters-edit/edit-shooters.component';
 import { StatuteComponent } from './statute/statute.component';
 import { UsersComponent } from './users/users.component';
-import {CompetitionAddComponent} from "./competition-add/competition-add.component";
+import { CompetitionAddComponent } from './competition-add/competition-add.component';
 
 @NgModule({
   declarations: [
