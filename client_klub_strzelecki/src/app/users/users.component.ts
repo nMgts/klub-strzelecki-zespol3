@@ -16,6 +16,8 @@ import {Router} from "@angular/router";
 export class UsersComponent implements AfterViewInit {
 
   users_list: User[] = [];
+  visible: boolean = false;
+  userId: number| undefined
 
   constructor(
     private userService: UsersService,
@@ -66,14 +68,20 @@ export class UsersComponent implements AfterViewInit {
     this.router.navigate(['users/edit', id]);
   }
 
-  deleteUsers(id?: number): void {
-    if (id !== undefined) {
-      this.userService.deleteUser(id).subscribe( data =>{
+  deleteUsers(): void {
+    if (this.userId !== undefined) {
+      this.userService.deleteUser(this.userId).subscribe( data =>{
         console.log(data);
         this.getUsers();
       })
     } else {
       console.error('ID is undefined');
     }
+  }
+  showDialog(id?: number)
+  {
+    console.log("show dialog");
+    this.visible = true;
+    this.userId = id;
   }
 }

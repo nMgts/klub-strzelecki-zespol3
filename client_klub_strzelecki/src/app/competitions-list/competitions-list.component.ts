@@ -10,6 +10,8 @@ import {CompetitionService} from "../services/competition.service";
 export class CompetitionsListComponent implements AfterViewInit {
 
   competition_list: Competition[] = [];
+  visible: boolean = false;
+  CompetitionId: number| undefined
 
   constructor(private competitionService: CompetitionService, private cd: ChangeDetectorRef) {
   }
@@ -25,12 +27,12 @@ export class CompetitionsListComponent implements AfterViewInit {
   }
 
   deleteCompetition(id? : number) {
-
   }
 
   ngOnInit(): void {
     console.log("NewsComponent is initialized halo");
     this.getCompetitions();
   }
+
 
 }

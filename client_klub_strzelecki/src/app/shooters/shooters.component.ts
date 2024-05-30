@@ -18,6 +18,8 @@ import {Router} from "@angular/router";
 export class ShootersComponent implements AfterViewInit {
 
   shooters_list: Shooter[] = [];
+  visible: boolean = false;
+  shooterId: number| undefined
 
   constructor(
     private shooterService: ShootersService,
@@ -68,14 +70,20 @@ export class ShootersComponent implements AfterViewInit {
     this.router.navigate(['shooters/edit', id]);
   }
 
-  deleteShooters(id?: number): void {
-    if (id !== undefined) {
-      this.shooterService.deleteShooter(id).subscribe( data =>{
+  deleteShooters(): void {
+    if (this.shooterId !== undefined) {
+      this.shooterService.deleteShooter(this.shooterId).subscribe( data =>{
         console.log(data);
         this.getShooters();
       })
     } else {
       console.error('ID is undefined');
     }
+  }
+  showDialog(id?: number)
+  {
+    console.log("show dialog");
+    this.visible = true;
+    this.shooterId = id;
   }
 }
