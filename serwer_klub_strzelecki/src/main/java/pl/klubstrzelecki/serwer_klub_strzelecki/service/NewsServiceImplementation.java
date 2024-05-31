@@ -42,24 +42,36 @@ public class NewsServiceImplementation implements NewsService {
         throw new Exception("News not found with id " + newsId);
     }
 
-    public NewsDTO saveNews(NewsDTO newsDTO) {
-        News news = new News();
-        news.setId(newsDTO.getId());
-        news.setTitle(newsDTO.getTitle());
-        news.setContent(newsDTO.getContent());
-        News savedNews = newsRepository.save(news);
-        return new NewsDTO(savedNews.getId(), savedNews.getTitle(), savedNews.getContent());
+    @Override
+    public News saveNews(NewsDTO newsDTO) {
+        News news = newsDTOMapper.convertNewsDTOtoNews(newsDTO);
+        return newsRepository.save(news);
     }
 
     @Override
-    public void deleteNewsById(Long id) {
+    public News updateNews(long id, NewsDTO newsDTO) throws Exception {
+        Optional<News> newsOptional = newsRepository.findById(id);
+
+        if (newsOptional.isEmpty()) {
+            throw new Exception("News not found with id " + id);
+        }
+
+        News existingNews = newsOptional.get();
+        News updatedNews = newsDTOMapper.convertNewsDTOtoNews(newsDTO);
+        updatedNews.setId(existingNews.getId());
+
+        return newsRepository.save(updatedNews);
+    }
+
+    @Override
+    public void deleteNewsById(Long id) throws Exception {
         Optional<News> opt = getNewsById(id);
         if (opt.isPresent()) {
             News news = opt.get();
             newsRepository.delete(news);
         }
         else {
-            //todo
+            throw new Exception("News not found with id " + id);
         }
     }
 
