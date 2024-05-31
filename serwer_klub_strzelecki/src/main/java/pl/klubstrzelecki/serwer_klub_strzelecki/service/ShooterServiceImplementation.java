@@ -64,7 +64,7 @@ public class ShooterServiceImplementation implements ShooterService {
     }
 
     @Override
-    public void deleteShooterById(Long id) throws Exception {
+    public void deleteShooterById(long id) throws Exception {
         Optional<Shooter> opt = shooterRepository.findById(id);
         if (opt.isPresent()) {
             Shooter shooter = opt.get();

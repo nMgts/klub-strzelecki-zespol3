@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface NewsService {
     List<NewsDTO> findAll();
-    NewsDTO findNewsById(long newsId) throws Exception;
-    void deleteNewsById(Long id) throws Exception;
+    NewsDTO findNewsById(long id) throws Exception;
+    void deleteNewsById(long id) throws Exception;
     News saveNews(NewsDTO newsDTO);
     News updateNews(long id, NewsDTO newsDTO) throws Exception;
 }

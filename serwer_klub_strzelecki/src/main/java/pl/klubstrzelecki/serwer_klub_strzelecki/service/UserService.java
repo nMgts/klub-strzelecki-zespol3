@@ -5,9 +5,13 @@ import pl.klubstrzelecki.serwer_klub_strzelecki.dto.UserDTO;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.User;
 
-public interface UserService {
+import java.util.List;
 
-    User findUserById(long userId) throws Exception;
-    void deleteUserById(Long id);
-    User saveUser(UserDTO user);
+public interface UserService {
+    List<UserDTO> findAll();
+    UserDTO findUserById(long id) throws Exception;
+
+    void deleteUserById(long id) throws Exception;
+    User saveUser(UserDTO userDTO);
+    User updateUser(long id, UserDTO userDTO) throws Exception;
 }

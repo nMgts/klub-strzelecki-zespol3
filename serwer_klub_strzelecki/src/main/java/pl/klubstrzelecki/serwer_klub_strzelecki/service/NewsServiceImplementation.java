@@ -64,7 +64,7 @@ public class NewsServiceImplementation implements NewsService {
     }
 
     @Override
-    public void deleteNewsById(Long id) throws Exception {
+    public void deleteNewsById(long id) throws Exception {
         Optional<News> opt = newsRepository.findById(id);
         if (opt.isPresent()) {
             News news = opt.get();

@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface ShooterService {
     List<ShooterDTO> findAll();
-    ShooterDTO findShooterById(long shooterId) throws Exception;
-    void deleteShooterById(Long id) throws Exception;
+    ShooterDTO findShooterById(long id) throws Exception;
+    void deleteShooterById(long id) throws Exception;
 
-    Shooter saveShooter(ShooterDTO shooter);
+    Shooter saveShooter(ShooterDTO shooterDTO);
     Shooter updateShooter(long id, ShooterDTO shooterDTO) throws Exception;
 }
