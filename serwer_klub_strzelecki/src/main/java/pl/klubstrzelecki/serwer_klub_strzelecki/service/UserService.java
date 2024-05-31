@@ -9,5 +9,5 @@ public interface UserService {
 
     User findUserById(long userId) throws Exception;
     void deleteUserById(Long id);
-    UserDTO saveUser(UserDTO user);
+    User saveUser(UserDTO user);
 }

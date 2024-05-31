@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.UserDTO;
-import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.User;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.UserRepository;
 
@@ -29,18 +28,15 @@ public class UserServiceImplementation implements UserService {
         throw new Exception("Shooter not found with id" + userId);
     }
 
-    public UserDTO saveUser(UserDTO userDTO) {
+    public User saveUser(UserDTO userDTO) {
         User user = new User();
-        user.setId(userDTO.getId());
-        user.setFirst_name(userDTO.getFirst_name());
-        user.setLast_name(userDTO.getLast_name());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
-        user.setRoles(userDTO.getRoles());
-        User savedUser = userRepository.save(user);
-        return new UserDTO(savedUser.getId(), savedUser.getFirst_name(),
-                savedUser.getLast_name(), savedUser.getEmail(), savedUser.getPassword(),
-                savedUser.getRoles());
+        user.setId(userDTO.id());
+        user.setFirst_name(userDTO.first_name());
+        user.setLast_name(userDTO.last_name());
+        user.setEmail(userDTO.email());
+        user.setPassword(userDTO.password());
+        user.setRoles(userDTO.roles());
+        return userRepository.save(user);
     }
 
     @Override

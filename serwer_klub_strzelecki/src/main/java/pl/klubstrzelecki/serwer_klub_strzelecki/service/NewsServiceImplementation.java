@@ -28,9 +28,9 @@ public class NewsServiceImplementation implements NewsService {
 
     public NewsDTO saveNews(NewsDTO newsDTO) {
         News news = new News();
-        news.setId(newsDTO.getId());
-        news.setTitle(newsDTO.getTitle());
-        news.setContent(newsDTO.getContent());
+        news.setId(newsDTO.id());
+        news.setTitle(newsDTO.title());
+        news.setContent(newsDTO.content());
         News savedNews = newsRepository.save(news);
         return new NewsDTO(savedNews.getId(), savedNews.getTitle(), savedNews.getContent());
     }

@@ -38,7 +38,7 @@ public class UserController {
 
     @PostMapping("/add")
     public ResponseEntity<Object> createUser(@RequestBody UserDTO user) {
-        UserDTO result = userService.saveUser(user);
+        User result = userService.saveUser(user);
         if (result.getId() > 0) {
             return ResponseEntity.ok("{\"message\": \"User was saved\"}");
         }

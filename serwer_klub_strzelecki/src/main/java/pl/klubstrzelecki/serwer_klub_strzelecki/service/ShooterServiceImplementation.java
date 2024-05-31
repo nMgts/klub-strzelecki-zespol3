@@ -29,10 +29,10 @@ public class ShooterServiceImplementation implements ShooterService {
 
     public ShooterDTO saveShooter(ShooterDTO shooterDTO) {
         Shooter shooter = new Shooter();
-        shooter.setId(shooterDTO.getId());
-        shooter.setFirst_name(shooterDTO.getFirst_name());
-        shooter.setLast_name(shooterDTO.getLast_name());
-        shooter.setEmail(shooterDTO.getEmail());
+        shooter.setId(shooterDTO.id());
+        shooter.setFirst_name(shooterDTO.first_name());
+        shooter.setLast_name(shooterDTO.last_name());
+        shooter.setEmail(shooterDTO.email());
         Shooter savedShooter = shooterRepository.save(shooter);
         return new ShooterDTO(savedShooter.getId(), savedShooter.getFirst_name(), savedShooter.getLast_name(),
                 savedShooter.getEmail());

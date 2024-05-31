@@ -47,7 +47,7 @@ public class ShooterController {
 //    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> createShooter(@RequestBody ShooterDTO shooter) {
         ShooterDTO result = shooterService.saveShooter(shooter);
-        if (result.getId() > 0) {
+        if (result.id() > 0) {
             return ResponseEntity.ok().body("{\"message\": \"Shooter was saved\"}");
         }
         return ResponseEntity.status(404).body("{\"error\": \"Error, shooter not saved\"}");
