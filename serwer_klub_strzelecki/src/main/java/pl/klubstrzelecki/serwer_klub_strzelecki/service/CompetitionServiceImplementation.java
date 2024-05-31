@@ -5,12 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.klubstrzelecki.serwer_klub_strzelecki.convert.CompetitionDTOMapper;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.CompetitionDTO;
-import pl.klubstrzelecki.serwer_klub_strzelecki.dto.NewsDTO;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Competition;
-import pl.klubstrzelecki.serwer_klub_strzelecki.model.News;
-import pl.klubstrzelecki.serwer_klub_strzelecki.model.User;
+import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.CompetitionRepository;
-import pl.klubstrzelecki.serwer_klub_strzelecki.repository.UserRepository;
+import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ShooterRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +18,13 @@ import java.util.Optional;
 @Service
 public class CompetitionServiceImplementation implements CompetitionService {
     private final CompetitionRepository competitionRepository;
-    private final UserRepository userRepository;
+    private final ShooterRepository shooterRepository;
     private final CompetitionDTOMapper competitionDTOMapper;
 
     @Autowired
-    public CompetitionServiceImplementation(CompetitionRepository competitionRepository, UserRepository userRepository, CompetitionDTOMapper competitionDTOMapper) {
+    public CompetitionServiceImplementation(CompetitionRepository competitionRepository, ShooterRepository shooterRepository, CompetitionDTOMapper competitionDTOMapper) {
         this.competitionRepository = competitionRepository;
-        this.userRepository = userRepository;
+        this.shooterRepository = shooterRepository;
         this.competitionDTOMapper = competitionDTOMapper;
     }
 
@@ -46,20 +44,22 @@ public class CompetitionServiceImplementation implements CompetitionService {
         return competitionRepository.save(competition);
     }
 
-    public ResponseEntity<Object> registerUserToCompetition(long competitionId, long userId) {
-        Optional<Competition> competitionOptional = competitionRepository.findById(competitionId);
-        Optional<User> userOptional = userRepository.findById(userId);
+    @Override
+    public void assignShooterToCompetition(long competitionId, long shooterId) throws Exception {
+        Optional<Competition> competitionOpt = competitionRepository.findById(competitionId);
+        Optional<Shooter> shooterOpt = shooterRepository.findById(shooterId);
 
-        if (competitionOptional.isPresent() && userOptional.isPresent()) {
-            Competition competition = competitionOptional.get();
-            User user = userOptional.get();
+        if (competitionOpt.isPresent() && shooterOpt.isPresent()) {
+            Competition competition = competitionOpt.get();
+            Shooter shooter = shooterOpt.get();
 
-            competition.getUsers().add(user);
+            competition.getShooters().add(shooter);
+            shooter.getCompetitions().add(competition);
+
+            shooterRepository.save(shooter);
             competitionRepository.save(competition);
-
-            return ResponseEntity.ok("User registered successfully to competition.");
         } else {
-            return ResponseEntity.notFound().build();
+            throw new Exception("Competition or Shooter not found");
         }
     }
 }

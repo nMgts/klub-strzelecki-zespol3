@@ -35,7 +35,7 @@ public class SecurityConfig {
                                 "api/shooter/all", "api/shooter/{id}", "api/shooter/add", "api/shooter/edit/{id}","api/shooter/delete/{id}",
                                 "/api/news/all", "api/news/{id}", "api/news/add", "/api/news/edit/{id}", "/api/news/delete/{id}",
                                 "/api/user/all", "/api/user/{id}", "/api/user/add", "/api/user/edit/{id}", "/api/user/delete/{userId}",
-                                "api/competition/all", "api/competition/add"
+                                "api/competition/all", "api/competition/add", "api/competition/assign/{id}/{idd}"
                                 ).permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())

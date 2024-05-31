@@ -31,8 +31,13 @@ public class CompetitionController {
         return ResponseEntity.ok().body("{\"message\": \"Competition saved successfully!\"}");
     }
 
-    //@PostMapping("/{competitionId}/register/{userId}")
-    public ResponseEntity<Object> registerUserToCompetition(@PathVariable long competitionId, @PathVariable long userId) {
-        return competitionService.registerUserToCompetition(competitionId, userId);
+    @PostMapping("/assign/{competitionId}/{shooterId}")
+    public ResponseEntity<Object> assignShooterToCompetition(@PathVariable long competitionId, @PathVariable long shooterId) {
+        try {
+            competitionService.assignShooterToCompetition(competitionId, shooterId);
+            return ResponseEntity.ok().body("{\"message\": \"Shooter assigned to competition successfully!\"}");
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body("{\"message\": \"" + e.getMessage() + "\"}");
+        }
     }
 }

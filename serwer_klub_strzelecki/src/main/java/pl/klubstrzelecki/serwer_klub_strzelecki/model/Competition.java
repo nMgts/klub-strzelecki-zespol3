@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -25,6 +26,6 @@ public class Competition {
     private LocalDateTime end_date;
     private int shooters_limit;
 
-    @ManyToMany(mappedBy = "competitions")
-    private Set<User> users;
+    @ManyToMany(mappedBy = "competitions", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Shooter> shooters = new HashSet<>();
 }

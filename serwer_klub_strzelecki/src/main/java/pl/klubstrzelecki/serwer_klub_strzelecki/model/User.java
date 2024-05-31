@@ -22,12 +22,4 @@ public class User {
     private String email;
     private String password;
     private String roles;
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_competition",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "competition_id")
-    )
-    private Set<Competition> competitions;
 }

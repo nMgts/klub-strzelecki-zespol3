@@ -9,5 +9,5 @@ import java.util.List;
 public interface CompetitionService {
     List<CompetitionDTO> findAll();
     Competition saveCompetition(CompetitionDTO competitionDTO);
-    ResponseEntity<Object> registerUserToCompetition(long competitionId, long userId);
+    void assignShooterToCompetition(long competitionId, long shooterId) throws Exception;
 }
