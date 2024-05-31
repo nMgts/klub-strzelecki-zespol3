@@ -1,8 +1,17 @@
 package pl.klubstrzelecki.serwer_klub_strzelecki.dto;
 
-public record ShooterDTO(
-        long id,
-        String first_name,
-        String last_name,
-        String email
-) {}
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class ShooterDTO {
+    private long id;
+    private String first_name;
+    private String last_name;
+    private String email;
+}

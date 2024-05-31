@@ -36,21 +36,21 @@ public class NewsController {
 
     @PostMapping("/add")
     //@PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Object> createNews(@RequestBody NewsDTO news) {
-        newsService.saveNews(news);
+    public ResponseEntity<Object> createNews(@RequestBody NewsDTO newsDTO) {
+        newsService.saveNews(newsDTO);
         return ResponseEntity.ok().body("{\"message\": \"News saved successfully!\"}");
     }
 
     @PutMapping("/edit/{id}")
     public ResponseEntity<Object> updateNews(@PathVariable Long id, @RequestBody NewsDTO newsDTO) throws Exception {
         newsService.updateNews(id, newsDTO);
-        return ResponseEntity.ok().body("{\"message\": \"News updated successfully!.\"}");
+        return ResponseEntity.ok().body("{\"message\": \"News updated successfully!\"}");
     }
 
     @DeleteMapping("/delete/{id}")
     //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> deleteNews(@PathVariable("id") Long id) throws Exception {
-            newsService.deleteNewsById(id);
-        return ResponseEntity.ok().body("{\"message\": \"News deleted successfully!.\"}");
+        newsService.deleteNewsById(id);
+        return ResponseEntity.ok().body("{\"message\": \"News deleted successfully!\"}");
     }
 }

@@ -1,11 +1,16 @@
 package pl.klubstrzelecki.serwer_klub_strzelecki.service;
 
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.ShooterDTO;
+import pl.klubstrzelecki.serwer_klub_strzelecki.model.News;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
 
-public interface ShooterService {
-    Shooter findShooterById(long shooterId) throws Exception;
-    void deleteShooterById(Long id);
+import java.util.List;
 
-    ShooterDTO saveShooter(ShooterDTO shooter);
+public interface ShooterService {
+    List<ShooterDTO> findAll();
+    ShooterDTO findShooterById(long shooterId) throws Exception;
+    void deleteShooterById(Long id) throws Exception;
+
+    Shooter saveShooter(ShooterDTO shooter);
+    Shooter updateShooter(long id, ShooterDTO shooterDTO) throws Exception;
 }

@@ -13,19 +13,16 @@ import pl.klubstrzelecki.serwer_klub_strzelecki.service.ShooterService;
 @RestController
 @RequestMapping("/api/shooter")
 public class ShooterController {
-
-    private final ShooterRepository shooterRepository;
     private final ShooterService shooterService;
 
     @Autowired
-    public ShooterController(ShooterRepository shooterRepository, ShooterService shooterService) {
-        this.shooterRepository = shooterRepository;
+    public ShooterController(ShooterService shooterService) {
         this.shooterService = shooterService;
     }
 
     @GetMapping("/all")
     public ResponseEntity<Object> getAllShooters() {
-        return ResponseEntity.ok().body(shooterRepository.findAll());
+        return ResponseEntity.ok().body(shooterService.findAll());
     }
 
 //    @PostMapping("/shooter/save")
@@ -38,37 +35,29 @@ public class ShooterController {
 //    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getNewsById(@PathVariable Long id) {
-        return ResponseEntity.ok().body(shooterRepository.findById(id).
-                orElseThrow(() -> new EntityNotFoundException("Shooter not exists with id: " + id)));
+    public ResponseEntity<Object> getNewsById(@PathVariable Long id) throws Exception {
+        return ResponseEntity.ok().body(shooterService.findShooterById(id));
     }
 
     @PostMapping("/add")
 //    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Object> createShooter(@RequestBody ShooterDTO shooter) {
-        ShooterDTO result = shooterService.saveShooter(shooter);
-        if (result.id() > 0) {
-            return ResponseEntity.ok().body("{\"message\": \"Shooter was saved\"}");
-        }
-        return ResponseEntity.status(404).body("{\"error\": \"Error, shooter not saved\"}");
+    public ResponseEntity<Object> createShooter(@RequestBody ShooterDTO shooterDTO) {
+        shooterService.saveShooter(shooterDTO);
+        return ResponseEntity.ok().body("{\"message\": \"Shooter was saved!\"}");
     }
 
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<Object> updateNews(@PathVariable Long id, @RequestBody Shooter shooterDetails) {
-        Shooter shooter = shooterRepository.findById(id).
-                orElseThrow(() -> new EntityNotFoundException("News not exists with id: " + id));
-        shooter.setFirst_name(shooterDetails.getFirst_name());
-        shooter.setLast_name(shooterDetails.getLast_name());
-        shooter.setEmail(shooterDetails.getEmail());
+    //return ResponseEntity.status(404).body("{\"error\": \"Error, shooter not saved\"}");
 
-        Shooter updatedShooter = shooterRepository.save(shooter);
-        return ResponseEntity.ok().body(updatedShooter);
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Object> updateNews(@PathVariable Long id, @RequestBody ShooterDTO shooterDTO) throws Exception {
+        shooterService.updateShooter(id, shooterDTO);
+        return ResponseEntity.ok().body("{\"message\": \"Shooter updated successfully!\"}");
     }
 
     @RequestMapping("/delete/{shooterId}")
 //    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<String> deleteShooter(@PathVariable("shooterId") Long id) {
+    public ResponseEntity<String> deleteShooter(@PathVariable("shooterId") Long id) throws Exception {
         shooterService.deleteShooterById(id);
-        return ResponseEntity.ok().body("{\"message\": \"Shooter deleted successfully\"}");
+        return ResponseEntity.ok().body("{\"message\": \"Shooter deleted successfully!\"}");
     }
 }
