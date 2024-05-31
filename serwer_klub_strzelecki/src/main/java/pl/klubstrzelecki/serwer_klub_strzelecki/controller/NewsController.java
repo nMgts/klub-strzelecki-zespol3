@@ -25,7 +25,7 @@ public class NewsController {
 
     @GetMapping("/all")
     public ResponseEntity<Object> getAllNews() {
-        return ResponseEntity.ok().body(newsRepository.findAll());
+        return ResponseEntity.ok().body(newsService.findAll());
     }
 
     @GetMapping("/{id}")
