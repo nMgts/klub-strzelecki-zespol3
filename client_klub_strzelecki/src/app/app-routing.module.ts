@@ -15,6 +15,7 @@ import { ProfileComponent } from "./profile/profile.component";
 import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import {UpdateProfileComponent} from "./update-profile/update-profile.component";
+import {AssignShootersComponent} from "./assign-shooters/assign-shooters.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: 'news', pathMatch: 'full' },
@@ -27,6 +28,7 @@ export const routes: Routes = [
   { path: 'users', component: UsersComponent},
   { path: 'competitions', component: CompetitionsListComponent},
   { path: 'competitions/add', component: CompetitionAddComponent},
+  { path: 'competitions/assign/:id', component: AssignShootersComponent },
   { path: 'statute', component: StatuteComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'profile/update/:id', component: UpdateProfileComponent },

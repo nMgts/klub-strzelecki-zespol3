@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Competition} from "../interfaces/competition";
-import {News} from "../interfaces/news";
+import {forkJoin, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +9,7 @@ export class CompetitionService {
 
   private baseUrl = 'http://localhost:8080/api/competition/all';
   private postUrl = 'http://localhost:8080/api/competition/add';
+  private assignUrl = 'http://localhost:8080/api/competition/assign';
 
   constructor(private http: HttpClient) {}
 
@@ -38,5 +37,24 @@ export class CompetitionService {
     } catch (error) {
       throw error
     }
+  }
+
+  assignShooterToCompetition(competitionId: number, shooterId: number, token: string):Promise<any> {
+    const url = `${this.assignUrl}/${competitionId}/${shooterId}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    try {
+      console.log(headers);
+      const response = this.http.post<any>(url, {}, {headers}).toPromise();
+      return response;
+    } catch (error) {
+      throw error
+    }
+  }
+
+  assignMultipleShootersToCompetition(competitionId: number, shooterIds: number[], token: string): Observable<any[]> {
+    const requests = shooterIds.map(shooterId => this.assignShooterToCompetition(competitionId, shooterId, token));
+    return forkJoin(requests);
   }
 }

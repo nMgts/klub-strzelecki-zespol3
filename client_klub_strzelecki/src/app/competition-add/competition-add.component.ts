@@ -35,14 +35,14 @@ export class CompetitionAddComponent implements OnInit {
       } else {
         this.showError('No news found.');
       }
-      this.goToNews();
+      this.goToCompetitions();
     } catch (error: any) {
       this.showError(error.message);
-      this.goToNews();
+      this.goToCompetitions();
     }
   }
 
-  goToNews() {
+  goToCompetitions() {
     this.router.navigate(['/competitions']);
   }
 

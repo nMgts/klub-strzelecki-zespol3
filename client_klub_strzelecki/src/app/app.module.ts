@@ -21,8 +21,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
-import { provideHttpClient } from '@angular/common/http';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
+import {AssignShootersComponent} from "./assign-shooters/assign-shooters.component";
+
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { UpdateProfileComponent } from './update-profile/update-profile.componen
     LoginComponent,
     ProfileComponent,
     RegisterComponent,
-    UpdateProfileComponent
+    UpdateProfileComponent,
+    AssignShootersComponent
   ],
   imports: [
     DialogModule,
