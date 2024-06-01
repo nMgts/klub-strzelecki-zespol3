@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrl: '../shooters/shooters.component.css'
+  styleUrl: './users.component.css'
 })
 
 export class UsersComponent implements AfterViewInit {

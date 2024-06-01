@@ -65,12 +65,12 @@ tfoot td {
   background: linear-gradient(to bottom, rgb(0 0 0 / 10%), rgb(0 0 0 / 35%));
 }
 input {
-  padding: 5px;
+  padding: 15px;
   margin: 15px;
 }
 button {
   font-weight: bold;
-  padding: 6px;
+  padding: 2px;
 }
 
 button {
