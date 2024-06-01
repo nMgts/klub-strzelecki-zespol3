@@ -10,8 +10,8 @@ import {UsersService} from "./services/users.service";
 })
 export class AppComponent implements OnInit {
 
-  constructor(private readonly userService: UsersService) {
-  }
+
+  constructor(private readonly userService: UsersService) {}
 
   title = 'Shooting Club';
   isAuthenticated:boolean = false;
