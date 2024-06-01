@@ -40,4 +40,15 @@ public class CompetitionController {
             return ResponseEntity.status(404).body("{\"message\": \"" + e.getMessage() + "\"}");
         }
     }
+
+    @DeleteMapping("/remove/{competitionId}/{shooterId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Object> removeShooterFromCompetition(@PathVariable long competitionId, @PathVariable long shooterId) {
+        try {
+            competitionService.removeShooterFromCompetition(competitionId, shooterId);
+            return ResponseEntity.ok().body("{\"message\": \"Shooter removed from competition successfully!\"}");
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body("{\"message\": \"" + e.getMessage() + "\"}");
+        }
+    }
 }
