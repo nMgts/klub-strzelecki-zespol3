@@ -31,7 +31,7 @@ export class AddShooterComponent implements OnInit {
       if (response) {
         this.new_shooter = response;
       } else {
-        this.showError('No users found.');
+        this.showError('No shooters found.');
       }
       this.goToShooters();
     } catch (error: any) {

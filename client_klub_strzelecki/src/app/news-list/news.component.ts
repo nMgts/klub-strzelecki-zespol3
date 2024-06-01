@@ -18,7 +18,8 @@ export class NewsComponent implements AfterViewInit {
 
   news_list: News[] = [];
   visible: boolean = false;
-  newsId: number| undefined
+  newsId: number| undefined;
+  errorMessage: string = '';
 
   constructor(
     private newsService: NewsService,
@@ -32,9 +33,7 @@ export class NewsComponent implements AfterViewInit {
     // The DOM has been changed, we need to detect the changes to prevent ExpressionChangedAfterItHasBeenCheckedError
     this.cd.detectChanges();
   }
-  logHello(): void {
-    console.log("Hello");
-  }
+
   ngOnInit(): void {
     console.log("NewsComponent is initialized halo");
     this.getNews();
@@ -45,6 +44,7 @@ export class NewsComponent implements AfterViewInit {
       this.news_list = data;
     });
   }
+  /*
   public onDeleteNews(id: number): void {
     console.log('Attempting to delete news with id:');  // Check if ID is correct
     this.newsService.deleteNews(id).subscribe({
@@ -57,7 +57,7 @@ export class NewsComponent implements AfterViewInit {
       }
     });
   }
-
+*/
   changeNlForP(text: string): string {
     let editedText = '<p>' + text;
     editedText = editedText.replace(/\n/g, '</p><p>');
@@ -69,16 +69,14 @@ export class NewsComponent implements AfterViewInit {
     this.router.navigate(['news/edit', id]);
   }
 
-  deleteNews(): void {
-    if (this.newsId !== undefined) {
-      this.newsService.deleteNews(this.newsId).subscribe( data =>{
-        console.log(data);
-        this.getNews();
-      })
-    } else {
-      console.error('ID is undefined');
-    }
-    this.visible = false;
+  async deleteNews(newsId: number | undefined) {
+    try {
+    const token: any = localStorage.getItem('token');
+    await this.newsService.deleteNews(newsId, token);
+    this.getNews();
+  } catch (error: any) {
+    this.showError(error.message);
+  }
   }
 
   showDialog(id?: number)
@@ -98,4 +96,11 @@ export class NewsComponent implements AfterViewInit {
   }
 
    */
+
+  showError(mess: string) {
+    this.errorMessage = mess;
+    setTimeout(() => {
+      this.errorMessage = ''
+    }, 3000)
+  }
 }

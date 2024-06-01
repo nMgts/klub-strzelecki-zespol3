@@ -1,7 +1,7 @@
 <div class="competition_list">
   <p>Aktualności</p>
   <button type="button" id="news-add-button" class="generic-button" [routerLink]="['/competitions/add']">Dodaj nowe zawody</button>
-  <div *ngFor="let competition of competition_list" class="news-item">
+  <div *ngFor="let competition of competitions" class="news-item">
     <h2>{{ competition.name }}</h2>
     <h3>{{ competition.start_date }}</h3>
     <h3>{{ competition.end_date }}</h3>

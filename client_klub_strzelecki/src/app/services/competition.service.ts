@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Competition} from "../interfaces/competition";
 import {News} from "../interfaces/news";
@@ -14,8 +14,17 @@ export class CompetitionService {
 
   constructor(private http: HttpClient) {}
 
-  getCompetition(): Observable<Competition[]> {
-    return this.http.get<Competition[]>(this.baseUrl);
+  getAllCompetitions(token:string):Promise<any> {
+    const url = `${this.baseUrl}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.get<any>(url, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 
   addCompetition(competition?: Competition): Observable<Competition> {

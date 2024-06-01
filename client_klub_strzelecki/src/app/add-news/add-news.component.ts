@@ -13,6 +13,8 @@ export class AddNewsComponent implements OnInit {
     title: '',
     content: ''
   };
+  errorMessage: string = '';
+
   constructor(
     private newsService: NewsService,
     private router: Router) {
@@ -21,12 +23,20 @@ export class AddNewsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  saveNews() {
-    this.newsService.addNews(this.new_news).subscribe( data =>{
-      console.log(data);
+  async saveNews() {
+    try {
+      const token: any = localStorage.getItem('token');
+      const response = await this.newsService.addNews(this.new_news, token);
+      if (response) {
+        this.new_news = response;
+      } else {
+        this.showError('No news found.');
+      }
       this.goToNews();
-    },
-        error => console.log(error));
+    } catch (error: any) {
+      this.showError(error.message);
+      this.goToNews();
+    }
   }
 
   goToNews() {
@@ -36,5 +46,12 @@ export class AddNewsComponent implements OnInit {
   onSubmit() {
     console.log(this.new_news);
     this.saveNews();
+  }
+
+  showError(messaga: string) {
+    this.errorMessage = messaga;
+    setTimeout(() => {
+      this.errorMessage = '';
+    }, 3000);
   }
 }
