@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject } from 'rxjs';
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -14,18 +15,15 @@ export class UsersService {
   private putUrl = 'http://localhost:8080/api/user/edit';
   private getUrl = 'http://localhost:8080/api/user'
 
-  getRole(): string | null {
-    return localStorage.getItem('role');
-  }
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private readonly router:Router) {}
 
   async login(email:string, password:string):Promise<any> {
     const url = `${this.defaultUrl}/auth/login`;
     try {
       const response = this.http.post<any>(url, {email, password}).toPromise();
       if (await response) {
-        window.location.reload();
+       // window.location.reload();
+        this.router.navigate(['/news'])
       }
       return response;
     } catch (error) {

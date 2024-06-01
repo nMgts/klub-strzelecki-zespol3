@@ -6,6 +6,7 @@ import { NewsService } from '../services/news.service';
 import { CommonModule } from '@angular/common';
 import { News } from '../interfaces/news';
 import {Router} from "@angular/router";
+import {UsersService} from "../services/users.service";
 
 @Component({
   selector: 'app-news',
@@ -21,8 +22,11 @@ export class NewsComponent implements AfterViewInit {
   newsId: number| undefined;
   errorMessage: string = '';
 
+  isAdmin:boolean = false;
+
   constructor(
     private newsService: NewsService,
+    private userService: UsersService,
     private cd: ChangeDetectorRef,
     private router: Router) {}
 
@@ -35,7 +39,7 @@ export class NewsComponent implements AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log("NewsComponent is initialized halo");
+    this.isAdmin = this.userService.isAdmin();
     this.getNews();
   }
 

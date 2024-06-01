@@ -25,10 +25,10 @@ export class LoginComponent {
       if(response.statusCode === 200) {
         localStorage.setItem('token', response.token)
         localStorage.setItem('role', response.role)
-        await this.router.navigate(['/news'])
       } else {
         this.showError(response.message)
       }
+      window.location.reload();
     } catch (error:any) {
       this.showError(error.message)
     }

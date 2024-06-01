@@ -1,6 +1,7 @@
 import {AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
 import {Competition} from "../interfaces/competition";
 import {CompetitionService} from "../services/competition.service";
+import {UsersService} from "../services/users.service";
 
 @Component({
   selector: 'app-competitions-list',
@@ -13,7 +14,9 @@ export class CompetitionsListComponent implements AfterViewInit {
   CompetitionId: number| undefined
   errorMessage: string = '';
 
-  constructor(private competitionService: CompetitionService, private cd: ChangeDetectorRef) {
+  isAdmin:boolean = false;
+
+  constructor(private competitionService: CompetitionService, private cd: ChangeDetectorRef, private userService: UsersService,) {
   }
 
   ngAfterViewInit(): void {
@@ -38,7 +41,7 @@ export class CompetitionsListComponent implements AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log("NewsComponent is initialized halo");
+    this.isAdmin = this.userService.isAdmin();
     this.loadCompetitions();
   }
 
