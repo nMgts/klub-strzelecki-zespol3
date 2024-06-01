@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { News } from '../interfaces/news';
 
@@ -21,22 +21,56 @@ export class NewsService {
     return this.http.get<News[]>(this.baseUrl);
   }
 
-  deleteNews(newsId: number): Observable<News> {
+  async deleteNews(newsId: number | undefined, token: string):Promise<any> {
     const url = `${this.deleteUrl}/${newsId}`;
-    return this.http.delete<News>(url);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.delete<any>(url, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 
-  getNewsById(newsId: number): Observable<News> {
+  async getNewsById(newsId:string, token: string):Promise<any> {
     const url = `${this.getUrl}/${newsId}`;
-    return this.http.get<News>(url);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.get<any>(url, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 
-  addNews(news?: News): Observable<News> {
-    return this.http.post<News>(this.postUrl, news);
+  async addNews(newsData:any, token:string):Promise<any> {
+    const url = `${this.postUrl}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.post<any>(url, newsData, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 
-  editNews(id: number, news: News) {
-    return this.http.put(`${this.putUrl}/${id}`, news);
+  async updateNews(newsId: string | null, newsData: any, token: string):Promise<any> {
+    const url = `${this.putUrl}/${newsId}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.put<any>(url, newsData, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 }
 

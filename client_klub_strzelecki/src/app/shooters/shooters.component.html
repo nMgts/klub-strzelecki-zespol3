@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="border-2" *ngFor="let shooter of shooters_list; let i=index">
+        <tr class="border-2" *ngFor="let shooter of shooters; let i=index">
           <td class="p-3 border-2">id: {{i+1}} </td>
           <td class="p-3 border-2">Imie: {{ shooter.first_name}} </td>
           <td class="p-3 border-2">Nazwisko: {{ shooter.last_name }} </td>
@@ -44,11 +44,7 @@
   <span class="p-text-secondary block mb-5">Czy chcesz usunąć zawodnika?</span>
   <div class="flex justify-content-end gap-2">
     <p-button label="Anuluj" severity="secondary" (click)="visible = false" />
-    <p-button label="Usuń" (click)= "deleteShooters()"  />
+    <p-button label="Usuń" (click)= "deleteShooters(shooterId)"  />
   </div>
 </p-dialog>
 </html>
-
-
-
-

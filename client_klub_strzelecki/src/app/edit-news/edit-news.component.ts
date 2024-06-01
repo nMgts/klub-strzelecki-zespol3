@@ -10,23 +10,53 @@ import {resetParseTemplateAsSourceFileForTest} from "@angular/compiler-cli/src/n
   styleUrl: './edit-news.component.css'
 })
 export class EditNewsComponent implements OnInit {
-  id: number;
+  id: string | null;
   new_news: News = {
     title: '',
     content: ''
   };
+  errorMessage: string = '';
 
   constructor(
     private newsService: NewsService,
     private route: ActivatedRoute,
     private router: Router) {
-    this.id = 0;
+    this.id = '';
   }
 
-  onSubmit() {
-    this.newsService.editNews(this.id, this.new_news).subscribe(data => {
-      this.goToNews();
-    }, error => console.log(error));
+  async onSubmit() {
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) {
+        throw new Error("Token not found")
+      }
+      const res = await this.newsService.updateNews(this.id, this.new_news, token);
+
+      if (res) {
+        this.goToNews();
+      } else {
+        this.showError(res.message)
+      }
+    } catch (error: any) {
+      this.showError(error.message)
+    }
+  }
+
+  async getNewsById() {
+    this.id = this.route.snapshot.paramMap.get('id')
+    const token = localStorage.getItem('token')
+    if (!this.id || !token) {
+      this.showError("News ID or token is required")
+      return;
+    }
+    try {
+      let newsDataResponse = await this.newsService.getNewsById(this.id, token)
+      console.log(newsDataResponse)
+      const {title, content} = newsDataResponse
+      this.new_news = {title, content};
+    } catch (error: any) {
+      this.showError(error.message);
+    }
   }
 
   goToNews() {
@@ -34,10 +64,13 @@ export class EditNewsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params['id'];
-    this.newsService.getNewsById(this.id).subscribe(data => {
-      this.new_news = data;
-    }, error => console.log(error));
+    this.getNewsById();
   }
 
+  showError(mess: string) {
+    this.errorMessage = mess;
+    setTimeout(() => {
+      this.errorMessage = ''
+    }, 3000)
+  }
 }

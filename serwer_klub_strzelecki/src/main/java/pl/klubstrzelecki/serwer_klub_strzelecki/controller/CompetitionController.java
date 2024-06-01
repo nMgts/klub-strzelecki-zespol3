@@ -2,15 +2,13 @@ package pl.klubstrzelecki.serwer_klub_strzelecki.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.CompetitionDTO;
-import pl.klubstrzelecki.serwer_klub_strzelecki.model.Competition;
-import pl.klubstrzelecki.serwer_klub_strzelecki.repository.CompetitionRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.service.CompetitionService;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
-@RequestMapping("api/competition")
+@RequestMapping("/api/competition")
 public class CompetitionController {
     private final CompetitionService competitionService;
 
@@ -20,18 +18,20 @@ public class CompetitionController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public ResponseEntity<Object> getAllCompetitions() {
         return ResponseEntity.ok().body(competitionService.findAll());
     }
 
     @PostMapping("/add")
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> createCompetition(@RequestBody CompetitionDTO competitionDTO) {
         competitionService.saveCompetition(competitionDTO);
         return ResponseEntity.ok().body("{\"message\": \"Competition saved successfully!\"}");
     }
 
     @PostMapping("/assign/{competitionId}/{shooterId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> assignShooterToCompetition(@PathVariable long competitionId, @PathVariable long shooterId) {
         try {
             competitionService.assignShooterToCompetition(competitionId, shooterId);

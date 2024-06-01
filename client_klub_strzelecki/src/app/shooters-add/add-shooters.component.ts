@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import { Shooter } from '../interfaces/shooter';
-import { ShootersService } from '../services/shooters.service';
+import { ShootersService } from '../services/shooter.service';
 
 @Component({
   selector: 'app-add-shooters',
@@ -14,6 +14,7 @@ export class AddShooterComponent implements OnInit {
     last_name: '',
     email: ''
   };
+  errorMessage: string = ''
 
   constructor(
     private shooterService: ShootersService,
@@ -23,12 +24,20 @@ export class AddShooterComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  saveShooter() {
-    this.shooterService.addShooter(this.new_shooter).subscribe( data =>{
-      console.log(data);
+  async saveShooter() {
+    try {
+      const token: any = localStorage.getItem('token');
+      const response = await this.shooterService.addShooter(this.new_shooter, token);
+      if (response) {
+        this.new_shooter = response;
+      } else {
+        this.showError('No shooters found.');
+      }
       this.goToShooters();
-    },
-        error => console.log(error));
+    } catch (error: any) {
+      this.showError(error.message);
+      this.goToShooters();
+    }
   }
 
   goToShooters() {
@@ -38,5 +47,12 @@ export class AddShooterComponent implements OnInit {
   onSubmit() {
     console.log(this.new_shooter);
     this.saveShooter();
+  }
+
+  showError(mess: string) {
+    this.errorMessage = mess;
+    setTimeout(() => {
+      this.errorMessage = ''
+    }, 3000)
   }
 }

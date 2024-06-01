@@ -2,6 +2,7 @@
 <body>
 <div class="w-4/4 shadow-md p-10 bg-white shadow-blue-200/20 mx-36 my-10">
     <h2>Użytkownicy</h2>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
       <div class="flex justify-between items-center mb-4 mt-4">
         <input type="text" placeholder="Search" class="w-full border p-2 rounded 1-g">
         <select class="border p-2 rounded-1g">
@@ -21,7 +22,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="border-2" *ngFor="let user of users_list; let i=index">
+          <tr class="border-2" *ngFor="let user of users; let i=index">
             <td class="p-3 border-2">id: {{i+1}} </td>
             <td class="p-3 border-2">Imie: {{ user.first_name }} </td>
             <td class="p-3 border-2">Nazwisko: {{ user.last_name }} </td>
@@ -29,7 +30,7 @@
             <td class="p-3 border-2">Role: {{ user.roles }} </td>
             <div id="button-container">
               <button [routerLink]="['/users/edit', user.id]" type="button" id="users-edit-button" class="generic-button">Edytuj</button>
-              <button (click) = "showDialog(user.id)" type="button" id="users-delete-button" class="generic-button">Usuń</button>
+              <button type="button" id="users-delete-button" class="generic-button">Usuń</button>
             </div>
             <p class="p-3 border-2"></p>
           </tr>
@@ -47,7 +48,6 @@
   <span class="p-text-secondary block mb-5">Czy chcesz usunąć użytkownika?</span>
   <div class="flex justify-content-end gap-2">
     <p-button label="Anuluj" severity="secondary" (click)="visible = false" />
-    <p-button label="Usuń" (click)= "deleteUsers()"  />
   </div>
 </p-dialog>
 </html>
