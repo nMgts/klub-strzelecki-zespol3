@@ -27,7 +27,7 @@
             <td class="p-3 border-2">Imie: {{ user.first_name }} </td>
             <td class="p-3 border-2">Nazwisko: {{ user.last_name }} </td>
             <td class="p-3 border-2">Email: {{ user.email }} </td>
-            <td class="p-3 border-2">Role: {{ user.roles }} </td>
+            <td class="p-3 border-2">Role: {{ user.role }} </td>
             <div id="button-container">
               <button [routerLink]="['/users/edit', user.id]" type="button" id="users-edit-button" class="generic-button">Edytuj</button>
               <button type="button" id="users-delete-button" class="generic-button">Usuń</button>

@@ -88,17 +88,22 @@ main{
   margin: 20px 0;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 70vh;
+  margin: 0;
+}
+
+.content {
+  flex: 1;
+}
+
 .footer {
   background-color: #010038;
   color: #ffffff;
-  padding: 10px;
-  bottom: 0;
-  left: 0;
+  padding: 5px;
   width: 100%;
-  z-index: 100;
   text-align: center;
-}
-
-#footerLinks{
   text-decoration: underline;
 }
