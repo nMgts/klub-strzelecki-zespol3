@@ -27,7 +27,16 @@ export class CompetitionService {
     }
   }
 
-  addCompetition(competition?: Competition): Observable<Competition> {
-    return this.http.post<Competition>(this.postUrl, competition);
+  addCompetition(competitionData:any, token:string):Promise<any> {
+    const url = `${this.postUrl}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.post<any>(url, competitionData, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 }

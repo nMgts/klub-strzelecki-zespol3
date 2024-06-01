@@ -16,6 +16,8 @@ export class CompetitionAddComponent implements OnInit {
     end_date: '',
     shooters_limit: 0
   };
+  errorMessage: string = '';
+
   constructor(
     private competitionService: CompetitionService,
     private router: Router) {
@@ -24,12 +26,20 @@ export class CompetitionAddComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  saveCompetition() {
-    this.competitionService.addCompetition(this.new_competition).subscribe( data =>{
-        console.log(data);
-        this.goToNews();
-      },
-      error => console.log(error));
+  async saveCompetition() {
+    try {
+      const token: any = localStorage.getItem('token');
+      const response = await this.competitionService.addCompetition(this.new_competition, token);
+      if (response) {
+        this.new_competition = response;
+      } else {
+        this.showError('No news found.');
+      }
+      this.goToNews();
+    } catch (error: any) {
+      this.showError(error.message);
+      this.goToNews();
+    }
   }
 
   goToNews() {
@@ -39,6 +49,13 @@ export class CompetitionAddComponent implements OnInit {
   onSubmit() {
     console.log(this.new_competition);
     this.saveCompetition();
+  }
+
+  showError(messaga: string) {
+    this.errorMessage = messaga;
+    setTimeout(() => {
+      this.errorMessage = '';
+    }, 3000);
   }
 }
 
