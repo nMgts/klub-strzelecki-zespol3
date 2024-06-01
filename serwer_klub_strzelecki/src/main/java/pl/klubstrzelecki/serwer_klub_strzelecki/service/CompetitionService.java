@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.klubstrzelecki.serwer_klub_strzelecki.convert.CompetitionDTOMapper;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.CompetitionDTO;
+import pl.klubstrzelecki.serwer_klub_strzelecki.dto.ReqRes;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Competition;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
+import pl.klubstrzelecki.serwer_klub_strzelecki.model.User;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.CompetitionRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ShooterRepository;
 
@@ -56,6 +58,20 @@ public class CompetitionService {
             competitionRepository.save(competition);
         } else {
             throw new Exception("Competition or Shooter not found");
+        }
+    }
+
+    public void signUp(String email, long competitionId) throws Exception {
+        try {
+            Optional<Shooter> shooterOpt = shooterRepository.findByEmail(email);
+            if (shooterOpt.isPresent()) {
+                long shooterId = shooterOpt.get().getId();
+                assignShooterToCompetition(competitionId, shooterId);
+            } else {
+                throw new Exception("Competition or Shooter not found");
+            }
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
     }
 

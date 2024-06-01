@@ -52,6 +52,7 @@ public class UserManagementService {
             user.setLast_name(registrationRequest.getLast_name());
             user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
             user.setShooter(shooterResult);
+            user.setRole("USER");
             User userResult = userRepository.save(user);
             if (userResult.getId() > 0 || shooterResult.getId() > 0) {
                 resp.setUser(userResult);

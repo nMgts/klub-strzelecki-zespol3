@@ -42,7 +42,7 @@ public class SecurityConfig {
                                 "/api/news/id", "/api/news/add", "/api/news/edit/{id}", "/api/news/delete/{id}",
                                 "/api/shooter/all", "/api/shooter/{id}", "/api/shooter/add", "/api/shooter/edit/{id}", "/api/shooter/delete/{id}").hasAuthority("ADMIN")
                         //.requestMatchers().hasAuthority("USER")
-                        .requestMatchers("/api/competition/all", "/api/user/get-profile").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers("/api/competition/all", "/api/user/get-profile", "/api/competition/signup/{id}").hasAnyAuthority("ADMIN", "USER")
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

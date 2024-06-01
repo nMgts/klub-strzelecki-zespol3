@@ -3,8 +3,11 @@ package pl.klubstrzelecki.serwer_klub_strzelecki.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.CompetitionDTO;
+import pl.klubstrzelecki.serwer_klub_strzelecki.dto.ReqRes;
 import pl.klubstrzelecki.serwer_klub_strzelecki.service.CompetitionService;
 
 @RestController
@@ -39,6 +42,14 @@ public class CompetitionController {
         } catch (Exception e) {
             return ResponseEntity.status(404).body("{\"message\": \"" + e.getMessage() + "\"}");
         }
+    }
+
+    @PostMapping("/signup/{competitionId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    public void signUp(@PathVariable long competitionId) throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        competitionService.signUp(email, competitionId);
     }
 
     @DeleteMapping("/remove/{competitionId}/{shooterId}")

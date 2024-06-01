@@ -10,6 +10,7 @@ export class CompetitionService {
   private baseUrl = 'http://localhost:8080/api/competition/all';
   private postUrl = 'http://localhost:8080/api/competition/add';
   private assignUrl = 'http://localhost:8080/api/competition/assign';
+  private signupUrl = 'http://localhost:8080/api/competition/signup';
 
   constructor(private http: HttpClient) {}
 
@@ -46,6 +47,20 @@ export class CompetitionService {
     });
     try {
       console.log(headers);
+      const response = this.http.post<any>(url, {}, {headers}).toPromise();
+      return response;
+    } catch (error) {
+      throw error
+    }
+  }
+
+  signupShooterToCompetition(competitionId: number, token: string):Promise<any> {
+    const url = `${this.signupUrl}/${competitionId}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    try {
+      console.log(this.http.post<any>(url, {}, {headers}));
       const response = this.http.post<any>(url, {}, {headers}).toPromise();
       return response;
     } catch (error) {

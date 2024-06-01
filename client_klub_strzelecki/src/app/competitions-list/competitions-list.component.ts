@@ -40,6 +40,24 @@ export class CompetitionsListComponent implements AfterViewInit {
   deleteCompetition(id? : number) {
   }
 
+  async signUpForCompetition(id?: number) {
+    if (typeof id !== 'number') {
+      this.showError('Invalid competition ID');
+      return;
+    }
+    try {
+      const token: any = localStorage.getItem('token');
+      const response = await this.competitionService.signupShooterToCompetition(id, token);
+      if (response) {
+        // Handle success
+      } else {
+        this.showError('Error assigning shooters.');
+      }
+    } catch (error: any) {
+      this.showError(error.message);
+    }
+  }
+
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();
     this.loadCompetitions();
