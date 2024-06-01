@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.klubstrzelecki.serwer_klub_strzelecki.convert.ShooterDTOMapper;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.ShooterDTO;
+import pl.klubstrzelecki.serwer_klub_strzelecki.model.Competition;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
+import pl.klubstrzelecki.serwer_klub_strzelecki.repository.CompetitionRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ShooterRepository;
 
 import java.util.ArrayList;
@@ -14,11 +16,13 @@ import java.util.Optional;
 @Service
 public class ShooterService {
     private final ShooterRepository shooterRepository;
+    private final CompetitionRepository competitionRepository;
     private final ShooterDTOMapper shooterDTOMapper;
 
     @Autowired
-    public ShooterService(ShooterRepository shooterRepository, ShooterDTOMapper shooterDTOMapper) {
+    public ShooterService(ShooterRepository shooterRepository,  CompetitionRepository competitionRepository, ShooterDTOMapper shooterDTOMapper) {
         this.shooterRepository = shooterRepository;
+        this.competitionRepository = competitionRepository;
         this.shooterDTOMapper = shooterDTOMapper;
     }
 
@@ -63,10 +67,30 @@ public class ShooterService {
         Optional<Shooter> opt = shooterRepository.findById(id);
         if (opt.isPresent()) {
             Shooter shooter = opt.get();
+            removeShooterFromAllCompetitions(id);
             shooterRepository.delete(shooter);
         }
         else {
             throw new Exception("Shooter not found with id " + id);
+        }
+    }
+
+    private void removeShooterFromAllCompetitions(long shooterId) throws Exception {
+        Optional<Shooter> shooterOpt = shooterRepository.findById(shooterId);
+
+        if (shooterOpt.isPresent()) {
+            Shooter shooter = shooterOpt.get();
+            List<Competition> competitions = new ArrayList<>(shooter.getCompetitions());
+
+            for (Competition competition : competitions) {
+                competition.getShooters().remove(shooter);
+                competitionRepository.save(competition);
+            }
+
+            shooter.getCompetitions().clear();
+            shooterRepository.save(shooter);
+        } else {
+            throw new Exception("Shooter not found");
         }
     }
 }
