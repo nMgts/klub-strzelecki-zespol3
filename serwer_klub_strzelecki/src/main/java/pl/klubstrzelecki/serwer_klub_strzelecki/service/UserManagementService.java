@@ -5,8 +5,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.ReqRes;
+import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.User;
+import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ShooterRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.UserRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.util.JWTUtils;
 
@@ -16,30 +19,41 @@ import java.util.Optional;
 @Service
 public class UserManagementService {
     private final UserRepository userRepository;
+    private final ShooterRepository shooterRepository;
     private final JWTUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserManagementService(UserRepository userRepository, JWTUtils jwtUtils,
-                                 AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
+                                 AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
+                                 ShooterRepository shooterRepository) {
         this.userRepository = userRepository;
+        this.shooterRepository = shooterRepository;
         this.jwtUtils = jwtUtils;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
     }
 
+    //@Transactional
     public ReqRes register(ReqRes registrationRequest) {
         ReqRes resp = new ReqRes();
 
         try {
+            Shooter shooter = new Shooter();
+            shooter.setFirst_name(registrationRequest.getFirst_name());
+            shooter.setLast_name(registrationRequest.getLast_name());
+            shooter.setEmail(registrationRequest.getEmail());
+            Shooter shooterResult = shooterRepository.save(shooter);
+
             User user = new User();
             user.setEmail(registrationRequest.getEmail());
             user.setFirst_name(registrationRequest.getFirst_name());
             user.setLast_name(registrationRequest.getLast_name());
             user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
+            user.setShooter(shooterResult);
             User userResult = userRepository.save(user);
-            if (userResult.getId() > 0) {
+            if (userResult.getId() > 0 || shooterResult.getId() > 0) {
                 resp.setUser(userResult);
                 resp.setMessage("User saved successfully");
                 resp.setStatusCode(200);

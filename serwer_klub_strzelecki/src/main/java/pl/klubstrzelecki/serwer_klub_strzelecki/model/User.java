@@ -1,5 +1,6 @@
 package pl.klubstrzelecki.serwer_klub_strzelecki.model;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +27,11 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private String role;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @Nullable
+    @JoinColumn(name = "shooter_id", referencedColumnName = "id")
+    private Shooter shooter;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
