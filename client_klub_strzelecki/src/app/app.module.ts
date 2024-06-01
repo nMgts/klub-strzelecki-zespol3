@@ -14,10 +14,15 @@ import { CompetitionsListComponent } from './competitions-list/competitions-list
 import { AddShooterComponent } from './shooters-add/add-shooters.component';
 import { EditShooterComponent } from './shooters-edit/edit-shooters.component';
 import { StatuteComponent } from './statute/statute.component';
-import { UsersComponent } from './users/users.component';
+import { UsersComponent } from './users-list/users.component';
 import { CompetitionAddComponent } from './competition-add/competition-add.component';
-import {Button} from "primeng/button";
+import { Button } from "primeng/button";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
+import { RegisterComponent } from './register/register.component';
+import { provideHttpClient } from '@angular/common/http';
+import { UpdateProfileComponent } from './update-profile/update-profile.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +36,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     EditShooterComponent,
     CompetitionsListComponent,
     StatuteComponent,
-    CompetitionAddComponent
+    CompetitionAddComponent,
+    LoginComponent,
+    ProfileComponent,
+    RegisterComponent,
+    UpdateProfileComponent
   ],
   imports: [
     DialogModule,

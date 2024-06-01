@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { User } from "../interfaces/user";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
+  private defaultUrl = 'http://localhost:8080/api';
   private baseUrl = 'http://localhost:8080/api/user/all';
   private deleteUrl = 'http://localhost:8080/api/user/delete';
   private postUrl = 'http://localhost:8080/api/user/add';
@@ -16,25 +15,124 @@ export class UsersService {
 
   constructor(private http: HttpClient) {}
 
-  getUser(): Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl);
+  async login(email:string, password:string):Promise<any> {
+    const url = `${this.defaultUrl}/auth/login`;
+    try {
+      const response = this.http.post<any>(url, {email, password}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 
-  deleteUser(userId: number): Observable<User> {
-    const url = `${this.deleteUrl}/${userId}`;
-    return this.http.delete<User>(url);
+  async register(userData:any, token:string):Promise<any> {
+    const url = `${this.defaultUrl}/auth/register`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.post<any>(url, userData, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 
-  getUserById(userId: number): Observable<User> {
+  async getAllUsers(token:string):Promise<any> {
+    const url = `${this.baseUrl}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.get<any>(url, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async getYourProfile(token:string):Promise<any> {
+    const url = `${this.getUrl}/get-profile`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.get<any>(url, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async getUserById(userId:string, token: string):Promise<any> {
     const url = `${this.getUrl}/${userId}`;
-    return this.http.get<User>(url);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.post<any>(url, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 
-  addUser(user?: User): Observable<User> {
-    return this.http.post<User>(this.postUrl, user);
+  async deleteUser(userId:string, token: string):Promise<any> {
+    const url = `${this.deleteUrl}/${userId}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.delete<any>(url, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 
-  editUser(id: number, user: User) {
-    return this.http.put(`${this.putUrl}/${id}`, user);
+  async updateUser(userId:string, userData: any, token: string):Promise<any> {
+    const url = `${this.putUrl}/${userId}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.put<any>(url, userData, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
+
+  /***AUTHENTICATION METHODS***/
+  logOut(): void {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('token')
+      localStorage.removeItem('role')
+    }
+  }
+
+  isAuthenticated(): boolean {
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('token');
+      return !!token;
+    }
+    return false;
+  }
+
+  isAdmin(): boolean {
+    if (typeof localStorage !== 'undefined') {
+      const role = localStorage.getItem('role');
+      return role === 'ADMIN';
+    }
+    return false;
+  }
+
+  isUser(): boolean {
+    if (typeof localStorage !== 'undefined') {
+      const role = localStorage.getItem('role');
+      return role === 'USER';
+    }
+    return false;
+  }
+
 }

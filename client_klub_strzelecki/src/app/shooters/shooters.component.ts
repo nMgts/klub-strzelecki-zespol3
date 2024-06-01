@@ -1,11 +1,7 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ViewChild, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
-import { NgModule } from '@angular/core';
-
-import { ShootersService } from '../services/shooters.service';
-import { CommonModule } from '@angular/common';
-import { Shooter } from '../interfaces/shooter';
-import {Router} from "@angular/router";
+import { ShootersService } from '../services/shooter.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-shooters',
@@ -13,51 +9,54 @@ import {Router} from "@angular/router";
   styleUrl: './shooters.component.css'
 })
 
-
-
-export class ShootersComponent implements AfterViewInit {
-
-  shooters_list: Shooter[] = [];
+export class ShootersComponent implements AfterViewInit, OnInit {
+  shooters: any[] = [];
   visible: boolean = false;
   shooterId: number| undefined
+  errorMessage: string = ''
 
   constructor(
     private shooterService: ShootersService,
     private cd: ChangeDetectorRef,
     private router: Router) {}
 
-  // After init - because we need the pagination to load first
-  // Fetch the shooters from the database and display them
   ngAfterViewInit(): void {
-
-    // The DOM has been changed, we need to detect the changes to prevent ExpressionChangedAfterItHasBeenCheckedError
     this.cd.detectChanges();
   }
-  logHello(): void {
-    console.log("Hello");
-  }
+
   ngOnInit(): void {
     console.log("ShootersComponent is initialized halo");
-    this.getShooters();
+    this.loadShooters();
   }
 
-  private getShooters() {
-    this.shooterService.getShooter().subscribe(data => {
-      this.shooters_list = data;
-    });
+  async loadShooters() {
+    try {
+      const token: any = localStorage.getItem('token');
+      const response = await this.shooterService.getAllShooters(token);
+      if (response ) {
+        this.shooters = response
+      } else {
+        this.showError("No shooters found.")
+      }
+    } catch (error: any) {
+      this.showError(error.message);
+    }
   }
+/*
   public onDeleteShooter(id: number): void {
     console.log('Attempting to delete shooter with id:');  // Check if ID is correct
     this.shooterService.deleteShooter(id).subscribe({
       next: (response) => {
         console.log('Shooter deleted successfully', response);
-        this.shooters_list = this.shooters_list.filter(shooter => shooter.id !== id);
+        this.shooters = this.shooters.filter(shooter => shooter.id !== id);
       },
       error: (err) => {
         console.error('Error deleting shooter:', err);
       }
     });
   }
+
+ */
 
   changeNlForP(text: string): string {
     let editedText = '<p>' + text;
@@ -70,14 +69,13 @@ export class ShootersComponent implements AfterViewInit {
     this.router.navigate(['shooters/edit', id]);
   }
 
-  deleteShooters(): void {
-    if (this.shooterId !== undefined) {
-      this.shooterService.deleteShooter(this.shooterId).subscribe( data =>{
-        console.log(data);
-        this.getShooters();
-      })
-    } else {
-      console.error('ID is undefined');
+  async deleteShooters(shooterId: number | undefined) {
+    try {
+      const token: any = localStorage.getItem('token');
+      await this.shooterService.deleteShooter(shooterId, token);
+      this.loadShooters();
+    } catch (error: any) {
+      this.showError(error.message);
     }
   }
   showDialog(id?: number)
@@ -85,5 +83,12 @@ export class ShootersComponent implements AfterViewInit {
     console.log("show dialog");
     this.visible = true;
     this.shooterId = id;
+  }
+
+  showError(mess: string) {
+    this.errorMessage = mess;
+    setTimeout(() => {
+      this.errorMessage = ''
+    }, 3000)
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Shooter } from "../interfaces/shooter";
 
@@ -16,25 +16,68 @@ export class ShootersService {
 
   constructor(private http: HttpClient) {}
 
-  getShooter(): Observable<Shooter[]> {
-    return this.http.get<Shooter[]>(this.baseUrl);
+  getAllShooters(token:string):Promise<any> {
+    const url = `${this.baseUrl}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.get<any>(url, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 
-  deleteShooter(shooterId: number): Observable<Shooter> {
+  deleteShooter(shooterId: number | undefined, token: string):Promise<any> {
     const url = `${this.deleteUrl}/${shooterId}`;
-    return this.http.delete<Shooter>(url);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.delete<any>(url, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 
-  getShooterById(shooterId: number): Observable<Shooter> {
-    const url = `${this.getUrl}/${shooterId}`;
-    return this.http.get<Shooter>(url);
+  getShooterById(shooteId:string, token: string):Promise<any> {
+    const url = `${this.getUrl}/${shooteId}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.get<any>(url, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 
-  addShooter(shooter?: Shooter): Observable<Shooter> {
-    return this.http.post<Shooter>(this.postUrl, shooter);
+  addShooter(shooterData:any, token:string):Promise<any> {
+    const url = `${this.postUrl}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.post<any>(url, shooterData, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 
-  editShooter(id: number, shooter: Shooter) {
-    return this.http.put(`${this.putUrl}/${id}`, shooter);
+  async editShooter(shooterId: string | null, shooterData: any, token: string):Promise<any> {
+    const url = `${this.putUrl}/${shooterId}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.put<any>(url, shooterData, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 }

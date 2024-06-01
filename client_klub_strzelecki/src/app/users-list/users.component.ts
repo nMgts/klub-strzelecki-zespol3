@@ -1,10 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ViewChild, OnInit } from '@angular/core';
 
-import { NgModule } from '@angular/core';
-
 import { UsersService } from '../services/users.service';
-import { CommonModule } from '@angular/common';
-import { User } from '../interfaces/user';
 import {Router} from "@angular/router";
 
 @Component({
@@ -13,9 +9,9 @@ import {Router} from "@angular/router";
   styleUrl: '../shooters/shooters.component.css'
 })
 
-export class UsersComponent implements AfterViewInit {
-
-  users_list: User[] = [];
+export class UsersComponent implements AfterViewInit, OnInit {
+  users: any[] = [];
+  errorMessage: string = ''
   visible: boolean = false;
   userId: number| undefined
 
@@ -24,26 +20,29 @@ export class UsersComponent implements AfterViewInit {
     private cd: ChangeDetectorRef,
     private router: Router) {}
 
-  // After init - because we need the pagination to load first
-  // Fetch the shooters from the database and display them
   ngAfterViewInit(): void {
-
-    // The DOM has been changed, we need to detect the changes to prevent ExpressionChangedAfterItHasBeenCheckedError
     this.cd.detectChanges();
   }
-  logHello(): void {
-    console.log("Hello");
-  }
+
   ngOnInit(): void {
     console.log("UsersComponent is initialized halo");
-    this.getUsers();
+    this.loadUsers();
   }
 
-  private getUsers() {
-    this.userService.getUser().subscribe(data => {
-      this.users_list = data;
-    });
+  async loadUsers() {
+    try {
+      const token: any = localStorage.getItem('token');
+      const response = await this.userService.getAllUsers(token);
+      if (response && response.statusCode === 200 && response.userList) {
+        this.users = response.userList;
+      } else {
+        this.showError('No users found.');
+      }
+    } catch (error: any) {
+      this.showError(error.message);
+    }
   }
+  /*
   public onDeleteUser(id: number): void {
     console.log('Attempting to delete user with id:');  // Check if ID is correct
     this.userService.deleteUser(id).subscribe({
@@ -56,7 +55,7 @@ export class UsersComponent implements AfterViewInit {
       }
     });
   }
-
+*/
   changeNlForP(text: string): string {
     let editedText = '<p>' + text;
     editedText = editedText.replace(/\n/g, '</p><p>');
@@ -68,14 +67,13 @@ export class UsersComponent implements AfterViewInit {
     this.router.navigate(['users/edit', id]);
   }
 
-  deleteUsers(): void {
-    if (this.userId !== undefined) {
-      this.userService.deleteUser(this.userId).subscribe( data =>{
-        console.log(data);
-        this.getUsers();
-      })
-    } else {
-      console.error('ID is undefined');
+  async deleteUser(userId: string) {
+    try {
+      const token: any = localStorage.getItem('token');
+      await this.userService.deleteUser(userId, token);
+      this.loadUsers();
+    } catch (error: any) {
+      this.showError(error.message);
     }
   }
   showDialog(id?: number)
@@ -83,5 +81,12 @@ export class UsersComponent implements AfterViewInit {
     console.log("show dialog");
     this.visible = true;
     this.userId = id;
+  }
+
+  showError(mess: string) {
+    this.errorMessage = mess;
+    setTimeout(() => {
+      this.errorMessage = ''
+    }, 3000)
   }
 }

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ShootersService } from './shooters.service';
+import { ShootersService } from './shooter.service';
 
 describe('ShootersService', () => {
   let service: ShootersService;
