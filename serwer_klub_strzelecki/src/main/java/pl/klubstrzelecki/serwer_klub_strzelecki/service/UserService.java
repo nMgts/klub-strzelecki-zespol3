@@ -25,7 +25,7 @@ public class UserService {
         this.userDTOMapper = userDTOMapper;
         this.passwordEncoder = passwordEncoder;
     }
-
+/*
     public ReqRes getAllUsers() {
         ReqRes reqRes = new ReqRes();
 
@@ -46,7 +46,7 @@ public class UserService {
             return reqRes;
         }
     }
-
+*/
     public List<UserDTO> findAll() {
         List<User> userList = userRepository.findAll();
         List<UserDTO> userDTOList = new ArrayList<>();

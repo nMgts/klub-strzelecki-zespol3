@@ -26,7 +26,7 @@ public class UserController {
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> getAllUsers() {
-        return ResponseEntity.ok().body(userService.getAllUsers());
+        return ResponseEntity.ok().body(userService.findAll());
     }
 
     @GetMapping("/{id}")
