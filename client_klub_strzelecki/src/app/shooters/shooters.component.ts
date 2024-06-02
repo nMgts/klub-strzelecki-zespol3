@@ -12,13 +12,12 @@ import { Router } from "@angular/router";
 export class ShootersComponent implements AfterViewInit, OnInit {
   shooters: any[] = [];
   visible: boolean = false;
-  shooterId: number| undefined
-  errorMessage: string = ''
+  shooterId: number| undefined;
+  errorMessage: string = '';
 
   constructor(
     private shooterService: ShootersService,
-    private cd: ChangeDetectorRef,
-    private router: Router) {}
+    private cd: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
     this.cd.detectChanges();
@@ -65,15 +64,12 @@ export class ShootersComponent implements AfterViewInit, OnInit {
     return editedText;
   }
 
-  editShooters(id: number) {
-    this.router.navigate(['shooters/edit', id]);
-  }
-
   async deleteShooters(shooterId: number | undefined) {
     try {
       const token: any = localStorage.getItem('token');
       await this.shooterService.deleteShooter(shooterId, token);
       this.loadShooters();
+      this.visible = false;
     } catch (error: any) {
       this.showError(error.message);
     }

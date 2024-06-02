@@ -16,7 +16,6 @@ import {UsersService} from "../services/users.service";
 
 // Component that displays the news
 export class NewsComponent implements AfterViewInit {
-
   news_list: News[] = [];
   visible: boolean = false;
   newsId: number| undefined;
@@ -78,6 +77,7 @@ export class NewsComponent implements AfterViewInit {
     const token: any = localStorage.getItem('token');
     await this.newsService.deleteNews(newsId, token);
     this.getNews();
+    this.visible = false;
   } catch (error: any) {
     this.showError(error.message);
   }
