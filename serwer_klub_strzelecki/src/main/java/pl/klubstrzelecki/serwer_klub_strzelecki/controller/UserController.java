@@ -15,18 +15,16 @@ import pl.klubstrzelecki.serwer_klub_strzelecki.service.UserService;
 @RequestMapping("/api/user")
 public class UserController {
     private final UserService userService;
-    private final UserManagementService userManagementService;
 
     @Autowired
-    public UserController(UserService userService, UserManagementService userManagementService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userManagementService = userManagementService;
     }
 
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> getAllUsers() {
-        return ResponseEntity.ok().body(userService.findAll());
+        return ResponseEntity.ok().body(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")

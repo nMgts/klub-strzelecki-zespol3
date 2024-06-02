@@ -24,7 +24,7 @@ export class UpdateProfileComponent implements OnInit {
     }
     try {
       let userDataResponse = await this.userService.getUserById(this.userId, token)
-      const {first_name, last_name, email, role} = userDataResponse.user
+      const {first_name, last_name, email, role} = userDataResponse
       this.userData = {first_name, last_name, email, role};
     } catch (error: any) {
       this.showError(error.message);
@@ -32,9 +32,6 @@ export class UpdateProfileComponent implements OnInit {
   }
 
   async updateUser() {
-    // @ts-ignore
-    const confirm = confirm("Are you sure you wanna update this user")
-    if(!confirm) return
     try {
       const token = localStorage.getItem('token')
       if(!token) {

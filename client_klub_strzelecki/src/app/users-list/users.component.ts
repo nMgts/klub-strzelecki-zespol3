@@ -34,7 +34,7 @@ export class UsersComponent implements AfterViewInit, OnInit {
       const token: any = localStorage.getItem('token');
       const response = await this.userService.getAllUsers(token);
       if (response /*&& response.statusCode === 200 && response.userList*/) {
-        this.users = response//.userList;
+        this.users = response.userList;
       } else {
         this.showError('No users found.');
       }

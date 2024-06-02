@@ -25,14 +25,20 @@ public class UserService {
         this.userDTOMapper = userDTOMapper;
         this.passwordEncoder = passwordEncoder;
     }
-/*
+
     public ReqRes getAllUsers() {
         ReqRes reqRes = new ReqRes();
 
         try {
             List<User> result = userRepository.findAll();
             if (!result.isEmpty()) {
-                reqRes.setUserList(result);
+
+                List<UserDTO> userDTOList = new ArrayList<>();
+                for (User user : result) {
+                    userDTOList.add(userDTOMapper.convertUserToUserDTO(user));
+                }
+
+                reqRes.setUserList(userDTOList);
                 reqRes.setStatusCode(200);
                 reqRes.setMessage("successfull");
             } else {
@@ -46,7 +52,7 @@ public class UserService {
             return reqRes;
         }
     }
-*/
+
     public List<UserDTO> findAll() {
         List<User> userList = userRepository.findAll();
         List<UserDTO> userDTOList = new ArrayList<>();
@@ -100,7 +106,8 @@ public class UserService {
         try {
             Optional<User> userOpt = userRepository.findByEmail(email);
             if (userOpt.isPresent()) {
-                reqRes.setUser(userOpt.get());
+                UserDTO userDTO = userDTOMapper.convertUserToUserDTO(userOpt.get());
+                reqRes.setUser(userDTO);
                 reqRes.setStatusCode(200);
                 reqRes.setMessage("successfull");
             } else {

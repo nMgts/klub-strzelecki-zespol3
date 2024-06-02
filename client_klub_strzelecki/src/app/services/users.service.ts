@@ -50,6 +50,7 @@ export class UsersService {
       'Authorization': `Bearer ${token}`
     })
     try {
+      console.log(this.http.get<any>(url, {headers}))
       const response = this.http.get<any>(url, {headers}).toPromise()
       return response;
     } catch (error) {
@@ -76,7 +77,7 @@ export class UsersService {
       'Authorization': `Bearer ${token}`
     })
     try {
-      const response = this.http.post<any>(url, {headers}).toPromise()
+      const response = this.http.get<any>(url, {headers}).toPromise()
       return response;
     } catch (error) {
       throw error

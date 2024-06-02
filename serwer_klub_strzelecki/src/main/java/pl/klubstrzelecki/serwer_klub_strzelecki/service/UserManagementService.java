@@ -6,7 +6,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.klubstrzelecki.serwer_klub_strzelecki.convert.UserDTOMapper;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.ReqRes;
+import pl.klubstrzelecki.serwer_klub_strzelecki.dto.UserDTO;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.User;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ShooterRepository;
@@ -23,16 +25,18 @@ public class UserManagementService {
     private final JWTUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
+    private final UserDTOMapper userDTOMapper;
 
     @Autowired
     public UserManagementService(UserRepository userRepository, JWTUtils jwtUtils,
                                  AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
-                                 ShooterRepository shooterRepository) {
+                                 ShooterRepository shooterRepository, UserDTOMapper userDTOMapper) {
         this.userRepository = userRepository;
         this.shooterRepository = shooterRepository;
         this.jwtUtils = jwtUtils;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
+        this.userDTOMapper = userDTOMapper;
     }
 
     //@Transactional
@@ -54,8 +58,9 @@ public class UserManagementService {
             user.setShooter(shooterResult);
             user.setRole("USER");
             User userResult = userRepository.save(user);
+            UserDTO userDTO = userDTOMapper.convertUserToUserDTO(userResult);
             if (userResult.getId() > 0 || shooterResult.getId() > 0) {
-                resp.setUser(userResult);
+                resp.setUser(userDTO);
                 resp.setMessage("User saved successfully");
                 resp.setStatusCode(200);
             }
