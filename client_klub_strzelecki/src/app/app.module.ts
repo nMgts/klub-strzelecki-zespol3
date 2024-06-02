@@ -23,6 +23,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import {AssignShootersComponent} from "./assign-shooters/assign-shooters.component";
+import { RemoveTPipe } from './competitions-list/remove-t.pipe';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import {AssignShootersComponent} from "./assign-shooters/assign-shooters.compone
     ProfileComponent,
     RegisterComponent,
     UpdateProfileComponent,
-    AssignShootersComponent
+    AssignShootersComponent,
+    RemoveTPipe
   ],
   imports: [
     DialogModule,

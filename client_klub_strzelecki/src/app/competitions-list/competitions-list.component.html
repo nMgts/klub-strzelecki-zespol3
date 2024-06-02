@@ -1,16 +1,20 @@
 <div class="competition_list">
-  <p>Aktualności</p>
+  <h1>Lista zawodów</h1>
   <button *ngIf="isAdmin" type="button" id="news-add-button" class="generic-button" [routerLink]="['/competitions/add']">Dodaj nowe zawody</button>
-  <div *ngFor="let competition of competitions" class="news-item">
-    <h2>{{ competition.name }}</h2>
-    <h3>{{ competition.start_date }}</h3>
-    <h3>{{ competition.end_date }}</h3>
-    <h4>{{ competition.shooters_limit }}</h4>
-    <div id="button-container">
-      <button *ngIf="isAdmin" [routerLink]="['/competitions/edit', competition.id]" type="button" id="news-edit-button" class="generic-button">Edytuj</button>
-      <button *ngIf="isAdmin" (click) = "deleteCompetition(competition.id)" type="button" id="news-delete-button" class="generic-button">Usuń</button>
-      <button *ngIf="isAdmin" [routerLink]="['/competitions/assign', competition.id]" type="button" id="assign-shooter-button" class="generic-button">Zapisz użytkownika</button>
-      <button *ngIf="!isAdmin" (click) = "signUpForCompetition(competition.id)" type="button" id="sign-up-button" class="generic-button">Zapisz się</button>
+  <div class="container">
+    <div *ngFor="let competition of competitions" class="news-item">
+      <div class="attributes">
+        <h2>{{ competition.name }}</h2>
+        <h3>Czas rozpoczęcia: {{ competition.start_date | removeT }}</h3>
+        <h3>Czas zakończenia: {{ competition.end_date | removeT }}</h3>
+        <h4>Limit zawodników: {{ competition.shooters_limit }}</h4>
+      </div>
+      <div class="button-container">
+        <button *ngIf="isAdmin" [routerLink]="['/competitions/edit', competition.id]" type="button" id="news-edit-button" class="generic-button">Edytuj</button>
+        <button *ngIf="isAdmin" (click) = "deleteCompetition(competition.id)" type="button" id="news-delete-button" class="generic-button">Usuń</button>
+        <button *ngIf="isAdmin" [routerLink]="['/competitions/assign', competition.id]" type="button" id="assign-shooter-button" class="generic-button">Zapisz użytkownika</button>
+        <button *ngIf="!isAdmin" (click) = "signUpForCompetition(competition.id)" type="button" id="sign-up-button" class="generic-button">Zapisz się</button>
+      </div>
     </div>
   </div>
 </div>

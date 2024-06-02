@@ -6,9 +6,9 @@
     <label>Opis</label>
     <input type="text" placeholder="Enter" class="form-control" id="description" name = "description" [(ngModel)]="new_competition.description" required>
     <label>Data startu</label>
-    <input type="text" placeholder="Enter" class="form-control" id="start_date" name = "start_date" [(ngModel)]="new_competition.start_date" required>
+    <input type="datetime-local" class="form-control" id="start_date" name = "start_date" [(ngModel)]="new_competition.start_date" required>
     <label>Data końca</label>
-    <input type="text" placeholder="Enter" class="form-control" id="end_date" name = "end_date" [(ngModel)]="new_competition.end_date" required>
+    <input type="datetime-local" class="form-control" id="end_date" name = "end_date" [(ngModel)]="new_competition.end_date" required>
     <label>limit uczesników</label>
     <input type="text" placeholder="Enter" class="form-control" id="shooters_limit" name = "shooters_limit" [(ngModel)]="new_competition.shooters_limit" required>
   </div>
