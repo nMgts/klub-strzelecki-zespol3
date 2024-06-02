@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { News } from '../interfaces/news';
 
@@ -11,6 +11,9 @@ export class NewsService {
 
   private baseUrl = 'http://localhost:8080/api/news/all';
   private deleteUrl = 'http://localhost:8080/api/news/delete';
+  private postUrl = 'http://localhost:8080/api/news/add';
+  private putUrl = 'http://localhost:8080/api/news/edit';
+  private getUrl = 'http://localhost:8080/api/news'
 
   constructor(private http: HttpClient) {}
 
@@ -18,11 +21,57 @@ export class NewsService {
     return this.http.get<News[]>(this.baseUrl);
   }
 
-  deleteNews(newsId: number): Observable<News> {
+  async deleteNews(newsId: number | undefined, token: string):Promise<any> {
     const url = `${this.deleteUrl}/${newsId}`;
-    return this.http.delete<News>(url);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.delete<any>(url, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 
+  async getNewsById(newsId:string, token: string):Promise<any> {
+    const url = `${this.getUrl}/${newsId}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.get<any>(url, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async addNews(newsData:any, token:string):Promise<any> {
+    const url = `${this.postUrl}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.post<any>(url, newsData, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async updateNews(newsId: string | null, newsData: any, token: string):Promise<any> {
+    const url = `${this.putUrl}/${newsId}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.put<any>(url, newsData, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 // import { Injectable } from '@angular/core';

@@ -1,0 +1,20 @@
+h2 {
+  margin-top: 25px;
+  font-size: 35px;
+}
+
+button {
+  font-weight: bold;
+  padding: 2px;
+}
+
+button {
+  width: 150px;
+  height: 50px;
+  transition: width 0.2s;
+}
+
+button:hover {
+  width: 200px;
+  background-color: #4141ce;
+}

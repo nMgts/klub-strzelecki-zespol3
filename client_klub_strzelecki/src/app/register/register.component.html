@@ -1,0 +1,31 @@
+<div class="container">
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  <h2>Rejestracja</h2>
+  <form (submit)="handleSubmit()">
+    <div class="form-group">
+      <label>Imię: </label>
+      <input type="text" name="first_name" [(ngModel)]="formData.first_name" required>
+    </div>
+    <div class="form-group">
+      <label>Nazwisko: </label>
+      <input type="text" name="last_name" [(ngModel)]="formData.last_name" required>
+    </div>
+    <div class="form-group">
+      <label>Email: </label>
+      <input type="text" name="email" [(ngModel)]="formData.email" required>
+    </div>
+    <div class="form-group">
+      <label>Hasło: </label>
+      <input type="password" name="password" [(ngModel)]="formData.password" required>
+    </div>
+    <div class="form-group">
+      <label>Role: </label>
+      <select name="role" [(ngModel)]="formData.role" required>
+        <option value="">Wybierz rolę</option>
+        <option value="ADMIN">ADMIN</option>
+        <option value="USER">USER</option>
+      </select>
+    </div>
+    <button type="submit">Zarejestruj</button>
+  </form>
+</div>

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -16,21 +17,15 @@ import java.util.Set;
 @Entity
 @Table(name = "competitions", schema = "public")
 public class Competition {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "Name")
     private String name;
-    @Column(name = "Description")
     private String description;
-    @Column(name = "Start_Date")
-    private LocalDateTime startDate;
-    @Column(name = "End_Date")
-    private LocalDateTime endDate;
-    @Column(name = "Shooters_Limit")
+    private LocalDateTime start_date;
+    private LocalDateTime end_date;
     private int shooters_limit;
 
-    @ManyToMany(mappedBy = "competitions")
-    private Set<User> users;
+    @ManyToMany(mappedBy = "competitions", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Shooter> shooters = new HashSet<>();
 }

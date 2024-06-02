@@ -5,55 +5,61 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import pl.klubstrzelecki.serwer_klub_strzelecki.model.User;
-import pl.klubstrzelecki.serwer_klub_strzelecki.repository.UserRepository;
+import pl.klubstrzelecki.serwer_klub_strzelecki.dto.ReqRes;
+import pl.klubstrzelecki.serwer_klub_strzelecki.dto.UserDTO;
+import pl.klubstrzelecki.serwer_klub_strzelecki.service.UserManagementService;
+import pl.klubstrzelecki.serwer_klub_strzelecki.service.UserService;
 
 @RestController
+@RequestMapping("/api/user")
 public class UserController {
+    private final UserService userService;
 
     @Autowired
-    private UserRepository userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @GetMapping("/user/all")
+    @GetMapping("/all")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> getAllUsers() {
-        return ResponseEntity.ok(userRepository.findAll());
+        return ResponseEntity.ok().body(userService.getAllUsers());
     }
 
-    @GetMapping("user/single")
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
-    public ResponseEntity<Object> getMyDetails() {
-        return ResponseEntity.ok(userRepository.findByEmail(getLoggedInUserDetails().getUsername()));
-    }
-
-    @PostMapping("/user/save")
-    public ResponseEntity<Object> createUser(@RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        User result = userRepository.save(user);
-        if (result.getId() > 0) {
-            return ResponseEntity.ok("User was saved");
-        }
-        return ResponseEntity.status(404).body("Error, user not saved");
-    }
-
-    @DeleteMapping("/user/delete/{userId}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String deleteUser(@PathVariable Long userId) {
-        userRepository.deleteById(userId);
-        return "User deleted successfully";
+    public ResponseEntity<Object> getUserById(@PathVariable Long id) throws Exception {
+        return ResponseEntity.ok().body(userService.findUserById(id));
     }
 
-    public UserDetails getLoggedInUserDetails() {
+    @PostMapping("/add")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Object> createUser(@RequestBody UserDTO userDTO) {
+        userService.saveUser(userDTO);
+        return ResponseEntity.ok().body("{\"message\": \"User was saved!\"}");
+    }
+
+    @PutMapping("/edit/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Object> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) throws Exception {
+        userService.updateUser(id, userDTO);
+        return ResponseEntity.ok().body("{\"message\": \"User updated successfully!\"}");
+    }
+
+    @DeleteMapping("/delete/{userId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<String> deleteUser(@PathVariable("userId") Long id) throws Exception {
+        userService.deleteUserById(id);
+        return ResponseEntity.ok().body("{\"message\": \"User deleted successfully!\"}");
+    }
+
+    @GetMapping("/get-profile")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    public ResponseEntity<ReqRes> getMyProfile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            return (UserDetails) authentication.getPrincipal();
-        }
-        return null;
+        String email = authentication.getName();
+        ReqRes response = userService.getMyInfo(email);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 }

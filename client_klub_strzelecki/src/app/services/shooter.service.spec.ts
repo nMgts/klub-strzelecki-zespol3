@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ShooterService } from './shooter.service';
+import { ShootersService } from './shooter.service';
 
-describe('ShooterService', () => {
-  let service: ShooterService;
+describe('ShootersService', () => {
+  let service: ShootersService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ShooterService);
+    service = TestBed.inject(ShootersService);
   });
 
   it('should be created', () => {

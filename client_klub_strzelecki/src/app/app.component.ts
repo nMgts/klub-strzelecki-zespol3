@@ -1,18 +1,33 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {ShootersTableComponent} from "./shooters-table/shooters-table.component";
-import { NewsComponent } from './components/news.component';
-import { NewsTableComponent } from './news-table/news-table.component';
+import {Component, OnInit} from '@angular/core';
+import {UsersService} from "./services/users.service";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ShootersTableComponent, NewsComponent, NewsTableComponent],
+
   templateUrl: './app.component.html',
-  standalone: true,
 
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+
+  constructor(private readonly userService: UsersService) {}
+
   title = 'Shooting Club';
-  title_news = 'Bieżące informacje'
+  isAuthenticated:boolean = false;
+  isAdmin:boolean = false;
+  isUser:boolean = false;
+
+  logout():void {
+    this.userService.logOut();
+    this.isAuthenticated = false;
+    this.isAdmin = false;
+    this.isUser = false;
+  }
+
+  ngOnInit(): void {
+    this.isAuthenticated = this.userService.isAuthenticated();
+    this.isAdmin = this.userService.isAdmin();
+    this.isUser = this.userService.isUser();
+  }
 }

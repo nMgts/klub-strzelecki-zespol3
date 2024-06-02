@@ -3,6 +3,9 @@ package pl.klubstrzelecki.serwer_klub_strzelecki.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -10,11 +13,21 @@ import lombok.*;
 @Entity
 @Table(name = "shooters", schema = "public")
 public class Shooter {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String firstName;
-    private String lastName;
+    private String first_name;
+    private String last_name;
+    @Column(unique = true)
     private String email;
+    @Transient
+    private boolean assignedToUser;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+        name = "shooter_competition",
+        joinColumns = @JoinColumn(name = "shooter_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "competition_id", referencedColumnName = "id")
+    )
+    private Set<Competition> competitions = new HashSet<>();
 }
