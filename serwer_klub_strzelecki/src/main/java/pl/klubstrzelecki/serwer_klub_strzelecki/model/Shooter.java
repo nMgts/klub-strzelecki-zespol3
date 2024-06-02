@@ -20,6 +20,8 @@ public class Shooter {
     private String last_name;
     @Column(unique = true)
     private String email;
+    @Transient
+    private boolean assignedToUser;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(

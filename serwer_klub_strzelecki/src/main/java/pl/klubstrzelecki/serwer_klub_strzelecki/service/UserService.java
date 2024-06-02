@@ -87,6 +87,7 @@ public class UserService {
         User existingUser = userOptional.get();
         User updatedUser = userDTOMapper.convertUserDTOtoUser(userDTO);
         updatedUser.setPassword(existingUser.getPassword());
+        updatedUser.setShooter(existingUser.getShooter());
         updatedUser.setId(existingUser.getId());
 
         return userRepository.save(updatedUser);

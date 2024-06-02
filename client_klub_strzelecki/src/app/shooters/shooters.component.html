@@ -27,7 +27,15 @@
           <td class="p-3 border-2">Email: {{ shooter.email }} </td>
           <div id="button-container">
             <button [routerLink]="['/shooters/edit', shooter.id]" type="button" id="shooters-edit-button" class="generic-button">Edytuj</button>
-            <button (click) = "showDialog(shooter.id)" type="button" id="shooters-delete-button" class="generic-button">Usuń</button>
+            <button *ngIf="!shooter.assignedToUser; else assignedTooltip" (click)="showDialog(shooter.id)"
+              type="button" id="shooters-delete1-button" class="generic-button">Usuń
+            </button>
+            <ng-template #assignedTooltip>
+              <button type="button" id="shooters-delete2-button" class="generic-button" disabled
+                title="Nie można usunąć zawodnika, ponieważ jest on przypisany do konta, aby to zrobić usuń użytkownika">
+                Usuń
+              </button>
+            </ng-template>
           </div>
         </tr>
       </tbody>

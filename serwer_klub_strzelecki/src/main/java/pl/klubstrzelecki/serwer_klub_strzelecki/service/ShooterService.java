@@ -6,8 +6,10 @@ import pl.klubstrzelecki.serwer_klub_strzelecki.convert.ShooterDTOMapper;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.ShooterDTO;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Competition;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
+import pl.klubstrzelecki.serwer_klub_strzelecki.model.User;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.CompetitionRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ShooterRepository;
+import pl.klubstrzelecki.serwer_klub_strzelecki.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +20,14 @@ public class ShooterService {
     private final ShooterRepository shooterRepository;
     private final CompetitionRepository competitionRepository;
     private final ShooterDTOMapper shooterDTOMapper;
+    private final UserRepository userRepository;
 
     @Autowired
-    public ShooterService(ShooterRepository shooterRepository,  CompetitionRepository competitionRepository, ShooterDTOMapper shooterDTOMapper) {
+    public ShooterService(ShooterRepository shooterRepository,  CompetitionRepository competitionRepository,
+                          UserRepository userRepository, ShooterDTOMapper shooterDTOMapper ) {
         this.shooterRepository = shooterRepository;
         this.competitionRepository = competitionRepository;
+        this.userRepository = userRepository;
         this.shooterDTOMapper = shooterDTOMapper;
     }
 
@@ -30,6 +35,8 @@ public class ShooterService {
         List<Shooter> shooterList = shooterRepository.findAll();
         List<ShooterDTO> shooterDTOList = new ArrayList<>();
         for (Shooter shooter : shooterList) {
+            User user = userRepository.findByShooter(shooter);
+            shooter.setAssignedToUser(user != null);
             shooterDTOList.add(shooterDTOMapper.convertShooterToShooterDTO(shooter));
         }
         return shooterDTOList;

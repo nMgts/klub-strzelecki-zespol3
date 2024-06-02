@@ -14,4 +14,5 @@ public class ShooterDTO {
     private String first_name;
     private String last_name;
     private String email;
+    private boolean assignedToUser;
 }
