@@ -8,7 +8,9 @@ import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ImageDataRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.util.ImageUtils;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ImageDataService {
@@ -35,5 +37,15 @@ public class ImageDataService {
         Optional<ImageData> dbImageData = imageDataRepository.findByName(fileName);
         byte[] images = ImageUtils.decompressImage(dbImageData.get().getImageData());
         return images;
+    }
+
+    public List<ImageData> getAllImages() {
+        return imageDataRepository.findAll().stream()
+                .map(image -> ImageData.builder()
+                        .name(image.getName())
+                        .type(image.getType())
+                        .imageData(ImageUtils.decompressImage(image.getImageData()))
+                        .build())
+                .collect(Collectors.toList());
     }
 }

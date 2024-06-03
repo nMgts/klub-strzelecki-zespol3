@@ -1,0 +1,7 @@
+<p>Nasza galeria</p>
+<div *ngIf="images && images.length">
+    <div *ngFor="let image of images">
+      <img [src]="'data:image/png;base64,' + image.imagedata" [alt]="image.name" />
+    </div>
+  </div>
+  

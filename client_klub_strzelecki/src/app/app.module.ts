@@ -24,7 +24,7 @@ import { RegisterComponent } from './register/register.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import {AssignShootersComponent} from "./assign-shooters/assign-shooters.component";
 import { RemoveTPipe } from './competitions-list/remove-t.pipe';
-
+import { ImageGalleryComponent } from './image-gallery/image-gallery.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,9 @@ import { RemoveTPipe } from './competitions-list/remove-t.pipe';
     RegisterComponent,
     UpdateProfileComponent,
     AssignShootersComponent,
+    ImageGalleryComponent,
     RemoveTPipe
+    
   ],
   imports: [
     DialogModule,

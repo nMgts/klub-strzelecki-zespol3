@@ -12,6 +12,7 @@ import { StatuteComponent } from './statute/statute.component';
 import { CompetitionAddComponent } from "./competition-add/competition-add.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { LoginComponent } from "./login/login.component";
+import { ImageGalleryComponent } from './image-gallery/image-gallery.component';
 import { RegisterComponent } from "./register/register.component";
 import {UpdateProfileComponent} from "./update-profile/update-profile.component";
 import {AssignShootersComponent} from "./assign-shooters/assign-shooters.component";
@@ -30,6 +31,7 @@ export const routes: Routes = [
   { path: 'competitions/add', component: CompetitionAddComponent, canActivate: [adminGuard]},
   { path: 'competitions/assign/:id', component: AssignShootersComponent, canActivate: [adminGuard] },
   { path: 'statute', component: StatuteComponent },
+  { path: 'gallery', component: ImageGalleryComponent},
   { path: 'profile', component: ProfileComponent, canActivate: [usersGuard] },
   { path: 'profile/update/:id', component: UpdateProfileComponent, canActivate: [usersGuard] },
   { path: 'login', component: LoginComponent },
