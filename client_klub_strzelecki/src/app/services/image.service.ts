@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Imagedata } from '../interfaces/imagedata';
 
@@ -13,7 +13,16 @@ export class ImageService {
 
   constructor(private http: HttpClient) { }
 
-  getAllImages(): Observable<Imagedata> {
-    return this.http.get<Imagedata>(`${this.baseUrl}`);
+  getAllImages(token:string):Promise<any> {
+    const url = `${this.baseUrl}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    try {
+      const response = this.http.get<any>(url, {headers}).toPromise()
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 }
