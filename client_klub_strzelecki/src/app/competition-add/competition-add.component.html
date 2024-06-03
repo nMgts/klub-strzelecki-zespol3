@@ -1,17 +1,18 @@
-<h3>Stwórz wzmiankę</h3>
+<h3>Stwórz zawody</h3>
 <form (ngSubmit) = "onSubmit()">
   <div class="form-group">
-    <label>Nazwa</label>
-    <input type="text" placeholder="Enter" class="form-control" id="name" name = "name" [(ngModel)]="new_competition.name" required>
-    <label>Opis</label>
-    <input type="text" placeholder="Enter" class="form-control" id="description" name = "description" [(ngModel)]="new_competition.description" required>
-    <label>Data startu</label>
-    <input type="datetime-local" class="form-control" id="start_date" name = "start_date" [(ngModel)]="new_competition.start_date" required>
-    <label>Data końca</label>
-    <input type="datetime-local" class="form-control" id="end_date" name = "end_date" [(ngModel)]="new_competition.end_date" required>
-    <label>limit uczesników</label>
-    <input type="text" placeholder="Enter" class="form-control" id="shooters_limit" name = "shooters_limit" [(ngModel)]="new_competition.shooters_limit" required>
+    <label>Nazwa</label><br>
+    <input type="text" placeholder="Enter" class="form-control" id="name" name = "name" [(ngModel)]="new_competition.name" required><br>
+    <label>Opis</label><br>
+    <input type="text" placeholder="Enter" class="form-control" id="description" name = "description" [(ngModel)]="new_competition.description" required><br>
+    <label>Data startu</label><br>
+    <input type="datetime-local" class="form-control" id="start_date" name = "start_date" [(ngModel)]="new_competition.start_date" required><br>
+    <label>Data końca</label><br>
+    <input type="datetime-local" class="form-control" id="end_date" name = "end_date" [(ngModel)]="new_competition.end_date" required><br>
+    <label>limit uczesników</label><br>
+    <input type="text" placeholder="Enter" class="form-control" id="shooters_limit" name = "shooters_limit" [(ngModel)]="new_competition.shooters_limit" required><br>
+    <button class="btn btn-success" type="submit"> Potwierdź </button>
   </div>
 
-  <button class="btn btn-success" type="submit"> Potwierdź </button>
+  
 </form>
