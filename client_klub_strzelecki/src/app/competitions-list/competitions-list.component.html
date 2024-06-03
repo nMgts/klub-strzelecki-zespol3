@@ -12,7 +12,7 @@
       <div class="button-container">
         <button *ngIf="isAdmin" [routerLink]="['/competitions/edit', competition.id]" type="button" id="news-edit-button" class="generic-button">Edytuj</button>
         <button *ngIf="isAdmin" (click) = "deleteCompetition(competition.id)" type="button" id="news-delete-button" class="generic-button">Usuń</button>
-        <button *ngIf="isAdmin" [routerLink]="['/competitions/assign', competition.id]" type="button" id="assign-shooter-button" class="generic-button">Zapisz użytkownika</button>
+        <button *ngIf="isAdmin" [routerLink]="['/competitions/assign', competition.id]" type="button" id="assign-shooter-button" class="generic-button">Zapisz zawodnika</button>
         <button *ngIf="!isAdmin" (click) = "signUpForCompetition(competition.id)" type="button" id="sign-up-button" class="generic-button">Zapisz się</button>
       </div>
     </div>
