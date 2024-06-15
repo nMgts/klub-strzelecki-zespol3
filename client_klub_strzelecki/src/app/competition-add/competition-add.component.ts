@@ -14,7 +14,8 @@ export class CompetitionAddComponent implements OnInit {
     description: '',
     start_date: '',
     end_date: '',
-    shooters_limit: 0
+    shooters_limit: 0,
+    emails: []
   };
   errorMessage: string = '';
 

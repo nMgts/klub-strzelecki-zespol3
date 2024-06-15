@@ -5,4 +5,5 @@ export interface Competition {
   start_date: string;
   end_date: string;
   shooters_limit: number;
+  emails: string[];
 }

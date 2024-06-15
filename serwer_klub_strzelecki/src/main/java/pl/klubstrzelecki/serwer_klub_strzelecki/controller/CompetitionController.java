@@ -62,4 +62,12 @@ public class CompetitionController {
             return ResponseEntity.status(404).body("{\"message\": \"" + e.getMessage() + "\"}");
         }
     }
+
+    @DeleteMapping("/signoff/{competitionId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    public void signOff(@PathVariable long competitionId) throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        competitionService.signOff(email, competitionId);
+    }
 }

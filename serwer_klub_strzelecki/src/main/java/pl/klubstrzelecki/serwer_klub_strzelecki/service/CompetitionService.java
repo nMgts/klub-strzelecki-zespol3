@@ -14,6 +14,7 @@ import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ShooterRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -30,12 +31,10 @@ public class CompetitionService {
     }
 
     public List<CompetitionDTO> findAll() {
-        List<Competition> competitionList = competitionRepository.findAll();
-        List<CompetitionDTO> competitionDTOList = new ArrayList<>();
-        for (Competition competition : competitionList) {
-            competitionDTOList.add(competitionDTOMapper.convertCompetitionToCompetitionDTO(competition));
-        }
-        return competitionDTOList;
+        List<Competition> competitions = competitionRepository.findAll();
+        return competitions.stream()
+                .map(competitionDTOMapper::convertCompetitionToCompetitionDTO)
+                .collect(Collectors.toList());
     }
 
     public Competition saveCompetition(CompetitionDTO competitionDTO) {
@@ -94,6 +93,32 @@ public class CompetitionService {
             }
         } else {
             throw new Exception("Competition or Shooter not found");
+        }
+    }
+
+    public void signOff(String email, long competitionId) throws Exception {
+        try {
+            Optional<Shooter> shooterOpt = shooterRepository.findByEmail(email);
+            Optional<Competition> competitionOpt = competitionRepository.findById(competitionId);
+
+            if (shooterOpt.isPresent() && competitionOpt.isPresent()) {
+                Shooter shooter = shooterOpt.get();
+                Competition competition = competitionOpt.get();
+
+                if (competition.getShooters().contains(shooter)) {
+                    competition.getShooters().remove(shooter);
+                    shooter.getCompetitions().remove(competition);
+
+                    shooterRepository.save(shooter);
+                    competitionRepository.save(competition);
+                } else {
+                    throw new Exception("Shooter is not assigned to this competition");
+                }
+            } else {
+                throw new Exception("Competition or Shooter not found");
+            }
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
     }
 }

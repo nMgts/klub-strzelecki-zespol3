@@ -11,6 +11,7 @@ export class CompetitionService {
   private postUrl = 'http://localhost:8080/api/competition/add';
   private assignUrl = 'http://localhost:8080/api/competition/assign';
   private signupUrl = 'http://localhost:8080/api/competition/signup';
+  private signoffUrl = 'http://localhost:8080/api/competition/signoff';
 
   constructor(private http: HttpClient) {}
 
@@ -71,5 +72,18 @@ export class CompetitionService {
   assignMultipleShootersToCompetition(competitionId: number, shooterIds: number[], token: string): Observable<any[]> {
     const requests = shooterIds.map(shooterId => this.assignShooterToCompetition(competitionId, shooterId, token));
     return forkJoin(requests);
+  }
+
+  signoffShooterFromCompetition(competitionId: number, token: string):Promise<any> {
+    const url = `${this.signoffUrl}/${competitionId}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    try {
+      const response = this.http.delete<any>(url, {headers}).toPromise();
+      return response;
+    } catch (error) {
+      throw error
+    }
   }
 }
