@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import {UsersService} from "../services/users.service";
-import {Router} from "@angular/router";
+import { UsersService } from "../services/users.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   formData: any = {
@@ -13,41 +13,48 @@ export class RegisterComponent {
     last_name: '',
     email: '',
     password: '',
-    role: ''
+    confirm_password: ''
   };
   errorMessage: string = '';
 
   constructor(private readonly userService: UsersService, private readonly router: Router) {}
 
-  async handleSubmit() {
-    if (!this.formData.first_name || !this.formData.last_name || !this.formData.email || !this.formData.password || !this.formData.role) {
+  async handleSubmit(event: Event) {
+    event.preventDefault();
+
+    if (!this.formData.first_name || !this.formData.last_name || !this.formData.email || !this.formData.password || !this.formData.confirm_password) {
       this.showError('Uzupełnij wszystkie pola.');
       return;
     }
 
-    const confirmRegistration = confirm('Czy na pewno chcesz się zarejestrować?')
-    if (!confirmRegistration) {
+    if (this.formData.password !== this.formData.confirm_password) {
+      this.showError('Hasła nie są takie same.');
       return;
     }
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error('No token found');
-      }
 
-      const response = await this.userService.register(this.formData, token);
+    const emailRegex = new RegExp('^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$');
+
+    if (!emailRegex.test(this.formData.email)) {
+      this.showError('Nieprawidłowy format adresu e-mail.');
+      return;
+    }
+
+    const { confirm_password, ...userData } = this.formData;
+
+    try {
+      const response = await this.userService.register(userData);
       if (response.statusCode === 200) {
         this.router.navigate(['/news']);
       } else {
         this.showError(response.message);
       }
-    } catch (error: any) {
-      this.showError(error.message);
+    } catch (error) {
+      this.showError('Wystąpił błąd podczas rejestracji.');
     }
   }
 
-  showError(messaga: string) {
-    this.errorMessage = messaga;
+  showError(message: string) {
+    this.errorMessage = message;
     setTimeout(() => {
       this.errorMessage = '';
     }, 3000);

@@ -1,16 +1,17 @@
 <div class="container">
   <h2>Zaloguj</h2>
-  <p *ngIf="errorMessage" class="error-message">{{errorMessage}}</p>
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
   <form (submit)="handleSubmit()">
     <div class="form-group">
       <label class="for-group">Email:</label>
-      <input type="text"  placeholder="Enter" [(ngModel)]="email" name="email">
+      <input type="text" placeholder="Enter" [(ngModel)]="email" name="email" required>
     </div>
 
     <div class="form-group">
       <label class="for-group">Password:</label>
-      <input type="password" placeholder="Enter" [(ngModel)]="password" name="password">
+      <input type="password" placeholder="Enter" [(ngModel)]="password" name="password" required>
     </div>
     <button type="submit">Zaloguj</button>
   </form>
+  <p>Nie posiadasz konta? <a routerLink="/register">Zarejestruj się</a></p>
 </div>

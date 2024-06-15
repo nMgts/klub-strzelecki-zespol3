@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { BehaviorSubject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 
 @Injectable({
@@ -31,14 +30,11 @@ export class UsersService {
     }
   }
 
-  async register(userData:any, token:string):Promise<any> {
+  async register(userData:any):Promise<any> {
     const url = `${this.defaultUrl}/auth/register`;
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    })
+
     try {
-      const response = this.http.post<any>(url, userData, {headers}).toPromise()
-      return response;
+      return this.http.post<any>(url, userData).toPromise();
     } catch (error) {
       throw error
     }
