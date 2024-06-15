@@ -39,6 +39,7 @@ public class CompetitionService {
 
     public Competition saveCompetition(CompetitionDTO competitionDTO) {
         Competition competition = competitionDTOMapper.convertCompetitionDTOtoCompetition(competitionDTO);
+        competition.setReminder_sent(false);
         return competitionRepository.save(competition);
     }
 

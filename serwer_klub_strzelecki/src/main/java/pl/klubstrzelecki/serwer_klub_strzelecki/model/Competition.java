@@ -26,7 +26,7 @@ public class Competition {
     private LocalDateTime start_date;
     private LocalDateTime end_date;
     private int shooters_limit;
-
+    private boolean reminder_sent;
 
     @ManyToMany(mappedBy = "competitions", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Shooter> shooters = new HashSet<>();

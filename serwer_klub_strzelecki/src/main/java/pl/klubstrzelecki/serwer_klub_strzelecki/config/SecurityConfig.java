@@ -40,9 +40,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/user/all", "/api/user/{id}", "/api/user/add", "/api/user/edit/{id}", "/api/user/delete/{id}",
                                 "/api/competition/add", "/api/competition/assign/{id1}/{id2}", "/api/competition/remove{id1}/{id2}",
                                 "/api/news/id", "/api/news/add", "/api/news/edit/{id}", "/api/news/delete/{id}", "/api/images/all",
-                                "/api/shooter/all", "/api/shooter/{id}", "/api/shooter/add", "/api/shooter/edit/{id}", "/api/shooter/delete/{id}").hasAuthority("ADMIN")
+                                "/api/shooter/all", "/api/shooter/{id}", "/api/shooter/add", "/api/shooter/edit/{id}", "/api/shooter/delete/{id}",
+                                "/api/remind/send").hasAuthority("ADMIN")
                         //.requestMatchers().hasAuthority("USER")
-                        .requestMatchers("/api/competition/all", "/api/competition/signup/{id}").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers("/api/competition/all", "/api/competition/signup/{id}", "/api/competition/signoff/{id}").hasAnyAuthority("ADMIN", "USER")
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
