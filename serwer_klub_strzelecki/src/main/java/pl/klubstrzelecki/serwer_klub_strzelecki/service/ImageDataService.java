@@ -32,5 +32,13 @@ public class ImageDataService {
         imageData.setImageData(file.getBytes());
         return imageDataRepository.save(imageData);
     }
+
+    public boolean deleteImage(long id) {
+        if (imageDataRepository.existsById(id)) {
+            imageDataRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 }
 

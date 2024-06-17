@@ -1,7 +1,29 @@
 <p>Nasza galeria</p>
-<div *ngFor="let image of images">
-  <img [src]="image.url" [alt]="image.name">
-  <p>{{ image.name }}</p>
+<div class="container">
+  <button (click)="showAddImageForm = true" class="add-button">Dodaj zdjęcie</button>
+
+  <div class="image-grid">
+    <div class="image-container" *ngFor="let image of images">
+      <img [src]="image.url" [alt]="image.name">
+      <p>{{ image.name }}</p>
+      <button (click)="onDeleteImage(image.id)" class="delete-button">Usuń zdjęcie</button>
+    </div>
+  </div>
+
+  <!-- Modal do dodawania zdjęcia -->
+  <div *ngIf="showAddImageForm" class="modal">
+    <div class="modal-content">
+      <span (click)="showAddImageForm = false" class="close">&times;</span>
+      <h2>Dodaj zdjęcie</h2>
+      <form (submit)="onAddImage()">
+        <label for="name">Nazwa:</label>
+        <input type="text" id="name" [(ngModel)]="newImageName" name="name" required>
+        <label for="image">Obraz:</label>
+        <input type="file" id="image" (change)="onFileSelected($event)" name="image" required>
+        <button type="submit">Dodaj</button>
+      </form>
+    </div>
+  </div>
 </div>
 
 <!-- <p>Nasza galeria</p>

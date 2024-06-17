@@ -49,5 +49,15 @@ public class ImageDataController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + imageData.getName() + "\"")
                 .body(imageData.getImageData());
     }
+
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Void> deleteImage(@PathVariable long id) {
+        boolean isRemoved = imageDataService.deleteImage(id);
+        if (!isRemoved) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.noContent().build();
+    }
 }
 
