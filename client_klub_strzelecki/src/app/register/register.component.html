@@ -1,27 +1,19 @@
 <div class="container">
   <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-  <h2>Rejestracja</h2>
+  <h3>Rejestracja</h3>
   <form (submit)="handleSubmit($event)">
     <div class="form-group">
       <label>Imię: </label>
       <input type="text" name="first_name" [(ngModel)]="formData.first_name" required>
-    </div>
-    <div class="form-group">
       <label>Nazwisko: </label>
       <input type="text" name="last_name" [(ngModel)]="formData.last_name" required>
-    </div>
-    <div class="form-group">
       <label>Email: </label>
       <input type="email" name="email" [(ngModel)]="formData.email" required>
-    </div>
-    <div class="form-group">
       <label>Hasło: </label>
       <input type="password" name="password" [(ngModel)]="formData.password" required>
-    </div>
-    <div class="form-group">
       <label>Powtórz hasło: </label>
       <input type="password" name="confirm_password" [(ngModel)]="formData.confirm_password" required>
+      <button type="submit">Zarejestruj</button>
     </div>
-    <button type="submit">Zarejestruj</button>
   </form>
 </div>
