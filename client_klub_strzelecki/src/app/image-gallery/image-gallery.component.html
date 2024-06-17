@@ -1,4 +1,4 @@
-<p>Nasza galeria</p>
+<h3>Nasza galeria</h3>
 <div class="container">
   <button *ngIf="isAdmin" (click)="showAddImageForm = true" class="add-button">Dodaj zdjęcie</button>
 
@@ -6,7 +6,7 @@
     <div class="image-container" *ngFor="let image of images">
       <img [src]="image.url" [alt]="image.name">
       <p>{{ image.name }}</p>
-      <button *ngIf="isAdmin" (click)="onDeleteImage(image.id)" class="delete-button">Usuń zdjęcie</button>
+      <button *ngIf="isAdmin" (click)="onDeleteImage(image.id)" class="delete-button">X</button>
     </div>
   </div>
 
@@ -19,8 +19,9 @@
         <label for="name">Nazwa:</label>
         <input type="text" id="name" [(ngModel)]="newImageName" name="name" required>
         <label for="image">Obraz:</label>
+        <div id="addPhoto"><label id="textForUpload">Kliknij by dodać obraz</label></div>
         <input type="file" id="image" (change)="onFileSelected($event)" name="image" required>
-        <button type="submit">Dodaj</button>
+        <button type="submit" id="submitButton">Dodaj zdjęcie</button>
       </form>
     </div>
   </div>
