@@ -3,6 +3,7 @@ import { ImageService } from '../services/image.service';
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {Imagedata} from "../interfaces/imagedata";
 import {HttpErrorResponse} from "@angular/common/http";
+import {UsersService} from "../services/users.service";
 
 @Component({
   selector: 'app-image-gallery',
@@ -16,9 +17,12 @@ export class ImageGalleryComponent implements OnInit {
   errorMessage: string = '';
   selectedFile: File | null = null;
 
-  constructor(private imageService: ImageService, private sanitizer: DomSanitizer) { }
+  isAdmin:boolean = false;
+
+  constructor(private imageService: ImageService, private sanitizer: DomSanitizer, private userService: UsersService) { }
 
   ngOnInit(): void {
+    this.isAdmin = this.userService.isAdmin();
     this.loadImages();
   }
 
@@ -44,28 +48,17 @@ export class ImageGalleryComponent implements OnInit {
     }
   }
 
-  onAddImage() :void {}
-/*
+
   onAddImage(): void {
     if (this.newImageName && this.selectedFile) {
-      this.imageService.addImage(this.newImageName, this.selectedFile).subscribe(
-        (image: Imagedata) => {
-          this.images.push({
-            id: image.id,
-            name: image.name,
-            url: this.sanitizer.bypassSecurityTrustUrl(`data:image/jpeg;base64,${image.imageData}`)
-          });
+      this.imageService.addImage(this.newImageName, this.selectedFile).subscribe()
           this.showAddImageForm = false;
           this.newImageName = '';
           this.selectedFile = null;
-        },
-        (error: HttpErrorResponse) => {
-          console.error('Błąd podczas dodawania obrazu', error);
-        }
-      );
     }
+    this.loadImages();
   }
-*/
+
   onDeleteImage(id: number): void {
     if (confirm('Czy na pewno chcesz usunąć to zdjęcie?')) {
       this.imageService.deleteImage(id).subscribe(

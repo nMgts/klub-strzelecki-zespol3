@@ -1,12 +1,12 @@
 <p>Nasza galeria</p>
 <div class="container">
-  <button (click)="showAddImageForm = true" class="add-button">Dodaj zdjęcie</button>
+  <button *ngIf="isAdmin" (click)="showAddImageForm = true" class="add-button">Dodaj zdjęcie</button>
 
   <div class="image-grid">
     <div class="image-container" *ngFor="let image of images">
       <img [src]="image.url" [alt]="image.name">
       <p>{{ image.name }}</p>
-      <button (click)="onDeleteImage(image.id)" class="delete-button">Usuń zdjęcie</button>
+      <button *ngIf="isAdmin" (click)="onDeleteImage(image.id)" class="delete-button">Usuń zdjęcie</button>
     </div>
   </div>
 

@@ -12,7 +12,7 @@
       <div *ngIf="isAdmin" class="nav-item"><a routerLink="/users" routerLinkActive="active">Lista użytkowników</a></div>
       <div *ngIf="isAdmin" class="nav-item"><a routerLink="/shooters" routerLinkActive="active">Lista zawodników</a></div>
       <div *ngIf="isAuthenticated" class="nav-item"><a routerLink="/competitions" routerLinkActive="active">Lista zawodów</a></div>
-      <div *ngIf="isAuthenticated" class="nav-item"><a routerLink="/gallery" routerLinkActive="active">Galeria</a></div>
+      <div class="nav-item"><a routerLink="/gallery" routerLinkActive="active">Galeria</a></div>
       <div class="nav-item"><a routerLink="/about" routerLinkActive="active">O nas</a></div>
       <div *ngIf="isAuthenticated" class="nav-item"><a routerLink="/profile" routerLinkActive="active">Profil</a></div>
       <div *ngIf="!isAuthenticated" class="nav-item"><a routerLink="/login" routerLinkActive="active">Zaloguj</a></div>
