@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {Imagedata} from "../interfaces/imagedata";
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,8 @@ export class ImageService {
 
   constructor(private http: HttpClient) { }
 
-  getAllImages(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/all`);
-  }
-
-  getImage(id: number): Observable<Blob> {
-    return this.http.get(`${this.baseUrl}/image/${id}`, { responseType: 'blob' });
+  getAllImages(): Observable<Imagedata[]> {
+    return this.http.get<Imagedata[]>(`${this.baseUrl}/all`);
   }
 }
 

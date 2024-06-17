@@ -26,10 +26,9 @@ public class ImageDataService {
         return imageDataRepository.findAll();
     }
 
-    public ImageData addImage(String name, String type, MultipartFile file) throws IOException {
+    public ImageData addImage(String name, MultipartFile file) throws IOException {
         ImageData imageData = new ImageData();
         imageData.setName(name);
-        imageData.setType(type);
         imageData.setImageData(file.getBytes());
         return imageDataRepository.save(imageData);
     }

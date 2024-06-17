@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.ImageData;
@@ -32,13 +33,13 @@ public class ImageDataController {
         return ResponseEntity.ok(imageDataService.getAllImages());
     }
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ImageData> addImage(
             @RequestParam("name") String name,
-            @RequestParam("type") String type,
             @RequestParam("image") MultipartFile image
     ) throws IOException {
-        return ResponseEntity.ok(imageDataService.addImage(name, type, image));
+        return ResponseEntity.ok(imageDataService.addImage(name, image));
     }
 
     @GetMapping("/image/{id}")
@@ -46,7 +47,6 @@ public class ImageDataController {
         ImageData imageData = imageDataService.getImageDetails(id);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + imageData.getName() + "\"")
-                .contentType(MediaType.parseMediaType(imageData.getType()))
                 .body(imageData.getImageData());
     }
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ImageService } from '../services/image.service';
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {Imagedata} from "../interfaces/imagedata";
 
 @Component({
   selector: 'app-image-gallery',
@@ -7,42 +9,28 @@ import { ImageService } from '../services/image.service';
   styleUrls: ['./image-gallery.component.css']
 })
 export class ImageGalleryComponent implements OnInit {
-  images: any[] = [];
+  images: { id: number; name: string; url: SafeUrl }[] = [];
   errorMessage: string = '';
 
-  constructor(private imageService: ImageService) { }
+  constructor(private imageService: ImageService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.loadImages();
   }
 
-  loadImages() {
-    this.imageService.getAllImages().subscribe({
-      next: data => {
-        this.images = data;
-        this.images.forEach(image => {
-          this.loadImage(image);
-        });
+  loadImages(): void {
+    this.imageService.getAllImages().subscribe(
+      (images: Imagedata[]) => {
+        this.images = images.map(image => ({
+          id: image.id,
+          name: image.name,
+          url: this.sanitizer.bypassSecurityTrustUrl(`data:image/jpeg;base64,${image.imageData}`)
+        }));
       },
-      error: err => {
-        this.showError(err.message);
+      error => {
+        console.error('Błąd podczas ładowania obrazów', error);
       }
-    });
-  }
-
-  loadImage(image: any) {
-    this.imageService.getImage(image.id).subscribe({
-      next: imageBlob => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          image.imageSrc = reader.result;
-        };
-        reader.readAsDataURL(imageBlob);
-      },
-      error: err => {
-        this.showError(err.message);
-      }
-    });
+    );
   }
 
   showError(mess: string) {

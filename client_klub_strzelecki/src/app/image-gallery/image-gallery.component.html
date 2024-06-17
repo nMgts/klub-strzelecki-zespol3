@@ -1,9 +1,7 @@
 <p>Nasza galeria</p>
-<div *ngIf="images && images.length">
-  <div *ngFor="let image of images">
-    <img [src]="image.imageSrc" [alt]="image.name" />
-    <p>{{ image.name }}</p>
-  </div>
+<div *ngFor="let image of images">
+  <img [src]="image.url" [alt]="image.name">
+  <p>{{ image.name }}</p>
 </div>
 
 <!-- <p>Nasza galeria</p>
