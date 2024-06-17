@@ -43,6 +43,8 @@ export class ImageGalleryComponent implements OnInit {
       this.selectedFile = input.files[0];
     }
   }
+
+  onAddImage() :void {}
 /*
   onAddImage(): void {
     if (this.newImageName && this.selectedFile) {

@@ -30,7 +30,7 @@ export class ImageService {
   }
 
   deleteImage(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`, {
+    return this.http.delete<void>(`${this.deleteUrl}/${id}`, {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('token') // Dostosuj sposób przekazywania tokena, jeśli jest używany
       })

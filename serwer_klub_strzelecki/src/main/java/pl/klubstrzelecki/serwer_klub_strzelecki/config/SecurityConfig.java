@@ -42,7 +42,7 @@ public class SecurityConfig {
                                 "/api/competition/add", "/api/competition/assign/{id1}/{id2}", "/api/competition/remove{id1}/{id2}",
                                 "/api/news/id", "/api/news/add", "/api/news/edit/{id}", "/api/news/delete/{id}", "/api/images/all",
                                 "/api/shooter/all", "/api/shooter/{id}", "/api/shooter/add", "/api/shooter/edit/{id}", "/api/shooter/delete/{id}",
-                                "/api/remind/send", "/api/images/add", "api/images/delete/{id}").hasAuthority("ADMIN")
+                                "/api/remind/send", "/api/images/add", "/api/images/delete/{id}").hasAuthority("ADMIN")
                         //.requestMatchers().hasAuthority("USER")
                         .requestMatchers("/api/competition/all", "/api/competition/signup/{id}", "/api/competition/signoff/{id}").hasAnyAuthority("ADMIN", "USER")
                         .anyRequest().authenticated())
