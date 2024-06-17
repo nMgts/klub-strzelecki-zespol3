@@ -14,22 +14,24 @@ table {
   table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
+  box-shadow: 8px 8px 24px -6px rgba(66, 68, 90, 1);
+  border-radius: 10px;
 }
 
 thead th:nth-child(1) {
-  width: 5%;
-}
-
-thead th:nth-child(2) {
-  width: 15%;
-}
-
-thead th:nth-child(3) {
   width: 25%;
 }
 
-thead th:nth-child(4) {
+thead th:nth-child(2) {
+  width: 25%;
+}
+
+thead th:nth-child(3) {
   width: 40%;
+}
+
+thead th:nth-child(4) {
+  width: 20%;
 }
 
 th,
@@ -62,27 +64,42 @@ tfoot {
 thead th,
 tfoot th,
 tfoot td {
-  background: linear-gradient(to bottom, rgb(0 0 0 / 10%), rgb(0 0 0 / 35%));
+  background: #010038;
 }
 input {
   padding: 5px;
-  margin: 15px;
+  margin: 5px 15px;
 }
-button {
-  font-weight: bold;
-  padding: 7px;
+
+#shooters-add-button{
+  margin-top: 15px;
 }
 
 button {
-  width: 150px;
-  height: 50px;
+  width: 100%;
+  margin: 0 10px 10px 0;
+  height: 40px;
+  box-shadow: 0px 0px 24px -6px rgba(66, 68, 90, 1);
+  border-radius: 20px;
   transition: width 0.2s;
 }
 
 button:hover {
-  width: 200px;
-  background-color: #4141ce;
+  background-color: #ececec;
 }
 
+button:focus{
+  box-shadow: inset 0px 0px 24px -6px rgba(66, 68, 90, 1);
+}
+
+input {
+  padding: 0 15px;
+  margin: 15px;
+  width: 100%;
+  height: 40px;
+  font-size: 20px;
+  box-shadow: inset 0px 0px 24px -12px rgba(66, 68, 90, 1);
+  border-radius: 20px;
+}
 
 

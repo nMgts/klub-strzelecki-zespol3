@@ -2,29 +2,28 @@
 <body>
 <div class="w-4/4 shadow-md p-10 bg-white shadow-blue-200/20 mx-36 my-10">
   <h2>Strzelcy</h2>
+  <button type="button" id="shooters-add-button" class="generic-button" [routerLink]="['/shooters/add']">Dodaj zawodnika</button>
     <div class="flex justify-between items-center mb-4 mt-4">
-      <input type="text" placeholder="Search" class="w-full border p-2 rounded 1-g">
+      <input type="text" placeholder="Szukaj" class="w-full border p-2 rounded 1-g">
       <select class="border p-2 rounded-1g">
         <option value="">Test</option>
       </select>
     </div>
-    <button type="button" id="shooters-add-button" class="generic-button" [routerLink]="['/shooters/add']">Dodaj zawodnika</button>
+    
     <table class="w-full border-4">
       <thead>
         <tr>
-          <th class="p-3 text-left bg-gray-200">Id </th>
-          <th class="p-3 text-left bg-gray-200">Imię </th>
-          <th class="p-3 text-left bg-gray-200">Nazwisko </th>
-          <th class="p-3 text-left bg-gray-200">e-mail </th>
-          <th class="p-3 text-center bg-gray-200">Akcja </th>
+          <th class="p-3 text-center">Imię </th>
+          <th class="p-3 text-center">Nazwisko </th>
+          <th class="p-3 text-center">e-mail </th>
+          <th class="p-3 text-center">Akcja </th>
         </tr>
       </thead>
       <tbody>
         <tr class="border-2" *ngFor="let shooter of shooters; let i=index">
-          <td class="p-3 border-2">id: {{i+1}} </td>
-          <td class="p-3 border-2">Imie: {{ shooter.first_name}} </td>
-          <td class="p-3 border-2">Nazwisko: {{ shooter.last_name }} </td>
-          <td class="p-3 border-2">Email: {{ shooter.email }} </td>
+          <td class="p-3 border-2">{{ shooter.first_name}} </td>
+          <td class="p-3 border-2">{{ shooter.last_name }} </td>
+          <td class="p-3 border-2">{{ shooter.email }} </td>
           <div id="button-container">
             <button [routerLink]="['/shooters/edit', shooter.id]" type="button" id="shooters-edit-button" class="generic-button">Edytuj</button>
             <button *ngIf="!shooter.assignedToUser; else assignedTooltip" (click)="showDialog(shooter.id)"
@@ -41,9 +40,9 @@
       </tbody>
     </table>
     <div class="mt-4 flex items-center justify-center">
-      <button class="text-cyan-500 border-4 py-2 px-4 rounded-l-lg cursor-pointer mr-5">Previous</button>
-      <button class="py-2 px-4 cursor-pointer bg-cyan-500 text-white">1</button>
-      <button class="text-cyan-500 border-4 py-2 px-4 cursor-pointer rounder-r-lg ml-5">Next</button>
+      <button>Poprzednia strona</button>
+      <button disabled>1</button>
+      <button>Następna strona</button>
     </div>
 </div>
 </body>
