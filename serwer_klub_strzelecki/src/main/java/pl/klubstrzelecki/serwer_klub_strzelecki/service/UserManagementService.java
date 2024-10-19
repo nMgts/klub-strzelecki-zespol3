@@ -39,7 +39,7 @@ public class UserManagementService {
         this.userDTOMapper = userDTOMapper;
     }
 
-    //@Transactional
+    @Transactional
     public ReqRes register(ReqRes registrationRequest) {
         ReqRes resp = new ReqRes();
 
