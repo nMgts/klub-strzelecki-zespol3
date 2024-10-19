@@ -13,6 +13,8 @@ public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    
+    @Column(columnDefinition = "TEXT")
     private String title;
     private String content;
 }
