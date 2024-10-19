@@ -6,6 +6,7 @@ import lombok.*;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Table(name = "weapons", schema = "public")
+@Entity
 public class Weapon {
     @Setter
     @Getter
