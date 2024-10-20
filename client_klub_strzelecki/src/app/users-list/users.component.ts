@@ -1,7 +1,6 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ViewChild, OnInit } from '@angular/core';
-
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UsersService } from '../services/users.service';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-users',
@@ -11,14 +10,22 @@ import {Router} from "@angular/router";
 
 export class UsersComponent implements AfterViewInit, OnInit {
   users: any[] = [];
-  errorMessage: string = ''
+  filteredUsers: any[] = [];  // zmienna dla przefiltrowanej listy użytkowników
+  searchQuery: string = '';   // zmienna do wyszukiwania
+  errorMessage: string = '';
   visible: boolean = false;
-  userId: number| undefined
+  userId: number | undefined;
+
+  // Zmienne do paginacji
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  totalPages: number = 1;
 
   constructor(
     private userService: UsersService,
     private cd: ChangeDetectorRef,
-    private router: Router) {}
+    private router: Router
+  ) {}
 
   ngAfterViewInit(): void {
     this.cd.detectChanges();
@@ -33,8 +40,10 @@ export class UsersComponent implements AfterViewInit, OnInit {
     try {
       const token: any = localStorage.getItem('token');
       const response = await this.userService.getAllUsers(token);
-      if (response /*&& response.statusCode === 200 && response.userList*/) {
+      if (response) {
         this.users = response.userList;
+        this.filteredUsers = this.users;  // Inicjalizacja przefiltrowanej listy użytkowników
+        this.updatePagination();  // Aktualizacja paginacji
       } else {
         this.showError('No users found.');
       }
@@ -42,29 +51,34 @@ export class UsersComponent implements AfterViewInit, OnInit {
       this.showError(error.message);
     }
   }
-  /*
-  public onDeleteUser(id: number): void {
-    console.log('Attempting to delete user with id:');  // Check if ID is correct
-    this.userService.deleteUser(id).subscribe({
-      next: (response) => {
-        console.log('User deleted successfully', response);
-        this.users_list = this.users_list.filter(user => user.id !== id);
-      },
-      error: (err) => {
-        console.error('Error deleting user:', err);
-      }
-    });
-  }
-*/
-  changeNlForP(text: string): string {
-    let editedText = '<p>' + text;
-    editedText = editedText.replace(/\n/g, '</p><p>');
-    editedText += '</p>';
-    return editedText;
+
+  // metoda do filtrowania użytkowników na podstawie zapytania
+  filterUsers() {
+    this.filteredUsers = this.users.filter(user =>
+      user.first_name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      user.last_name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      user.email.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+    this.currentPage = 1;  // Zresetowanie do pierwszej strony po filtracji
+    this.updatePagination();  // Aktualizacja liczby stron po filtracji
   }
 
-  editUsers(id: number) {
-    this.router.navigate(['users/edit', id]);
+  // metoda do aktualizacji liczby stron
+  updatePagination() {
+    this.totalPages = Math.ceil(this.filteredUsers.length / this.itemsPerPage);
+  }
+
+  // obsługa przełączania stron
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
   }
 
   async deleteUser(userId: string) {
@@ -76,8 +90,8 @@ export class UsersComponent implements AfterViewInit, OnInit {
       this.showError(error.message);
     }
   }
-  showDialog(id?: number)
-  {
+
+  showDialog(id?: number) {
     console.log("show dialog");
     this.visible = true;
     this.userId = id;
@@ -87,6 +101,6 @@ export class UsersComponent implements AfterViewInit, OnInit {
     this.errorMessage = mess;
     setTimeout(() => {
       this.errorMessage = ''
-    }, 3000)
+    }, 3000);
   }
 }

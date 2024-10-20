@@ -1,5 +1,4 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-
 import { ShootersService } from '../services/shooter.service';
 import { Router } from "@angular/router";
 
@@ -11,13 +10,21 @@ import { Router } from "@angular/router";
 
 export class ShootersComponent implements AfterViewInit, OnInit {
   shooters: any[] = [];
+  filteredShooters: any[] = [];  // Dodano zmienną dla przefiltrowanej listy zawodników
+  searchQuery: string = '';  // Dodano zmienną dla przechowywania zapytania wyszukiwania
   visible: boolean = false;
   shooterId: number| undefined;
   errorMessage: string = '';
 
+  // Zmienne dla paginacji
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  totalPages: number = 1;
+
   constructor(
     private shooterService: ShootersService,
-    private cd: ChangeDetectorRef) {}
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngAfterViewInit(): void {
     this.cd.detectChanges();
@@ -32,36 +39,44 @@ export class ShootersComponent implements AfterViewInit, OnInit {
     try {
       const token: any = localStorage.getItem('token');
       const response = await this.shooterService.getAllShooters(token);
-      if (response ) {
-        this.shooters = response
+      if (response) {
+        this.shooters = response;
+        this.filteredShooters = this.shooters;  // Inicjalizacja listy zawodników
+        this.updatePagination();  // Aktualizacja paginacji po załadowaniu danych
       } else {
-        this.showError("No shooters found.")
+        this.showError("No shooters found.");
       }
     } catch (error: any) {
       this.showError(error.message);
     }
   }
-/*
-  public onDeleteShooter(id: number): void {
-    console.log('Attempting to delete shooter with id:');  // Check if ID is correct
-    this.shooterService.deleteShooter(id).subscribe({
-      next: (response) => {
-        console.log('Shooter deleted successfully', response);
-        this.shooters = this.shooters.filter(shooter => shooter.id !== id);
-      },
-      error: (err) => {
-        console.error('Error deleting shooter:', err);
-      }
-    });
+
+  // Metoda do filtrowania zawodników na podstawie zapytania
+  filterShooters() {
+    this.filteredShooters = this.shooters.filter(shooter =>
+      shooter.first_name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      shooter.last_name.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+    this.currentPage = 1;  // Zresetowanie na pierwszą stronę po filtracji
+    this.updatePagination();  // Aktualizacja paginacji po filtracji
   }
 
- */
+  // Metoda do aktualizacji liczby stron
+  updatePagination() {
+    this.totalPages = Math.ceil(this.filteredShooters.length / this.itemsPerPage);
+  }
 
-  changeNlForP(text: string): string {
-    let editedText = '<p>' + text;
-    editedText = editedText.replace(/\n/g, '</p><p>');
-    editedText += '</p>';
-    return editedText;
+  // Metody do obsługi zmiany stron
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
   }
 
   async deleteShooters(shooterId: number | undefined) {
@@ -74,8 +89,8 @@ export class ShootersComponent implements AfterViewInit, OnInit {
       this.showError(error.message);
     }
   }
-  showDialog(id?: number)
-  {
+
+  showDialog(id?: number) {
     console.log("show dialog");
     this.visible = true;
     this.shooterId = id;
@@ -85,6 +100,6 @@ export class ShootersComponent implements AfterViewInit, OnInit {
     this.errorMessage = mess;
     setTimeout(() => {
       this.errorMessage = ''
-    }, 3000)
+    }, 3000);
   }
 }

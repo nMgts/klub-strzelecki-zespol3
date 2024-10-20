@@ -1,50 +1,46 @@
-<html>
-<body>
 <div class="w-4/4 shadow-md p-10 bg-white shadow-blue-200/20 mx-36 my-10">
-    <h2>Użytkownicy</h2>
-    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-    <button type="button" id="users-add-button" class="generic-button" [routerLink]="['/users/add']">Dodaj użytkownika</button>
-      <div class="flex justify-between items-center mb-4 mt-4">
-        <input type="text" placeholder="Search" class="w-full border p-2 rounded 1-g">
-        <select class="border p-2 rounded-1g">
-          <option value="">Test</option>
-        </select>
-      </div>
-      
-      <table class="w-full border-4">
-        <thead>
-          <tr>
-            <th class="p-3 text-left">Imię </th>
-            <th class="p-3 text-left">Nazwisko </th>
-            <th class="p-3 text-left">e-mail </th>
-            <th class="p-3 text-left">rola </th>
-            <th class="p-3 text-center">Akcja </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-2" *ngFor="let user of users; let i=index">
-            <td class="p-3 border-2">Imie: {{ user.first_name }} </td>
-            <td class="p-3 border-2">Nazwisko: {{ user.last_name }} </td>
-            <td class="p-3 border-2">Email: {{ user.email }} </td>
-            <td class="p-3 border-2">Role: {{ user.role }} </td>
-            <div id="button-container">
-              <button [routerLink]="['/users/edit', user.id]" type="button" id="users-edit-button" class="generic-button">Edytuj</button>
-              <button type="button" id="users-delete-button" class="generic-button">Usuń</button>
-            </div>
-          </tr>
-        </tbody>
-      </table>
-      <div class="mt-4 flex items-center justify-center">
-        <button>Poprzednia strona</button>
-        <button disabled>1</button>
-        <button>Następna strona</button>
-      </div>
-    </div>
-</body>
-<p-dialog header="Potwierdzenie" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
-  <span class="p-text-secondary block mb-5">Czy chcesz usunąć użytkownika?</span>
-  <div class="flex justify-content-end gap-2">
-    <p-button label="Anuluj" severity="secondary" (click)="visible = false" />
+  <h2>Użytkownicy</h2>
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  <button type="button" id="users-add-button" class="generic-button" [routerLink]="['/users/add']">Dodaj użytkownika</button>
+
+  <!-- Zmieniono na: połączenie wyszukiwania z filtrowaniem -->
+  <div class="flex justify-between items-center mb-4 mt-4">
+    <input type="text" placeholder="Szukaj" class="w-full border p-2 rounded 1-g" [(ngModel)]="searchQuery" (input)="filterUsers()">
+    <!-- Na razie w komentarzu dopóki nwm po czym miałbym ich filtrowac
+    <select class="border p-2 rounded-1g">
+      <option value="">Test</option>
+    </select>-->
   </div>
-</p-dialog>
-</html>
+  
+  <table class="w-full border-4">
+    <thead>
+      <tr>
+        <th class="p-3 text-left">Imię </th>
+        <th class="p-3 text-left">Nazwisko </th>
+        <th class="p-3 text-left">e-mail </th>
+        <th class="p-3 text-left">rola </th>
+        <th class="p-3 text-center">Akcja </th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Zmieniono na: dodanie obsługi paginacji i wyszukiwania -->
+      <tr class="border-2" *ngFor="let user of filteredUsers.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i=index">
+        <td class="p-3 border-2">{{ user.first_name }} </td>
+        <td class="p-3 border-2">{{ user.last_name }} </td>
+        <td class="p-3 border-2">{{ user.email }} </td>
+        <td class="p-3 border-2">{{ user.role }} </td>
+        <div id="button-container">
+          <button [routerLink]="['/users/edit', user.id]" type="button" id="users-edit-button" class="generic-button">Edytuj</button>
+          <button type="button" id="users-delete-button" class="generic-button" (click)="showDialog(user.id)">Usuń</button>
+        </div>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Zmieniono na: dodanie dynamicznej paginacji -->
+  <div class="mt-4 flex items-center justify-center">
+    <button (click)="previousPage()" [disabled]="currentPage === 1">Poprzednia strona</button>
+    <button disabled>Strona {{ currentPage }} z {{ totalPages }}</button>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Następna strona</button>
+  </div>
+</div>
