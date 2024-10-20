@@ -31,6 +31,5 @@ public class WeaponMigration {
     private void addWeaponEntries() {
         WeaponDTO weapon1 = new WeaponDTO(0, "AR15", "Karabinek", 5.56, "brak");
         WeaponDTO weapon2 = new WeaponDTO(1, "HK MR223", "Karabinek", 5.56, "brak");
-
     }
 }

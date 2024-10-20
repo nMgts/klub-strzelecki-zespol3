@@ -3,9 +3,7 @@ package pl.klubstrzelecki.serwer_klub_strzelecki.convert;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.klubstrzelecki.serwer_klub_strzelecki.dto.NewsDTO;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.WeaponDTO;
-import pl.klubstrzelecki.serwer_klub_strzelecki.model.News;
 import pl.klubstrzelecki.serwer_klub_strzelecki.model.Weapon;
 
 import java.util.Base64;
@@ -19,43 +17,35 @@ public class WeaponDTOMapper {
         this.modelMapper = modelMapper;
     }
 
+    // Konwersja Weapon -> WeaponDTO
     public WeaponDTO convertWeaponToWeaponDTO(Weapon weapon) {
         WeaponDTO weaponDTO = modelMapper.map(weapon, WeaponDTO.class);
+        if (weapon.getImage() != null) {
+            weaponDTO.setImage(encodeImageToBase64(weapon.getImage())); // Konwersja byte[] na Base64 string
+        }
         return weaponDTO;
     }
 
+    // Konwersja WeaponDTO -> Weapon
     public Weapon convertWeaponDTOtoWeapon(WeaponDTO weaponDTO) {
         Weapon weapon = modelMapper.map(weaponDTO, Weapon.class);
+        if (weaponDTO.getImage() != null) {
+            weapon.setImage(decodeBase64ToImage(weaponDTO.getImage())); // Konwersja Base64 string na byte[]
+        }
         return weapon;
     }
 
-//    @Mapper(componentModel = "spring")
-//    public interface WeaponDTOMapper {
-//
-//        @Mapping(target = "image", source = "image", qualifiedByName = "byteArrayToBase64")
-//        WeaponDTO convertWeaponToWeaponDTO(Weapon weapon);
-//
-//        @Mapping(target = "image", source = "image", qualifiedByName = "base64ToByteArray")
-//        Weapon convertWeaponDTOtoWeapon(WeaponDTO weaponDTO);
-//
-//        // Konwersja obrazu z bajtów na Base64
-//        @Named("byteArrayToBase64")
-//        default String byteArrayToBase64(byte[] image) {
-//            if (image != null) {
-//                return "data:image/png;base64," + Base64.getEncoder().encodeToString(image);
-//            }
-//            return null;
-//        }
-//
-//        // Konwersja obrazu z Base64 na bajty
-//        @Named("base64ToByteArray")
-//        default byte[] base64ToByteArray(String image) {
-//            if (image != null && image.startsWith("data:image/png;base64,")) {
-//                String base64Image = image.substring("data:image/png;base64,".length());
-//                return Base64.getDecoder().decode(base64Image);
-//            }
-//            return null;
-//        }
-//    }
-}
+    // Metoda do konwersji byte[] na Base64
+    private String encodeImageToBase64(byte[] image) {
+        return "data:image/png;base64," + Base64.getEncoder().encodeToString(image);
+    }
 
+    // Metoda do konwersji Base64 na byte[]
+    private byte[] decodeBase64ToImage(String imageBase64) {
+        if (imageBase64 != null && imageBase64.startsWith("data:image/png;base64,")) {
+            String base64Image = imageBase64.substring("data:image/png;base64,".length());
+            return Base64.getDecoder().decode(base64Image);
+        }
+        return null;
+    }
+}
