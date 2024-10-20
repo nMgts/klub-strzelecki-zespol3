@@ -2,6 +2,8 @@ import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core
 import {Competition} from "../interfaces/competition";
 import {CompetitionService} from "../services/competition.service";
 import {UsersService} from "../services/users.service";
+import {MatDialog} from "@angular/material/dialog";
+import {CompetitionDetailsDialogComponent} from "../competition-details-dialog/competition-details-dialog.component";
 
 @Component({
   selector: 'app-competitions-list',
@@ -17,8 +19,11 @@ export class CompetitionsListComponent implements AfterViewInit, OnInit {
   isAdmin:boolean = false;
   userEmail:string = '';
 
-  constructor(private competitionService: CompetitionService, private cd: ChangeDetectorRef, private userService: UsersService) {
-  }
+  constructor(
+    private competitionService: CompetitionService,
+    private cd: ChangeDetectorRef,
+    private userService: UsersService,
+    private dialog: MatDialog) {}
 
   ngAfterViewInit(): void {
     this.cd.detectChanges();
@@ -101,7 +106,13 @@ export class CompetitionsListComponent implements AfterViewInit, OnInit {
   }
 
   openDetails(competition: Competition) {
-
+    this.dialog.open(CompetitionDetailsDialogComponent, {
+      width: '400px',
+      data: {
+        id: competition.id,
+        emails: competition.emails
+      }
+    });
   }
 
   showError(mess: string) {

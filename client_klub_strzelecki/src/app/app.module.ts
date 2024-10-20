@@ -22,9 +22,12 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
-import {AssignShootersComponent} from "./assign-shooters/assign-shooters.component";
+import { AssignShootersComponent } from "./assign-shooters/assign-shooters.component";
 import { RemoveTPipe } from './competitions-list/remove-t.pipe';
 import { ImageGalleryComponent } from './image-gallery/image-gallery.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CompetitionDetailsDialogComponent } from './competition-details-dialog/competition-details-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,8 @@ import { ImageGalleryComponent } from './image-gallery/image-gallery.component';
     UpdateProfileComponent,
     AssignShootersComponent,
     ImageGalleryComponent,
-    RemoveTPipe
+    RemoveTPipe,
+    CompetitionDetailsDialogComponent
   ],
   imports: [
     DialogModule,
@@ -55,9 +59,12 @@ import { ImageGalleryComponent } from './image-gallery/image-gallery.component';
     RouterModule,
     FormsModule,
     BrowserAnimationsModule,
-    Button
+    Button,
+    MatDialogModule
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

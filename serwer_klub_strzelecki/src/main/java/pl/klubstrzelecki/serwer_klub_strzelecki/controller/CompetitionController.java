@@ -8,16 +8,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.CompetitionDTO;
 import pl.klubstrzelecki.serwer_klub_strzelecki.dto.ReqRes;
+import pl.klubstrzelecki.serwer_klub_strzelecki.model.Shooter;
+import pl.klubstrzelecki.serwer_klub_strzelecki.repository.ShooterRepository;
 import pl.klubstrzelecki.serwer_klub_strzelecki.service.CompetitionService;
 
 @RestController
 @RequestMapping("/api/competition")
 public class CompetitionController {
     private final CompetitionService competitionService;
+    private final ShooterRepository shooterRepository;
 
     @Autowired
-    public CompetitionController(CompetitionService competitionService) {
+    public CompetitionController(CompetitionService competitionService, ShooterRepository shooterRepository) {
         this.competitionService = competitionService;
+        this.shooterRepository = shooterRepository;
     }
 
     @GetMapping("/all")
@@ -57,6 +61,18 @@ public class CompetitionController {
     public ResponseEntity<Object> removeShooterFromCompetition(@PathVariable long competitionId, @PathVariable long shooterId) {
         try {
             competitionService.removeShooterFromCompetition(competitionId, shooterId);
+            return ResponseEntity.ok().body("{\"message\": \"Shooter removed from competition successfully!\"}");
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body("{\"message\": \"" + e.getMessage() + "\"}");
+        }
+    }
+
+    @PostMapping("/removeUser/{competitionId}/{email}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> removeShooter(@PathVariable long competitionId, @PathVariable String email) {
+        try {
+            Shooter shooter = shooterRepository.findByEmail(email).orElseThrow();
+            competitionService.removeShooterFromCompetition(competitionId, shooter.getId());
             return ResponseEntity.ok().body("{\"message\": \"Shooter removed from competition successfully!\"}");
         } catch (Exception e) {
             return ResponseEntity.status(404).body("{\"message\": \"" + e.getMessage() + "\"}");
