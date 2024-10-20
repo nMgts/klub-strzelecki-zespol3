@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request.requestMatchers("/api/", "/api/auth/**", "/api/news/all", "/api/user/get-profile",
                         "/api/images/all").permitAll()
                         .requestMatchers("/api/user/all", "/api/user/{id}", "/api/user/add", "/api/user/edit/{id}", "/api/user/delete/{id}",
-                                "/api/competition/add", "/api/competition/assign/{id1}/{id2}", "/api/competition/remove{id1}/{id2}",
+                                "/api/competition/add", "/api/competition/assign/{id1}/{id2}", "/api/competition/remove{id1}/{id2}", "/api/competition/removeUser/{id}/{email}",
                                 "/api/news/id", "/api/news/add", "/api/news/edit/{id}", "/api/news/delete/{id}", "/api/images/all",
                                 "/api/shooter/all", "/api/shooter/{id}", "/api/shooter/add", "/api/shooter/edit/{id}", "/api/shooter/delete/{id}",
                                 "/api/remind/send", "/api/images/add", "/api/images/delete/{id}").hasAuthority("ADMIN")

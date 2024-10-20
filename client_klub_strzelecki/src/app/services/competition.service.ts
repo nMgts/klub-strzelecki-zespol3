@@ -12,6 +12,7 @@ export class CompetitionService {
   private assignUrl = 'http://localhost:8080/api/competition/assign';
   private signupUrl = 'http://localhost:8080/api/competition/signup';
   private signoffUrl = 'http://localhost:8080/api/competition/signoff';
+  private removeUserUrl = 'http://localhost:8080/api/competition/removeUser'
 
   constructor(private http: HttpClient) {}
 
@@ -80,10 +81,18 @@ export class CompetitionService {
       'Authorization': `Bearer ${token}`
     });
     try {
-      const response = this.http.delete<any>(url, {headers}).toPromise();
+      const response = this.http.delete<any>(url, { headers }).toPromise();
       return response;
     } catch (error) {
       throw error
     }
+  }
+
+  removeUser(id: number, email: string, token: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    const url = `${this.removeUserUrl}/${id}/${email}`
+    return this.http.post(url, {}, { headers });
   }
 }
