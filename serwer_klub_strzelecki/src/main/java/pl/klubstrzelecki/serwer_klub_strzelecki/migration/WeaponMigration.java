@@ -24,7 +24,7 @@ public class WeaponMigration {
             MigrationInfo migrationInfo = new MigrationInfo();
             migrationInfo.setMigrationName("InitWeaponMigration");
             migrationInfo.setExecutedAt(new Date());
-            migrationInfoRepository.save(migrationInfo);
+            //migrationInfoRepository.save(migrationInfo);
         }
     }
 

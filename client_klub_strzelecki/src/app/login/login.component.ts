@@ -23,8 +23,9 @@ export class LoginComponent {
     try {
       const response = await this.userService.login(this.email, this.password);
       if(response.statusCode === 200) {
-        localStorage.setItem('token', response.token)
-        localStorage.setItem('role', response.role)
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('role', response.role);
+        localStorage.setItem('email', response.email);
       } else {
         this.showError(response.message)
       }

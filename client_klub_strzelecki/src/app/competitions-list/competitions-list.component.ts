@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Competition} from "../interfaces/competition";
 import {CompetitionService} from "../services/competition.service";
 import {UsersService} from "../services/users.service";
@@ -8,10 +8,10 @@ import {UsersService} from "../services/users.service";
   templateUrl: './competitions-list.component.html',
   styleUrls: ['./competitions-list.component.css']
 })
-export class CompetitionsListComponent implements AfterViewInit {
+export class CompetitionsListComponent implements AfterViewInit, OnInit {
   competitions: Competition[] = [];
   visible: boolean = false;
-  CompetitionId: number| undefined;
+  CompetitionId: number | undefined;
   errorMessage: string = '';
 
   isAdmin:boolean = false;
@@ -48,13 +48,14 @@ export class CompetitionsListComponent implements AfterViewInit {
       const token: any = localStorage.getItem('token');
       const response = await this.competitionService.signupShooterToCompetition(id, token);
       if (response) {
-        await this.loadCompetitions();
+        console.log('user assigned')
       } else {
         this.showError('Error assigning shooters.');
       }
     } catch (error: any) {
       this.showError(error.message);
     }
+    this.loadCompetitions();
   }
 
   async signOffFromCompetition(id?: number) {
@@ -66,13 +67,14 @@ export class CompetitionsListComponent implements AfterViewInit {
       const token: any = localStorage.getItem('token');
       const response = await this.competitionService.signoffShooterFromCompetition(id, token);
       if (response) {
-        await this.loadCompetitions();
+        console.log('User sign off')
       } else {
         this.showError('Error assigning shooters.');
       }
     } catch (error: any) {
       this.showError(error.message);
     }
+    this.loadCompetitions();
   }
 
   ngOnInit(): void {
@@ -95,6 +97,10 @@ export class CompetitionsListComponent implements AfterViewInit {
   }
 
   deleteCompetition(id?: number) {
+
+  }
+
+  openDetails(competition: Competition) {
 
   }
 
