@@ -107,7 +107,7 @@ body {
   text-align: center;
   text-decoration: underline;
   position: absolute;
-  bottom: 0;
+  bottom: -100px;
   left: 0;
 }
 

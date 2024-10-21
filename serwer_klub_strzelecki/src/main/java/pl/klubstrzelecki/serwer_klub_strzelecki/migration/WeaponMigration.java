@@ -19,7 +19,7 @@ public class WeaponMigration {
     @PostConstruct
     public void init() {
         if (!migrationInfoRepository.existsByMigrationName("InitWeaponMigration")) {
-            addWeaponEntries();
+            //addWeaponEntries();
 
             MigrationInfo migrationInfo = new MigrationInfo();
             migrationInfo.setMigrationName("InitWeaponMigration");
@@ -27,9 +27,11 @@ public class WeaponMigration {
             //migrationInfoRepository.save(migrationInfo);
         }
     }
-
+/*
     private void addWeaponEntries() {
         WeaponDTO weapon1 = new WeaponDTO(0, "AR15", "Karabinek", 5.56, "brak");
         WeaponDTO weapon2 = new WeaponDTO(1, "HK MR223", "Karabinek", 5.56, "brak");
     }
+
+ */
 }

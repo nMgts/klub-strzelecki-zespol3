@@ -44,6 +44,17 @@ public class WeaponService {
 
     public Weapon saveWeapon(WeaponDTO weaponDTO, MultipartFile image) {
         Weapon weapon = weaponDTOMapper.convertWeaponDTOtoWeapon(weaponDTO);
+
+        if (!image.isEmpty()) {
+            try {
+                byte[] imageBytes = image.getBytes(); // Konwersja MultipartFile na byte[]
+                weapon.setImage(imageBytes); // Ustawienie obrazka w formie byte[]
+            } catch (IOException e) {
+                // Obsługa błędu, na przykład logowanie
+                e.printStackTrace();
+            }
+        }
+
         return weaponRepository.save(weapon);
     }
 

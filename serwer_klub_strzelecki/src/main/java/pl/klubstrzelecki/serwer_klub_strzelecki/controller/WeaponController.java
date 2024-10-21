@@ -14,9 +14,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/weapon")
 public class  WeaponController {
-
     private final WeaponService weaponService;
-    private MultipartFile image;
 
     @Autowired
     public WeaponController(WeaponService weaponService) {
@@ -35,13 +33,6 @@ public class  WeaponController {
         return ResponseEntity.ok().body(weaponService.findWeaponById(id));
     }
 
-    @PostMapping("/add")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Object> createNews(@RequestBody WeaponDTO weaponDTO) {
-        weaponService.saveWeapon(weaponDTO, image);
-        return ResponseEntity.ok().body("{\"message\": \"News saved successfully!\"}");
-    }
-
     @PutMapping("/edit/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> updateWeapon(@PathVariable Long id, @RequestBody WeaponDTO weaponDTO) throws Exception {
@@ -56,13 +47,12 @@ public class  WeaponController {
         return ResponseEntity.ok().body("{\"message\": \"Weapon deleted successfully!\"}");
     }
 
-    @PostMapping(path = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping("/add")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> addWeapon(
-            @RequestPart("weapon") WeaponDTO weaponDTO,
-            @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
+    public ResponseEntity<Object> createNews(
+            @RequestParam("weaponDTO") WeaponDTO weaponDTO,
+            @RequestParam("image") MultipartFile image) {
         weaponService.saveWeapon(weaponDTO, image);
-        return ResponseEntity.ok().body("{\"message\": \"Weapon saved successfully!\"}");
+        return ResponseEntity.ok().body("{\"message\": \"News saved successfully!\"}");
     }
-
 }
