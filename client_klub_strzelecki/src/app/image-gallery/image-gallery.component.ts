@@ -56,7 +56,9 @@ export class ImageGalleryComponent implements OnInit {
           this.newImageName = '';
           this.selectedFile = null;
     }
-    this.loadImages();
+    setTimeout(() => {
+      this.loadImages();
+    }, 1000);
   }
 
   onDeleteImage(id: number): void {
