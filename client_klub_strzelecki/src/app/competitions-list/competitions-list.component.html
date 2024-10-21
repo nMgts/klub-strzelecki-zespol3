@@ -2,7 +2,7 @@
   <h1>Lista zawodów</h1>
   <button *ngIf="isAdmin" type="button" id="news-add-button" class="generic-button" [routerLink]="['/competitions/add']">Dodaj nowe zawody</button>
   <div class="container">
-    <div *ngFor="let competition of competitions" class="news-item" (click)="openDetails(competition)" >
+    <div *ngFor="let competition of competitions" class="news-item" (click)="openDetails(competition, $event)" >
       <div class="attributes">
         <h2>{{ competition.name }}</h2>
         <h3>Czas rozpoczęcia: {{ competition.start_date | removeT }}</h3>

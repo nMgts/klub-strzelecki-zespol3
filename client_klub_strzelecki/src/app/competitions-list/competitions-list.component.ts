@@ -105,7 +105,8 @@ export class CompetitionsListComponent implements AfterViewInit, OnInit {
 
   }
 
-  openDetails(competition: Competition) {
+  openDetails(competition: Competition, event: Event) {
+    event.stopPropagation();
     this.dialog.open(CompetitionDetailsDialogComponent, {
       width: '400px',
       data: {
