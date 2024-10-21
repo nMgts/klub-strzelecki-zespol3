@@ -55,7 +55,8 @@ export class ShootersComponent implements AfterViewInit, OnInit {
   filterShooters() {
     this.filteredShooters = this.shooters.filter(shooter =>
       shooter.first_name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      shooter.last_name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      shooter.last_name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      shooter.email.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
     this.currentPage = 1;  // Zresetowanie na pierwszą stronę po filtracji
     this.updatePagination();  // Aktualizacja paginacji po filtracji
