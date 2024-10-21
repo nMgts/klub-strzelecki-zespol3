@@ -107,10 +107,11 @@ body {
   text-align: center;
   text-decoration: underline;
   position: absolute;
-  bottom: 0;
+  bottom: -100px;
   left: 0;
 }
 
 .container {
+  min-height: 90vh;
   position: relative;
 }
