@@ -28,6 +28,8 @@ import { ImageGalleryComponent } from './image-gallery/image-gallery.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CompetitionDetailsDialogComponent } from './competition-details-dialog/competition-details-dialog.component';
+import {WeaponsComponent} from "./weapons/weapons.component";
+import {EditWeaponsComponent} from "./edit-weapons/edit-weapons.component";
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { CompetitionDetailsDialogComponent } from './competition-details-dialog/
     NewsComponent,
     ShootersComponent,
     UsersComponent,
+    WeaponsComponent,
+    EditWeaponsComponent,
     AddNewsComponent,
     EditNewsComponent,
     AddShooterComponent,

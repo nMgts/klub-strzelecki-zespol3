@@ -16,7 +16,10 @@ import { ImageGalleryComponent } from './image-gallery/image-gallery.component';
 import { RegisterComponent } from "./register/register.component";
 import {UpdateProfileComponent} from "./update-profile/update-profile.component";
 import {AssignShootersComponent} from "./assign-shooters/assign-shooters.component";
+import { WeaponsComponent } from "./weapons/weapons.component";
+import { EditWeaponsComponent } from "./edit-weapons/edit-weapons.component";
 import { usersGuard, adminGuard } from "./guard/users.guard";
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'news', pathMatch: 'full' },
@@ -26,6 +29,8 @@ export const routes: Routes = [
   { path: 'shooters', component: ShootersComponent, canActivate: [adminGuard]},
   { path: 'shooters/add', component: AddShooterComponent, canActivate: [adminGuard] },
   { path: 'shooters/edit/:id', component: EditShooterComponent, canActivate: [adminGuard] },
+  { path: 'weapons', component: WeaponsComponent, canActivate: [adminGuard]},
+  { path: 'weapons/edit/:id', component: EditWeaponsComponent, canActivate: [adminGuard]},
   { path: 'users', component: UsersComponent, canActivate: [adminGuard]},
   { path: 'competitions', component: CompetitionsListComponent, canActivate: [usersGuard]},
   { path: 'competitions/add', component: CompetitionAddComponent, canActivate: [adminGuard]},

@@ -12,8 +12,8 @@ import pl.klubstrzelecki.serwer_klub_strzelecki.service.WeaponService;
 import java.io.IOException;
 
 @RestController
-@RequestMapping
-public class WeaponController {
+@RequestMapping("/api/weapon")
+public class  WeaponController {
 
     private final WeaponService weaponService;
     private MultipartFile image;
@@ -24,6 +24,7 @@ public class WeaponController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> getAllWeapons() {
         return ResponseEntity.ok().body(weaponService.findAll());
     }
