@@ -1,27 +1,26 @@
-<html>
-<body>
 <div class="news-list">
   <p>Aktualności</p>
   <button *ngIf="isAdmin" type="button" id="news-add-button" class="generic-button" [routerLink]="['/news/add']">Dodaj nowy post</button>
   <div class="container">
-    <div *ngFor="let news of news_list" class="news-item">
+    <div *ngFor="let news of news_list.slice(0, displayedNewsCount)" class="news-item">
       <h2>{{ news.title }}</h2>
       <h3>{{ news.content }}</h3>
       <div *ngIf="isAdmin" class="button-container">
         <button [routerLink]="['/news/edit', news.id]" type="button" id="news-edit-button" class="generic-button">Edytuj</button>
-        <button (click) = "showDialog(news.id)" type="button" id="news-delete-button" class="generic-button">Usuń</button>
+        <button (click)="showDialog(news.id)" type="button" id="news-delete-button" class="generic-button">Usuń</button>
       </div>
     </div>
   </div>
+
+  <div *ngIf="displayedNewsCount < news_list.length" class="text-center mt-4">
+    <button (click)="loadMoreNews()" class="generic-button">Pokaż więcej</button>
+  </div>
 </div>
-</body>
+
 <p-dialog header="Potwierdzenie" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
   <span class="p-text-secondary block mb-5">Czy chcesz usunąć post?</span>
   <div  class="flex justify-content-end gap-2">
     <p-button label="Anuluj" severity="secondary" (click)="visible = false" />
-    <p-button label="Usuń" (click)= "deleteNews(newsId)"  />
+    <p-button label="Usuń" (click)="deleteNews(newsId)"  />
   </div>
 </p-dialog>
-</html>
-
-

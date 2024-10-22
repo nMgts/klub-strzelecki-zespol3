@@ -1,12 +1,8 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ViewChild, OnInit } from '@angular/core';
-
-import { NgModule } from '@angular/core';
-
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NewsService } from '../services/news.service';
-import { CommonModule } from '@angular/common';
 import { News } from '../interfaces/news';
-import {Router} from "@angular/router";
-import {UsersService} from "../services/users.service";
+import { Router } from "@angular/router";
+import { UsersService } from "../services/users.service";
 
 @Component({
   selector: 'app-news',
@@ -15,13 +11,17 @@ import {UsersService} from "../services/users.service";
 })
 
 // Component that displays the news
-export class NewsComponent implements AfterViewInit {
+export class NewsComponent implements AfterViewInit, OnInit {
   news_list: News[] = [];
   visible: boolean = false;
-  newsId: number| undefined;
+  newsId: number | undefined;
   errorMessage: string = '';
 
-  isAdmin:boolean = false;
+  isAdmin: boolean = false;
+
+  // Zmienna do kontrolowania ilości wyświetlanych wiadomości
+  displayedNewsCount: number = 6;  // Początkowo wyświetlamy 6 wiadomości
+  loadMoreStep: number = 6;  // O ile zwiększamy liczbę wiadomości po kliknięciu "Pokaż więcej"
 
   constructor(
     private newsService: NewsService,
@@ -29,11 +29,7 @@ export class NewsComponent implements AfterViewInit {
     private cd: ChangeDetectorRef,
     private router: Router) {}
 
-  // After init - because we need the pagination to load first
-  // Fetch the news from the database and display them
   ngAfterViewInit(): void {
-
-    // The DOM has been changed, we need to detect the changes to prevent ExpressionChangedAfterItHasBeenCheckedError
     this.cd.detectChanges();
   }
 
@@ -47,64 +43,33 @@ export class NewsComponent implements AfterViewInit {
       this.news_list = data;
     });
   }
-  /*
-  public onDeleteNews(id: number): void {
-    console.log('Attempting to delete news with id:');  // Check if ID is correct
-    this.newsService.deleteNews(id).subscribe({
-      next: (response) => {
-        console.log('News deleted successfully', response);
-        this.news_list = this.news_list.filter(news => news.id !== id);
-      },
-      error: (err) => {
-        console.error('Error deleting news:', err);
-      }
-    });
-  }
-*/
-  changeNlForP(text: string): string {
-    let editedText = '<p>' + text;
-    editedText = editedText.replace(/\n/g, '</p><p>');
-    editedText += '</p>';
-    return editedText;
-  }
 
-  editNews(id: number) {
-    this.router.navigate(['news/edit', id]);
+  // Funkcja do ładowania kolejnych wiadomości
+  loadMoreNews() {
+    this.displayedNewsCount += this.loadMoreStep;  // Zwiększamy liczbę wyświetlanych wiadomości
   }
 
   async deleteNews(newsId: number | undefined) {
     try {
-    const token: any = localStorage.getItem('token');
-    await this.newsService.deleteNews(newsId, token);
-    this.getNews();
-    this.visible = false;
-  } catch (error: any) {
-    this.showError(error.message);
-  }
+      const token: any = localStorage.getItem('token');
+      await this.newsService.deleteNews(newsId, token);
+      this.getNews();
+      this.visible = false;
+    } catch (error: any) {
+      this.showError(error.message);
+    }
   }
 
-  showDialog(id?: number)
-  {
+  showDialog(id?: number) {
     console.log("show dialog");
     this.visible = true;
     this.newsId = id;
   }
 
-
-  /*
-  deleteNews(id: number) {
-    this.newsService.deleteNews(id).subscribe( data =>{
-      console.log(data);
-      this.getNews();
-    })
-  }
-
-   */
-
   showError(mess: string) {
     this.errorMessage = mess;
     setTimeout(() => {
       this.errorMessage = ''
-    }, 3000)
+    }, 3000);
   }
 }

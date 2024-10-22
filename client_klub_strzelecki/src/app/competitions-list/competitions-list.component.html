@@ -2,7 +2,8 @@
   <h1>Lista zawodów</h1>
   <button *ngIf="isAdmin" type="button" id="news-add-button" class="generic-button" [routerLink]="['/competitions/add']">Dodaj nowe zawody</button>
   <div class="container">
-    <div *ngFor="let competition of competitions" class="news-item" (click)="openDetails(competition, $event)" >
+    <!-- Zmieniono na: wyświetlanie określonej liczby zawodów -->
+    <div *ngFor="let competition of competitions.slice(0, displayedCompetitionsCount)" class="news-item" (click)="openDetails(competition, $event)">
       <div class="attributes">
         <h2>{{ competition.name }}</h2>
         <h3>Czas rozpoczęcia: {{ competition.start_date | removeT }}</h3>
@@ -17,5 +18,10 @@
         <button *ngIf="!isAdmin && !competition.emails.includes(userEmail)" (click)="signUpForCompetition(competition.id)" type="button" id="sign-up-button" class="generic-button">Zapisz się</button>
       </div>
     </div>
+  </div>
+
+  <!-- Zmieniono na: przycisk "Pokaż więcej", który ładuje więcej zawodów -->
+  <div *ngIf="displayedCompetitionsCount < competitions.length" class="text-center mt-4">
+    <button (click)="loadMoreCompetitions()" class="generic-button">Pokaż więcej</button>
   </div>
 </div>
