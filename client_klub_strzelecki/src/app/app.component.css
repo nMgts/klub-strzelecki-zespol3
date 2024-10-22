@@ -8,7 +8,6 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 80px;
   z-index: 100;
   justify-content: space-between;
   align-items: center;
@@ -20,7 +19,7 @@ header {
   font-weight: bold;
   margin: 0;
   font-size: 40px;
-  min-width: 100%;
+  width: 301px;
   margin-right: 15px;
   user-select: none;
 }
@@ -28,9 +27,7 @@ header {
 @media screen and (min-width: 1115px) {
   header{
     display: flex;
-  }
-  .logo{
-    min-width: 300px;
+    min-height: 80px;
   }
 
 }
@@ -113,4 +110,37 @@ body {
 
 .container {
   position: relative;
+}
+
+/* Stylizacja dla przycisku "Menu" widocznego tylko na mniejszych ekranach */
+.menu-toggle {
+  color: #fff;
+  border: none;
+  font-size: 1px;
+  cursor: pointer;
+  display: none; /* Domyślnie ukryty */
+  padding: 10px 10px 16px 10px;
+  line-height: 10px;
+  margin-left: auto;
+}
+
+.menu-toggle:hover {
+  color: #010038;
+  background-color: #fff;
+}
+
+@media screen and (max-width: 730px) {
+  .menu-toggle {
+    display: block; /* Wyświetlany przy szerokości poniżej 730px */
+    font-size: xx-large;
+  }
+
+  /* Domyślnie ukryj navbar na małych ekranach */
+  .navbar.hidden {
+    display: none;
+  }
+
+  .navbar {
+    flex-direction: column;
+  }
 }

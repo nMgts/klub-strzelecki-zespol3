@@ -5,8 +5,14 @@
 <title>Sticky Footer</title>
 <link rel="stylesheet" href="app.component.css">
 <header>
-  <h1 class="logo" >Klub strzelecki</h1>
-  <nav class="navbar">
+  <div class="flex">
+    <h1 class="logo">Klub strzelecki</h1>
+
+    <!-- Przycisk "Menu" widoczny tylko na małych ekranach -->
+    <button class="menu-toggle" *ngIf="isSmallScreen" (click)="toggleNavbar()">≡</button>
+  </div>
+
+  <nav class="navbar" [ngClass]="{'hidden': !navbarVisible}">
     <div class="nav-list">
       <div class="nav-item"><a routerLink="/" routerLinkActive="active">Strona główna</a></div>
       <div *ngIf="isAdmin" class="nav-item"><a routerLink="/users" routerLinkActive="active">Lista użytkowników</a></div>
@@ -21,6 +27,7 @@
     </div>
   </nav>
 </header>
+
 
 <div class="container">
 <main>
